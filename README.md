@@ -1,2 +1,2 @@
 # ksmanPro
-SCMAN
+SCMAN for system management.
