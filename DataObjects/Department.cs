@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace KSManDataAccess
 {
-    class User
+    class Department
     {
-        public string Username { get; set; }
+        public string DepartmentId { get; set; }
 
-        public string firstName { get; set; }
-        public string lastName { get; set; }
+        public string Name { get; set; }
+
+        public string Description { get; set; }
 
     }
 }
