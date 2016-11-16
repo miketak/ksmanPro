@@ -9,5 +9,7 @@ namespace KSManDataAccess
     public class Class1
     {
         //this is an addition I'm making now
+
+        //oh yes, I really love changes
     }
 }
