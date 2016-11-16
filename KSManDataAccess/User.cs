@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic
+namespace KSManDataAccess
 {
-    public class Class1
+    class User
     {
-        //hello this is also another change
-
-        //lol...another change humans
+        public string Username { get; set; }
     }
 }
