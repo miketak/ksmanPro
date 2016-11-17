@@ -17,7 +17,7 @@ namespace DataObjects
 
         public string OtherNames { get; set; }
 
-        public string Department { get; set; }
+        public string DepartmentId { get; set; }
 
         public string SSNo { get; set; }
 

@@ -11,11 +11,50 @@ namespace DataAccessLayer
 {
     public class UserAccessor
     {
-        public static bool verifyUsernameAndPassword(string username, string password)
+        public static bool verifyUsernameAndPassword(string username, string passwordHash)
         {
-            bool result = false;
+            var result = false;
 
+            // get a connection
+            var conn = DBConnection.GetConnection();
+
+            // get command text
+            var cmdText = @"sp_authenticate_user";
+
+            // create a command object
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // add parameters
+            cmd.Parameters.Add("@Username", SqlDbType.VarChar, 20);
+            cmd.Parameters.Add("@PasswordHash", SqlDbType.VarChar, 100);
+
+            // set parameter values
+            cmd.Parameters["@Username"].Value = username;
+            cmd.Parameters["@PasswordHash"].Value = passwordHash;
+
+            // try-catch-finally
+            try
+            {
+                // open a connection
+                conn.Open();
+
+                // execute and capture the result
+                if (1 == (int)cmd.ExecuteScalar())
+                    result = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+  
             return result;
+
         }
 
         public static User retrieveUserByUsername(string username)
@@ -45,11 +84,11 @@ namespace DataAccessLayer
                         FirstName = reader.GetString(2),
                         LastName = reader.GetString(3),
                         OtherNames = reader.GetString(4),
-                        //Department = reader.GetString(5), - will be done on another stored procedure
-                        isEmployed = reader.GetInt32(5),//investigate this bit thing
-                        isBlocked = reader.GetInt32(6),
-                        UserRolesId = reader.GetString(7),
-                        ClearanceLevelId = reader.GetInt32(8)
+                        DepartmentId = reader.GetString(5), 
+                        isEmployed = reader.GetInt32(6),//investigate this bit thing
+                        isBlocked = reader.GetInt32(7),
+                        UserRolesId = reader.GetString(8),
+                        ClearanceLevelId = reader.GetInt32(9)
                     };
                 }
                 reader.Close();
