@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KSManDataAccess
+namespace DataObjects
 {
-    class ProgramFunctionsData
+    public class ProgramFunctionsData
     {
         public string Name { get; set; }
 

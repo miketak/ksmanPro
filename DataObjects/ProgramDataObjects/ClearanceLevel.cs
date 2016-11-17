@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KSManDataAccess
+namespace DataObjects
 {
-    class ClearanceLevel
+    public class ClearanceLevel
     {
         public int ClearanceLevelId { get; set; }
 

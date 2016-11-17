@@ -4,16 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KSManDataAccess
+namespace DataObjects
 {
-    class UserRoles
+    public class Department
     {
-        public int UserRolesId { get; set; }
+        public string DepartmentId { get; set; }
 
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        public int DepartmentId { get; set; }
     }
 }

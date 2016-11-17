@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KSManDataAccess
+namespace DataObjects
 {
-    class User
+    public class User
     {
+        public int UserId { get; set; }
         public string Username { get; set; }
 
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
-        public string OtherName { get; set; }
+        public string OtherNames { get; set; }
 
         public string Department { get; set; }
 
@@ -26,11 +27,11 @@ namespace KSManDataAccess
 
         public string PicUrl { get; set; }
 
-        public bool isEmployed { get; set; }
+        public int isEmployed { get; set; } //might change back to bool
 
-        public bool isBlocked { get; set; }
+        public int isBlocked { get; set; } //might change back to bool
 
-        public int UserRolesId { get; set; }
+        public string UserRolesId { get; set; }
 
         public int ClearanceLevelId { get; set; }
 
