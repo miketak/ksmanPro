@@ -85,8 +85,8 @@ namespace DataAccessLayer
                         LastName = reader.GetString(3),
                         OtherNames = reader.GetString(4),
                         DepartmentId = reader.GetString(5), 
-                        isEmployed = reader.GetInt32(6),//investigate this bit thing
-                        isBlocked = reader.GetInt32(7),
+                        isEmployed = reader.GetBoolean(6),
+                        isBlocked = reader.GetBoolean(7),
                         UserRolesId = reader.GetString(8),
                         ClearanceLevelId = reader.GetInt32(9)
                     };

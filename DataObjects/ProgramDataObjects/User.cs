@@ -27,9 +27,9 @@ namespace DataObjects
 
         public string PicUrl { get; set; }
 
-        public int isEmployed { get; set; } //might change back to bool
+        public bool isEmployed { get; set; } //might change back to bool
 
-        public int isBlocked { get; set; } //might change back to bool
+        public bool isBlocked { get; set; } //might change back to bool
 
         public string UserRolesId { get; set; }
 
