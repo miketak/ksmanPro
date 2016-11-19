@@ -18,8 +18,8 @@
             <RowDefinition Height="150"/>
             <RowDefinition Height="46*"/>
             <RowDefinition Height="26*"/>
-            <RowDefinition Height="27*"/>
-            <RowDefinition Height="27*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="25*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
@@ -28,22 +28,23 @@
 
         <!--Will abstract the colour into a resource-->
         <Border Background="Blue" BorderThickness="1" HorizontalAlignment="Stretch" Height="Auto"  Grid.Row="0" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="4">
-            <Button Grid.Column="3" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Background="Red" BorderThickness="0" ToolTip="Close" >
+            <Button Name="btnClose" Grid.Column="3" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Background="Red" BorderThickness="0" ToolTip="Close" Click="btnClose_Click" >
                 <StackPanel Orientation="Horizontal">
                     <Image Source="Resources/closeButton.png"/>
                 </StackPanel>
             </Button>
         </Border>
         
+        <!--Window Added Text-->
         <Label Content="Login" Grid.Column="3" Foreground="White" FontFamily="Garamond" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Bottom" FontSize="24"/>
-
-
-
-
-
         <Label Content="All Copyrights Reserved Stable Corps 2016 "  Grid.ColumnSpan ="2" Grid.Column="2" Grid.Row="6" Foreground="Blue" FontFamily="Garamond" HorizontalAlignment="Right"  VerticalAlignment="Bottom" FontSize="12" Width="213"/>
-        <Label Content="Label" Grid.Column="1" HorizontalAlignment="Left" Margin="36,20,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-
+        
+        <!--Login Elements-->
+        <Label Content="Username: " VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" Foreground="Blue" Grid.Column="1" FontSize="14" HorizontalAlignment="Right"  Grid.Row="2" VerticalAlignment="Bottom" Height="Auto" Width="Auto"/>
+        <Label Content="Password: " VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" Foreground="Blue" Grid.Column="1" FontSize="14" HorizontalAlignment="Right"  Grid.Row="3" VerticalAlignment="Bottom" Height="Auto" Width="Auto"/>
+        <TextBox Name="txtUsername" Grid.Column="2" HorizontalAlignment="Left" Height="Auto" Grid.Row="2" TextWrapping="NoWrap" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Width="110" BorderBrush="#FF023EF1" Foreground="#FF023EF1" Margin="0,0,0,7"/>
+        <TextBox Name="txtPassword" Grid.Column="2" HorizontalAlignment="Left" Height="Auto" Grid.Row="3" TextWrapping="NoWrap" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Width="110" BorderBrush="#FF023EF1" Foreground="#FF023EF1" Margin="0,0,0,7"/>
+        <Button Name="btnLogin" Foreground="Blue" Background="White" BorderBrush="Blue" Content="Login" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,7,0" Grid.Row="4" VerticalAlignment="Top" Width="75" Click="btnLogin_Click"/>
 
 
 

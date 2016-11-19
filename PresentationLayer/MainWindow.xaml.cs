@@ -29,6 +29,16 @@ namespace PresentationLayer
             InitializeComponent();
         }
 
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            //var um = new UserManager();
+        }
+
 
     }
 }
