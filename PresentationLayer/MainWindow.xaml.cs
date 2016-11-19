@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BusinessLogic;
+using DataObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -22,6 +24,8 @@ namespace PresentationLayer
     /// </summary>
     public partial class MainWindow : Window
     {
+        internal readonly string failure = "Wrong username or password.";
+        User _user = null;
 
 
         public MainWindow()
@@ -36,7 +40,36 @@ namespace PresentationLayer
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            //var um = new UserManager();
+            var authenticate = new UserManager();
+
+            try
+            {
+                _user = authenticate.authenticateUser(txtUsername.Text, txtPassword.Password);
+                MessageBox.Show("Welcome back, " + _user.FirstName + ".");
+
+            }
+            catch (Exception ex)
+            {
+                lblPrompt.Content = failure;
+                txtUsername.BorderBrush = Brushes.Red;
+                txtPassword.BorderBrush = Brushes.Red;
+                txtUsername.Focus();
+            }
+ 
+        }
+
+        private void txtUsername_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            txtUsername.BorderBrush = Brushes.Blue;
+            lblPrompt.Content = "";
+
+        }
+
+
+        private void txtPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            txtPassword.BorderBrush = Brushes.Blue;
+            lblPrompt.Content = "";
         }
 
 
