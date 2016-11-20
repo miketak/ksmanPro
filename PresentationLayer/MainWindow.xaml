@@ -17,10 +17,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition Height="46*"/>
-            <RowDefinition Height="26*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="25*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
@@ -34,17 +34,17 @@
                 </StackPanel>
             </Button>
         </Border>
-        
+
         <!--Window Added Text-->
         <Label Content="Login" Grid.Column="3" Foreground="White" FontFamily="Garamond" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Bottom" FontSize="24"/>
         <Label Content="All Copyrights Reserved Stable Corps 2016 "  Grid.ColumnSpan ="2" Grid.Column="2" Grid.Row="6" Foreground="Blue" FontFamily="Garamond" HorizontalAlignment="Right"  VerticalAlignment="Bottom" FontSize="12" Width="213"/>
-        
+
         <!--Login Elements-->
         <Label Content="Username: " VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" Foreground="Blue" Grid.Column="1" FontSize="14" HorizontalAlignment="Right"  Grid.Row="2" VerticalAlignment="Bottom" Height="Auto" Width="Auto"/>
         <Label Content="Password: " VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" Foreground="Blue" Grid.Column="1" FontSize="14" HorizontalAlignment="Right"  Grid.Row="3" VerticalAlignment="Bottom" Height="Auto" Width="Auto"/>
-        <TextBox Name="txtUsername" Grid.Column="2" HorizontalAlignment="Left" Height="Auto" Grid.Row="2" TextWrapping="NoWrap" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Width="110" BorderBrush="#FF023EF1" Foreground="#FF023EF1" Margin="0,0,0,7" TextChanged="txtUsername_TextChanged"/>
-        <PasswordBox Name="txtPassword" Grid.Column="2" HorizontalAlignment="Left" Height="Auto" Grid.Row="3" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Width="110" BorderBrush="#FF023EF1" Foreground="#FF023EF1" Margin="0,0,0,7" PasswordChanged="txtPassword_PasswordChanged"/>
-        <Button Name="btnLogin" IsDefault="True" Foreground="Blue" Background="White" BorderBrush="Blue" Content="Login" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,7,0" Grid.Row="4" VerticalAlignment="Top" Width="75" Click="btnLogin_Click"/>
+        <TextBox Name="txtUsername" Grid.Column="2" HorizontalAlignment="Left" Height="Auto" Grid.Row="2" TextWrapping="NoWrap" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Width="110" BorderBrush="#FF023EF1" Foreground="#FF023EF1"  TextChanged="txtUsername_TextChanged"/>
+        <PasswordBox Name="txtPassword" Grid.Column="2" HorizontalAlignment="Left" Height="Auto" Grid.Row="3" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Width="110" BorderBrush="#FF023EF1" Foreground="#FF023EF1"  PasswordChanged="txtPassword_PasswordChanged"/>
+        <Button Name="btnLogin" IsDefault="True" Foreground="Blue" Background="White" BorderBrush="Blue" Content="Login" Grid.Column="2" HorizontalAlignment="Right" Margin="0,8,7,2.474" Grid.Row="4" VerticalAlignment="Center" Width="75" Click="btnLogin_Click"/>
         <Label Name="lblPrompt" Content="" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" Foreground="Red" Grid.Column="1" Grid.ColumnSpan="2" FontSize="14" HorizontalAlignment="Right"  Grid.Row="5" VerticalAlignment="Bottom" Height="Auto" Width="Auto"/>
 
     </Grid>

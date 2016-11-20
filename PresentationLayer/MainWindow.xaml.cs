@@ -1,5 +1,6 @@
 ﻿using BusinessLogic;
 using DataObjects;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace PresentationLayer
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow 
     {
         internal readonly string failure = "Wrong username or password.";
         User _user = null;
@@ -31,6 +32,7 @@ namespace PresentationLayer
         public MainWindow()
         {
             InitializeComponent();
+            txtUsername.Focus();
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -45,8 +47,10 @@ namespace PresentationLayer
             try
             {
                 _user = authenticate.authenticateUser(txtUsername.Text, txtPassword.Password);
+                this.Hide();
                 MessageBox.Show("Welcome back, " + _user.FirstName + ".");
-
+                var frmCentralDashboard = new frmCentralDashboard();
+                frmCentralDashboard.ShowDialog();
             }
             catch (Exception ex)
             {
