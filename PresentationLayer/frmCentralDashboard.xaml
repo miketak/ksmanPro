@@ -2,54 +2,71 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="KSManPro Dashboard" Height="600" Width="800" GlowBrush="Black" ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen">
+        Title="KSManPro" Height="600" Width="800" GlowBrush="Black" ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen">
     <!--Window Bar Features. Do not tamper with-->
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <Button Content="settings" />
-            <Button>
-                <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="20"
-                   Height="20"
-                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cupcake}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                    <TextBlock Margin="4 0 0 0"
-                   VerticalAlignment="Center"
-                   Text="deploy cupcakes" />
-                </StackPanel>
-            </Button>
-            <ToggleButton Content="AppCentral" IsChecked="{Binding ElementName=myflyOut, Path=IsOpen}" Cursor="Hand" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked"/>
+            <Button Content="AppCentral" />
+            <ToggleButton Content="settings" IsChecked="{Binding ElementName=mySettings, Path=IsOpen}" Cursor="Hand" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked"/>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
     <!--End of Window Top Feature. Do not temper with-->
 
+    <!--Left flyout for settings-->
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout x:Name ="myFlyOut" Header="MyFlyOut" AnimateOpacity="True"
-                             AnimateOnPositionChange="True" 
+            <Controls:Flyout x:Name ="mySettings" Header="settings" AnimateOpacity="True"
+                             AnimateOnPositionChange="True"
                              Background="#91000000" 
-                             Width="350"
+                             Width="200"
                              IsOpen="False">
-                <ListBox Background="Transparent">
-                    <ListBoxItem>Hello 1</ListBoxItem>
-                    <ListBoxItem>Hello 2</ListBoxItem>
-                    <ListBoxItem>Hello 3</ListBoxItem>
-                    <ListBoxItem>Hello 4</ListBoxItem>
-                </ListBox>
+                <StackPanel Orientation="Vertical" Width="Auto">
+                    <Button Content="My Profile"/>
+                    <Button Content="Change Password"/>
+                    <Button Content="About KSManPro"/>
+                    <Button Content="Help"/>
+                    <Button Content="Exit"/>
+                </StackPanel>
             </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
+    <!--End of Left flyout-->
 
-
-    <Grid>
-        
-        
+    <!--Dock Panel For App Central left-->
+    <DockPanel >
+        <Border DockPanel.Dock="Left" Background="LightBlue" Width="220">
+            <StackPanel Orientation="Vertical" Margin="10 5 10 5">
+                <StackPanel Orientation="Horizontal" >
+                    <Ellipse Width="40" Height="40"
+                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Ellipse.OpacityMask>
+                            <ImageBrush Stretch="Fill" ImageSource="C:\Users\Mike T\documents\visual studio 2013\Projects\KSMANPRO\PresentationLayer\Resources\arrow.png" ></ImageBrush>
+                        </Ellipse.OpacityMask>
+                    </Ellipse>
+                    <TextBlock Margin="4 0 0 0"
+                   VerticalAlignment="Center"
+                   Name ="txtName" Text="_nameTag" Foreground="Red" FontWeight="Bold" FontSize="15"/>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Orientation="Horizontal" Width="Auto" Height="30">
+                    <TextBox Name="txtSearch" Height="25" Width="200" VerticalAlignment="Top" Foreground="Gray" Text="Search"/>
+                    <!--<Label Content="Search" Foreground="White"/>-->
+                </StackPanel>
+                <Button Content="Time Entry App" Background="AliceBlue" Foreground="Black" Margin="0 5 0 5"/>
+                <Button Content="Add New Employee" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                <Button Content="Manage Employee" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                <Button Content="Admin Central" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                
+               
+            </StackPanel>
+            
+        </Border>
         <Button Content="Click Me" Name="tryMe" Height="50" Width="80" Click="tryMe_Click"/>
 
-    </Grid>   
+    </DockPanel>
+    <!--End of Dock Panel For App Central left-->
+
+
+
 
 
 

@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using DataObjects;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,15 @@ namespace PresentationLayer
     /// </summary>
     public partial class frmCentralDashboard 
     {
-        public frmCentralDashboard()
+        User _user = null;
+
+        public frmCentralDashboard(User user)
         {
+            _user = user;
             InitializeComponent();
+            
+            //Set first and last name
+            txtName.Text = _user.FirstName + " " + _user.LastName;
         }
 
         private async void tryMe_Click(object sender, RoutedEventArgs e)
@@ -40,12 +47,12 @@ namespace PresentationLayer
 
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            myFlyOut.IsOpen = true;
+            mySettings.IsOpen = true;
         }
 
         private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            myFlyOut.IsOpen = false;
+            mySettings.IsOpen = false;
         }
 
  
