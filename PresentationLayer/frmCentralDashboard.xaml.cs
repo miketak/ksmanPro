@@ -55,6 +55,13 @@ namespace PresentationLayer
             mySettings.IsOpen = false;
         }
 
+        private void btnAdminCentral(object sender, RoutedEventArgs e)
+        {
+            //this.Hide();
+            var frmAdminCentral = new frmAdminCentral(_user);
+            frmAdminCentral.ShowDialog();
+        }
+
  
     }
 }
