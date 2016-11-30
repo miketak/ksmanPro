@@ -22,7 +22,7 @@
                              IsOpen="False">
                 <StackPanel Orientation="Vertical" Width="Auto">
                     <Button Content="My Profile"/>
-                    <Button Content="Change Password"/>
+                    <Button Content="Change Password" Click="btnChangePassword"/>
                     <Button Content="About KSManPro"/>
                     <Button Content="Help"/>
                     <Button Content="Exit"/>
@@ -68,7 +68,7 @@
         
         <Border DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Background="AntiqueWhite" Width="Auto" Height="30" BorderBrush="Blue">
             <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
-                <Label Content="Status Messages: ..." Foreground="Black"/>
+                <Label Content="Status Messages: ..." Foreground="Black" Name="txtStatusMessage"/>
                 <Button Content="Click Me" Name="tryMe" Height="25" Width="60" Click="tryMe_Click" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             </StackPanel>
         </Border>

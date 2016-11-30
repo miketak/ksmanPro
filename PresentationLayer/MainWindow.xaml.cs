@@ -48,7 +48,6 @@ namespace PresentationLayer
             {
                 _user = authenticate.authenticateUser(txtUsername.Text, txtPassword.Password);
                 this.Hide();
-                MessageBox.Show("Welcome back, " + _user.FirstName + ".");
                 var frmCentralDashboard = new frmCentralDashboard(_user);
                 frmCentralDashboard.ShowDialog();
             }

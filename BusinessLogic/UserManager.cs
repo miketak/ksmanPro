@@ -40,7 +40,6 @@ namespace BusinessLogic
             return result;
         }
         
-        
         public User authenticateUser(string username, string password)
         {
             User user = null;
@@ -57,7 +56,7 @@ namespace BusinessLogic
 
             try
             {
-                if ( UserAccessor.verifyUsernameAndPassword(username, password) )
+                if ( UserAccessor.verifyUsernameAndPassword( username, HashSHA256(password) ) )
                 {
                     password = null;
                     // need to create a user object to use as an access token
@@ -78,6 +77,25 @@ namespace BusinessLogic
             return user;
         }
 
-        
+        public bool UpdatePassword(int userID, string oldPassword, string newPassword)
+        {
+            var result = false;
+            try
+            {
+                if (1 == UserAccessor.UpdatePasswordHash(userID, HashSHA256(oldPassword), HashSHA256(newPassword)))
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return result;
+        }
     }
 }

@@ -31,6 +31,9 @@ namespace PresentationLayer
             
             //Set first and last name
             txtName.Text = _user.FirstName + " " + _user.LastName;
+
+            //Set status message
+            txtStatusMessage.Content += "Welcome back " + _user.FirstName + " " + _user.LastName;
         }
 
         private async void tryMe_Click(object sender, RoutedEventArgs e)
@@ -60,6 +63,18 @@ namespace PresentationLayer
             //this.Hide();
             var frmAdminCentral = new frmAdminCentral(_user);
             frmAdminCentral.ShowDialog();
+        }
+
+        private void btnChangePassword(object sender, RoutedEventArgs e)
+        {
+            
+            var mySettings = new MetroDialogSettings()
+            {
+                ColorScheme = MetroDialogColorScheme.Theme
+            };
+
+            var subfrmChangePassword = new subfrmChangePassword(_user);
+            subfrmChangePassword.ShowDialog();
         }
 
  
