@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="KSManPro" Height="600" Width="800" GlowBrush="Black" ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen">
+        Title="KSManPro" Height="600" Width="800" GlowBrush="Black" ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="True" WindowStartupLocation="CenterScreen">
     <!--Window Bar Features. Do not tamper with-->
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
@@ -33,8 +33,29 @@
     <!--End of Left flyout-->
 
     <!--Dock Panel For App Central left-->
-    <DockPanel >
-        <Border DockPanel.Dock="Left" Background="AntiqueWhite" Width="220">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="536*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Left Pane-->
+        <Border Background="AntiqueWhite"  Width="Auto" Margin="0,0,0,0" Grid.Column="0" Grid.ColumnSpan="3"  Grid.Row="0" Grid.RowSpan="2">
             <StackPanel Orientation="Vertical" Margin="10 5 10 5">
                 <StackPanel Orientation="Horizontal" >
                     <Ellipse Width="40" Height="40"
@@ -63,29 +84,35 @@
                 <Button Content="SC Careers Portal" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
                 <Button Content="SC HRM" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
                 <Button Content="SC Announcements" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
-            </StackPanel>   
+            </StackPanel>
         </Border>
-        
-        <Border DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Background="AntiqueWhite" Width="Auto" Height="30" BorderBrush="Blue">
+
+        <!--Bottom Status Bar-->
+        <Border VerticalAlignment="Bottom" Background="AntiqueWhite" Width="Auto" Height="Auto" BorderBrush="Blue" Grid.Column="3" Grid.ColumnSpan="9" Grid.Row="1">
             <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
                 <Label Content="Status Messages: ..." Foreground="Black" Name="txtStatusMessage"/>
                 <Button Content="Click Me" Name="tryMe" Height="25" Width="60" Click="tryMe_Click" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             </StackPanel>
         </Border>
+
+
+        <!--Left Corner Stufff-->
+        <Border Background="AliceBlue"  Width="Auto" Margin="0,10,0,10" Grid.Column="4" Grid.ColumnSpan="3"  Grid.Row="0" BorderBrush="LightBlue" BorderThickness="5,0,0,0" CornerRadius="10" >
+            <StackPanel Orientation="Vertical">
+                <TextBlock  TextAlignment="Center" Foreground="Black" FontWeight="Light" FontSize="15" Margin="6 0 6 0">Tasks</TextBlock>
+            </StackPanel>
+        </Border>
         
-        <Border DockPanel.Dock="Right" BorderThickness="1" CornerRadius="10" BorderBrush="Black" Width="260" Height="450" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0 0 10 0">
+        <!--Right Corner Stuff-->
+        <Border Background="AliceBlue"  Width="Auto" Margin="0,10,0,10" Grid.Column="8" Grid.ColumnSpan="3"  Grid.Row="0" BorderBrush="LightBlue" BorderThickness="5,0,0,0" CornerRadius="10" >
             <StackPanel Orientation="Vertical">
                 <TextBlock  TextAlignment="Center" Foreground="Black" FontWeight="Light" FontSize="15" Margin="6 0 6 0">Announcements</TextBlock>
             </StackPanel>
         </Border>
 
-        <Border DockPanel.Dock="Right" BorderThickness="1" CornerRadius="10" BorderBrush="Black" Width="260" Height="450" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0 0 0">
-            <StackPanel Orientation="Vertical">
-                <TextBlock  TextAlignment="Center" Foreground="Black" FontWeight="Light" FontSize="15" Margin="6 0 6 0">Tasks</TextBlock>
-            </StackPanel>
-        </Border>
 
 
-    </DockPanel>
+        
+    </Grid>
     <!--End of Dock Panel For App Central left-->
 </Controls:MetroWindow>

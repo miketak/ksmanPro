@@ -66,6 +66,9 @@
     <Compile Include="subfrmChangePassword.xaml.cs">
       <DependentUpon>subfrmChangePassword.xaml</DependentUpon>
     </Compile>
+    <Compile Include="subfrmManageEmployee.xaml.cs">
+      <DependentUpon>subfrmManageEmployee.xaml</DependentUpon>
+    </Compile>
     <Page Include="frmAdminCentral.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -101,6 +104,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="subfrmChangePassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="subfrmManageEmployee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

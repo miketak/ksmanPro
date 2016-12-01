@@ -1,0 +1,141 @@
+﻿<Controls:MetroWindow x:Class="PresentationLayer.subfrmManageEmployee"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="Manage Employee" Height="600" Width="800" GlowBrush="Black" ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="True" WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="27*"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="305*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="68*"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+
+        <!--Top Border for Name-->
+        <Border Background="AntiqueWhite" Grid.Column="0" Grid.ColumnSpan="12" Grid.Row="0">
+            <StackPanel Orientation="Horizontal" >
+                <Ellipse Width="20" Height="20"
+                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Ellipse.OpacityMask>
+                        <ImageBrush Stretch="Fill" ImageSource="C:\Users\Mike T\documents\visual studio 2013\Projects\KSMANPRO\PresentationLayer\Resources\arrow.png" ></ImageBrush>
+                    </Ellipse.OpacityMask>
+                </Ellipse>
+                <TextBlock Margin="4 0 0 0"
+                   VerticalAlignment="Center"
+                   Name ="txtName" Text="_nameTag" Foreground="Black" FontWeight="Bold" FontSize="15"/>
+            </StackPanel>
+        </Border>
+
+        <!--Status Messages for window-->
+        <Border Background="AntiqueWhite" Grid.Row="7" Grid.ColumnSpan="12">
+            <TextBlock Text="Status Message: " Margin="5 0 0 0"/>
+        </Border>
+
+        <!--Search Box and filters group-->
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5">
+            <TextBox Text="Enter Username" Grid.Row="2"  Margin="0 5 0 5" HorizontalAlignment="Left" Width="180"/>
+            <Button Content="Search" IsDefault="True" Click="btnSearch" Width="140" Margin="5 5 0 5" HorizontalAlignment="Right"/>
+        </StackPanel>
+
+        <Expander Header="Filter Settings" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Width="330" Height="150" VerticalAlignment="Top" >
+            <Expander.Content>
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Department: " Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right"/>
+                    <Label Content="Job Position: " Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right"/>
+                    <Label Content="Clearance Level: " Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right"/>
+
+                    <ComboBox Grid.Column="1" Grid.Row="0" Width="Auto" Margin="2"/>
+                    <ComboBox Grid.Column="1" Grid.Row="1" Width="Auto" Margin="2"/>
+                    <ComboBox Grid.Column="1" Grid.Row="2" Width="Auto" Margin="2"/>
+                </Grid>
+            </Expander.Content>
+
+        </Expander>
+  
+
+        <!--List Box for Employees-->
+        <ListBox  Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="10"/>
+        <DataGrid Name="globalEmployeeList" GridLinesVisibility="Horizontal"
+                  AlternatingRowBackground="#FFE5E37F" RowBackground="#FFBAABE8"
+                  AutoGenerateColumns="False"
+                  Grid.Column="1" Grid.ColumnSpan="10" Grid.Row="4"
+                  MouseDoubleClick="globalEmployeeList_MouseDoubleClick"
+                  IsSynchronizedWithCurrentItem="True" SelectionMode="Single"
+                  CanUserReorderColumns="False"
+                  ItemsSource="{Binding}" CanUserDeleteRows="False" IsReadOnly="True">
+
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Username" Width="100*" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding }" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Name" Width="200*" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding }" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Department" Width="130*" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding }" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Job Position" Width="100*" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding }" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Clearance Level" Width="130*" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding }" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+
+
+
+</Controls:MetroWindow>

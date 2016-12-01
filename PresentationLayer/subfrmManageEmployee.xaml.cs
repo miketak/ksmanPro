@@ -16,32 +16,24 @@ using System.Windows.Shapes;
 namespace PresentationLayer
 {
     /// <summary>
-    /// Interaction logic for frmAdminCentral.xaml
+    /// Interaction logic for subfrmManageEmployee.xaml
     /// </summary>
-    public partial class frmAdminCentral
+    public partial class subfrmManageEmployee 
     {
         User _user = null;
-
-        public frmAdminCentral(User user)
+        public subfrmManageEmployee(User user)
         {
-            InitializeComponent();
             _user = user;
+            InitializeComponent();
             txtName.Text = _user.FirstName + " " + _user.LastName;
         }
 
-        private void btnManageDepartment(object sender, RoutedEventArgs e)
+        private void globalEmployeeList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            
-        }
-
-        private void btnManageEmployees(object sender, RoutedEventArgs e)
-        {
-            var subfrmManageEmployee = new subfrmManageEmployee(_user);
-            subfrmManageEmployee.ShowDialog();
 
         }
 
-        private void btnLeaveSettings(object sender, RoutedEventArgs e)
+        private void btnSearch(object sender, RoutedEventArgs e)
         {
 
         }
