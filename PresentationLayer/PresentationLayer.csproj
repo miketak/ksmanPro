@@ -161,7 +161,9 @@
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Turbomachinery_consulting_turbine.png" />
+    <Content Include="Resources\Turbomachinery_consulting_turbine.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\arrow.png" />

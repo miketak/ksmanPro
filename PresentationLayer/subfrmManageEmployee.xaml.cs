@@ -1,4 +1,5 @@
-﻿using DataObjects;
+﻿using BusinessLogic;
+using DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +22,14 @@ namespace PresentationLayer
     public partial class subfrmManageEmployee 
     {
         User _user = null;
+        private List<Employee> _employees;
+
         public subfrmManageEmployee(User user)
         {
             _user = user;
             InitializeComponent();
-            txtName.Text = _user.FirstName + " " + _user.LastName;
+            
+
         }
 
         private void globalEmployeeList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -37,5 +41,25 @@ namespace PresentationLayer
         {
 
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtName.Text = _user.FirstName + " " + _user.LastName;
+            RefreshEmployees();
+
+        }
+
+        private void RefreshEmployees()
+        {
+            var employeeManager = new EmployeeManager();
+            _employees = employeeManager.retrieveEmployees(true);
+            globalEmployeeList.ItemsSource = _employees;
+
+            //option for active employees
+
+            //option for inactive employees
+        }
+
+ 
     }
 }

@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmployeeDataObjects\Address.cs" />
+    <Compile Include="EmployeeDataObjects\AddressType.cs" />
+    <Compile Include="EmployeeDataObjects\Employee.cs" />
     <Compile Include="ProgramDataObjects\ClearanceLevel.cs" />
     <Compile Include="ProgramDataObjects\Department.cs" />
     <Compile Include="ProgramDataObjects\ProgramFunctionsData.cs" />

@@ -19,9 +19,11 @@ namespace DataObjects
 
         public string DepartmentId { get; set; }
 
+        public string Department { get; set; } //new guy
+
         public string SSNo { get; set; }
 
-        public string Telephone { get; set; }
+        public string PhoneNumber { get; set; }
 
         public string Email { get; set; }
 
@@ -33,7 +35,11 @@ namespace DataObjects
 
         public string UserRolesId { get; set; }
 
+        public string JobDesignation { get; set; } //new guy
+
         public int ClearanceLevelId { get; set; }
+
+        public string ClearanceLevel { get; set; } //new guy
 
     }
 }

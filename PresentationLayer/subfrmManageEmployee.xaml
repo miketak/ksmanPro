@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="Manage Employee" Height="600" Width="800" GlowBrush="Black" ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="True" WindowStartupLocation="CenterScreen">
+        Title="Manage Employee" Height="600" Width="800" GlowBrush="Black" ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="True" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -37,7 +37,7 @@
                 <Ellipse Width="20" Height="20"
                    Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                     <Ellipse.OpacityMask>
-                        <ImageBrush Stretch="Fill" ImageSource="C:\Users\Mike T\documents\visual studio 2013\Projects\KSMANPRO\PresentationLayer\Resources\arrow.png" ></ImageBrush>
+                        <ImageBrush Stretch="Fill" ImageSource="pack://siteoforigin:,,,/Resources/Turbomachinery_consulting_turbine.png" ></ImageBrush>
                     </Ellipse.OpacityMask>
                 </Ellipse>
                 <TextBlock Margin="4 0 0 0"
@@ -53,7 +53,7 @@
 
         <!--Search Box and filters group-->
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5">
-            <TextBox Text="Enter Username" Grid.Row="2"  Margin="0 5 0 5" HorizontalAlignment="Left" Width="180"/>
+            <TextBox Text="Enter Username" Name ="txtUsername" Grid.Row="2"  Margin="0 5 0 5" HorizontalAlignment="Left" Width="180"/>
             <Button Content="Search" IsDefault="True" Click="btnSearch" Width="140" Margin="5 5 0 5" HorizontalAlignment="Right"/>
         </StackPanel>
 
@@ -86,51 +86,18 @@
         <!--List Box for Employees-->
         <ListBox  Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="10"/>
         <DataGrid Name="globalEmployeeList" GridLinesVisibility="Horizontal"
-                  AlternatingRowBackground="#FFE5E37F" RowBackground="#FFBAABE8"
+                  RowBackground="#FFBAABE8"
                   AutoGenerateColumns="False"
                   Grid.Column="1" Grid.ColumnSpan="10" Grid.Row="4"
                   MouseDoubleClick="globalEmployeeList_MouseDoubleClick"
                   IsSynchronizedWithCurrentItem="True" SelectionMode="Single"
-                  CanUserReorderColumns="False"
-                  ItemsSource="{Binding}" CanUserDeleteRows="False" IsReadOnly="True">
-
-
+                  CanUserReorderColumns="False" CanUserDeleteRows="False" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Username" Width="100*" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding }" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Name" Width="200*" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding }" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Department" Width="130*" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding }" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Job Position" Width="100*" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding }" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Clearance Level" Width="130*" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding }" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Username" Width="100*" Binding="{Binding Username}"/>
+                <DataGridTextColumn Header="Name" Width="200*" Binding="{Binding DisplayName}"/>
+                <DataGridTextColumn Header="Department" Width="130*" Binding="{Binding Department}"/>
+                <DataGridTextColumn Header="Job Position" Width="100*" Binding="{Binding JobDesignation}"/>
+                <DataGridTextColumn Header="ClearanceLevel" Width="130*" Binding="{Binding ClearanceLevel}"/>
             </DataGrid.Columns>
         </DataGrid>
 
