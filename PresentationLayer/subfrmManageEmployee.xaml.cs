@@ -60,6 +60,12 @@ namespace PresentationLayer
             //option for inactive employees
         }
 
+        private void btnAdd(object sender, RoutedEventArgs e)
+        {
+            var subfrmCreateUpdateDelete = new subfrmCreateUpdateEmployee();
+            subfrmCreateUpdateDelete.ShowDialog();
+        }
+
  
     }
 }

@@ -63,6 +63,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="subfrmAddAddress.xaml.cs">
+      <DependentUpon>subfrmAddAddress.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="subfrmAddEmail.xaml.cs">
+      <DependentUpon>subfrmAddEmail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="subfrmAddPersonalTelephone.xaml.cs">
+      <DependentUpon>subfrmAddPersonalTelephone.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="subfrmCreateUpdateEmployee.xaml.cs">
+      <DependentUpon>subfrmCreateUpdateEmployee.xaml</DependentUpon>
+    </Compile>
     <Compile Include="subfrmChangePassword.xaml.cs">
       <DependentUpon>subfrmChangePassword.xaml</DependentUpon>
     </Compile>
@@ -102,6 +114,22 @@
     <Page Include="Resources\IconsNonShared.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="subfrmAddAddress.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="subfrmAddEmail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="subfrmAddPersonalTelephone.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="subfrmCreateUpdateEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="subfrmChangePassword.xaml">
       <SubType>Designer</SubType>

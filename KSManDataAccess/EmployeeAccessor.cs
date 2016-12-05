@@ -59,7 +59,8 @@ namespace DataAccessLayer
                             JobDesignation = reader.GetString(10),
                             ClearanceLevelId = reader.GetInt32(11),
                             ClearanceLevel = reader.GetString(12),
-                            isEmployed = reader.GetBoolean(13)
+                            isEmployed = reader.GetBoolean(13),
+                            HireDate = reader.GetDateTime(14)
                         };
 
                         // Save Employees into List

@@ -43,15 +43,15 @@
             <ColumnDefinition Width="66"/>
             <ColumnDefinition Width="66"/>
             <ColumnDefinition Width="66"/>
-            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="66*"/>
             <ColumnDefinition Width="66*"/>
             <ColumnDefinition Width="66*"/>
-            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="66*"/>
             <ColumnDefinition Width="66*"/>
             <ColumnDefinition Width="66*"/>
-            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
         <!--Left Pane-->
@@ -90,21 +90,21 @@
         <!--Bottom Status Bar-->
         <Border VerticalAlignment="Bottom" Background="AntiqueWhite" Width="Auto" Height="Auto" BorderBrush="Blue" Grid.Column="3" Grid.ColumnSpan="9" Grid.Row="1">
             <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
-                <Label Content="Status Messages: ..." Foreground="Black" Name="txtStatusMessage"/>
+                <Label Content="Status Message: " Foreground="Black" Name="txtStatusMessage"/>
                 <Button Content="Click Me" Name="tryMe" Height="25" Width="60" Click="tryMe_Click" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             </StackPanel>
         </Border>
 
 
         <!--Left Corner Stufff-->
-        <Border Background="AliceBlue"  Width="Auto" Margin="0,10,0,10" Grid.Column="4" Grid.ColumnSpan="3"  Grid.Row="0" BorderBrush="LightBlue" BorderThickness="5,0,0,0" CornerRadius="10" >
+        <Border Background="White"  Width="Auto" Margin="0,10,0,10" Grid.Column="4" Grid.ColumnSpan="3"  Grid.Row="0" BorderBrush="LightBlue" BorderThickness="1" CornerRadius="10" >
             <StackPanel Orientation="Vertical">
                 <TextBlock  TextAlignment="Center" Foreground="Black" FontWeight="Light" FontSize="15" Margin="6 0 6 0">Tasks</TextBlock>
             </StackPanel>
         </Border>
         
         <!--Right Corner Stuff-->
-        <Border Background="AliceBlue"  Width="Auto" Margin="0,10,0,10" Grid.Column="8" Grid.ColumnSpan="3"  Grid.Row="0" BorderBrush="LightBlue" BorderThickness="5,0,0,0" CornerRadius="10" >
+        <Border Background="White"  Width="Auto" Margin="0,10,0,10" Grid.Column="8" Grid.ColumnSpan="3"  Grid.Row="0" BorderBrush="LightBlue" BorderThickness="1" CornerRadius="10" >
             <StackPanel Orientation="Vertical">
                 <TextBlock  TextAlignment="Center" Foreground="Black" FontWeight="Light" FontSize="15" Margin="6 0 6 0">Announcements</TextBlock>
             </StackPanel>

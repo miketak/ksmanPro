@@ -20,6 +20,8 @@ namespace DataObjects
 
         public List<Address> Address { get; set; }
 
+        public DateTime HireDate { get; set; }
+
         public string DisplayName
         {
             get
