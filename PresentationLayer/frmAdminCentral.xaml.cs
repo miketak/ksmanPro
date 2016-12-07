@@ -22,6 +22,10 @@ namespace PresentationLayer
     {
         User _user = null;
 
+        /// <summary>
+        /// Admin Central Constructor
+        /// </summary>
+        /// <param name="user"></param>
         public frmAdminCentral(User user)
         {
             InitializeComponent();
@@ -31,13 +35,13 @@ namespace PresentationLayer
 
         private void btnManageDepartment(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void btnManageEmployees(object sender, RoutedEventArgs e)
         {
             var subfrmManageEmployee = new subfrmManageEmployee(_user);
-            subfrmManageEmployee.ShowDialog();
+            subfrmManageEmployee.Show();
 
         }
 

@@ -24,6 +24,11 @@ namespace PresentationLayer
     {
         User _user = null;
 
+
+        /// <summary>
+        /// Retrieves and initializaes page with User information
+        /// </summary>
+        /// <param name="user"></param>
         public subfrmChangePassword(User user)
         {
             _user = user;

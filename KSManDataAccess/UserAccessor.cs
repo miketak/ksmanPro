@@ -9,8 +9,20 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
+
+    /// <summary>
+    /// Data Access for User Related Functionality
+    /// </summary>
     public class UserAccessor
     {
+
+
+        /// <summary>
+        /// Verifies username and password
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="passwordHash"></param>
+        /// <returns></returns>
         public static bool verifyUsernameAndPassword(string username, string passwordHash)
         {
             var result = false;
@@ -57,6 +69,11 @@ namespace DataAccessLayer
 
         }
 
+        /// <summary>
+        /// Retrieves User by Username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public static User retrieveUserByUsername(string username)
         {
             User user = null;
@@ -104,6 +121,13 @@ namespace DataAccessLayer
             return user;
         }
 
+        /// <summary>
+        /// Updates Password for a User
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="oldPasswordHash"></param>
+        /// <param name="newPasswordHash"></param>
+        /// <returns></returns>
         public static int UpdatePasswordHash(int userID, string oldPasswordHash, string newPasswordHash)
         {
             var count = 0;

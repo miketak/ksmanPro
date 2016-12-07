@@ -9,8 +9,18 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
+
+    /// <summary>
+    /// Data Access for Employee Related Functionality
+    /// </summary>
     public class EmployeeAccessor
     {
+
+        /// <summary>
+        /// Retrieve active or inactive employee based on paramater
+        /// </summary>
+        /// <param name="isEmployed"></param>
+        /// <returns></returns>
         public static List<Employee> RetrieveEmployees(bool isEmployed)
         {
             var employeesInDB = new List<Employee>();

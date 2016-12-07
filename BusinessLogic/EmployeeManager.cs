@@ -8,9 +8,20 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic
 {
+
+    /// <summary>
+    /// Manages Employee Related Activities
+    /// </summary>
     public class EmployeeManager
     {
-        //Retrieve all active employeesInDB from Database for Datagrids
+       
+
+
+        /// <summary>
+        /// Retrieves all Active Employees From Database
+        /// </summary>
+        /// <param name="isEmployed"></param>
+        /// <returns></returns>
         public List<Employee> retrieveEmployees(bool isEmployed)
         {
             var employeeList = new List<Employee>();

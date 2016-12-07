@@ -28,7 +28,9 @@ namespace PresentationLayer
         internal readonly string failure = "Wrong username or password.";
         User _user = null;
 
-
+        /// <summary>
+        /// Start Up Window for Program for User Authentication
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -53,6 +55,7 @@ namespace PresentationLayer
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 lblPrompt.Content = failure;
                 txtUsername.BorderBrush = Brushes.Red;
                 txtPassword.BorderBrush = Brushes.Red;

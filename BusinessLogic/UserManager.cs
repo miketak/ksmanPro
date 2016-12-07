@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic
 {
+
+    /// <summary>
+    /// Manages all User module level activities
+    /// </summary>
     public class UserManager
     {
 
@@ -40,6 +44,13 @@ namespace BusinessLogic
             return result;
         }
         
+
+        /// <summary>
+        /// Authenticates user
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public User authenticateUser(string username, string password)
         {
             User user = null;
@@ -77,6 +88,14 @@ namespace BusinessLogic
             return user;
         }
 
+
+        /// <summary>
+        /// Updates Password 
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="oldPassword"></param>
+        /// <param name="newPassword"></param>
+        /// <returns></returns>
         public bool UpdatePassword(int userID, string oldPassword, string newPassword)
         {
             var result = false;

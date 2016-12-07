@@ -19,6 +19,10 @@ namespace PresentationLayer
     /// </summary>
     public partial class subfrmCreateUpdateEmployee
     {
+
+        /// <summary>
+        /// Constructor information of Current User and Employee information to Edit
+        /// </summary>
         public subfrmCreateUpdateEmployee()
         {
             InitializeComponent();

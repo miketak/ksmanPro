@@ -19,6 +19,9 @@ namespace PresentationLayer
     /// </summary>
     public partial class subfrmAddPersonalTelephone
     {
+        /// <summary>
+        /// Add Personal Telephone Back to Parent Page
+        /// </summary>
         public subfrmAddPersonalTelephone()
         {
             InitializeComponent();

@@ -19,6 +19,9 @@ namespace PresentationLayer
     /// </summary>
     public partial class subfrmAddEmail 
     {
+        /// <summary>
+        /// Add Email to Parent Page
+        /// </summary>
         public subfrmAddEmail()
         {
             InitializeComponent();

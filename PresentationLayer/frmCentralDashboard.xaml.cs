@@ -24,6 +24,10 @@ namespace PresentationLayer
     {
         User _user = null;
 
+        /// <summary>
+        /// Central Dashboard Constructor
+        /// </summary>
+        /// <param name="user"></param>
         public frmCentralDashboard(User user)
         {
             _user = user;
@@ -62,7 +66,7 @@ namespace PresentationLayer
         {
             //this.Hide();
             var frmAdminCentral = new frmAdminCentral(_user);
-            frmAdminCentral.ShowDialog();
+            frmAdminCentral.Show();
         }
 
         private void btnChangePassword(object sender, RoutedEventArgs e)
@@ -75,7 +79,16 @@ namespace PresentationLayer
 
             var subfrmChangePassword = new subfrmChangePassword(_user);
             subfrmChangePassword.ShowDialog();
+
+            
         }
+
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+
 
  
     }

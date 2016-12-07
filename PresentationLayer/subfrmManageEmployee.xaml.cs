@@ -24,6 +24,11 @@ namespace PresentationLayer
         User _user = null;
         private List<Employee> _employees;
 
+
+        /// <summary>
+        /// Initialize using current User settings
+        /// </summary>
+        /// <param name="user"></param>
         public subfrmManageEmployee(User user)
         {
             _user = user;
@@ -31,6 +36,12 @@ namespace PresentationLayer
             
 
         }
+
+        /// <summary>
+        /// Toggle to Edit Mode on Edit Form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void globalEmployeeList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
