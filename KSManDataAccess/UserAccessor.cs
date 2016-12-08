@@ -74,7 +74,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        public static User retrieveUserByUsername(string username)
+        public static User RetrieveUserByUsername(string username)
         {
             User user = null;
 
@@ -102,10 +102,11 @@ namespace DataAccessLayer
                         LastName = reader.GetString(3),
                         OtherNames = reader.GetString(4),
                         DepartmentId = reader.GetString(5), 
-                        isEmployed = reader.GetBoolean(6),
-                        isBlocked = reader.GetBoolean(7),
-                        UserRolesId = reader.GetString(8),
-                        ClearanceLevelId = reader.GetInt32(9)
+                        Department = reader.GetString(6),
+                        isEmployed = reader.GetBoolean(7),
+                        isBlocked = reader.GetBoolean(8),
+                        UserRolesId = reader.GetString(9),
+                        ClearanceLevelId = reader.GetInt32(10)
                     };
                 }
                 reader.Close();

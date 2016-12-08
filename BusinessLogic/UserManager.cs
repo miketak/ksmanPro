@@ -73,7 +73,7 @@ namespace BusinessLogic
                     // need to create a user object to use as an access token
 
                     // get a user object
-                    user = UserAccessor.retrieveUserByUsername(username);
+                    user = UserAccessor.RetrieveUserByUsername(username);
                 }
                 else
                 {

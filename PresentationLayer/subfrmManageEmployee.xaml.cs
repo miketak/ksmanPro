@@ -2,6 +2,7 @@
 using DataObjects;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +22,20 @@ namespace PresentationLayer
     /// </summary>
     public partial class subfrmManageEmployee 
     {
+        /// <summary>
+        /// Current user logged into system.
+        /// </summary>
         User _user = null;
-        private List<Employee> _employees;
+
+        /// <summary>
+        /// List of active employee objects
+        /// </summary>
+        private List<Employee> _activeEmployees;
+
+        /// <summary>
+        /// List of inactive employee objects
+        /// </summary>
+        private List<Employee> _inactiveEmployees;
 
 
         /// <summary>
@@ -60,21 +73,44 @@ namespace PresentationLayer
 
         }
 
+
+        /// <summary>
+        /// Loads employees from database both active and inactive.
+        /// </summary>
         private void RefreshEmployees()
         {
             var employeeManager = new EmployeeManager();
-            _employees = employeeManager.retrieveEmployees(true);
-            globalEmployeeList.ItemsSource = _employees;
+            _activeEmployees = employeeManager.RetrieveEmployees(true);
+            _inactiveEmployees = employeeManager.RetrieveEmployees(false);
+            globalEmployeeList.ItemsSource = _activeEmployees.Concat(_inactiveEmployees);
 
             //option for active employees
 
             //option for inactive employees
         }
 
+        /// <summary>
+        /// Opens Create Update Employee in Add mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAdd(object sender, RoutedEventArgs e)
         {
-            var subfrmCreateUpdateDelete = new subfrmCreateUpdateEmployee();
+            //Open in Add Mode
+            var subfrmCreateUpdateDelete = new subfrmCreateUpdateEmployee(_user);
             subfrmCreateUpdateDelete.ShowDialog();
+        }
+
+        private void btnEdit(object sender, RoutedEventArgs e)
+        {
+            //Get username from datagrid
+            var selectedEmployee = (Employee)globalEmployeeList.SelectedItem;
+            var username = selectedEmployee.Username;
+            
+            //Open in Edit Mode
+            var subfrmCreateUpdateDelete = new subfrmCreateUpdateEmployee(_user, username);
+            subfrmCreateUpdateDelete.ShowDialog();
+
         }
 
  

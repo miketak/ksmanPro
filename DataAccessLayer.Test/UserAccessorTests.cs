@@ -54,7 +54,7 @@ namespace DataAccessLayer.Test
                 UserRolesId = "DESENG",
                 ClearanceLevelId = 30003
             };
-            var resultfromDB = UserAccessor.retrieveUserByUsername("SCSYMCX");
+            var resultfromDB = UserAccessor.RetrieveUserByUsername("SCSYMCX");
             Assert.AreEqual(expectedResult.UserId, resultfromDB.UserId);
             Assert.AreEqual(expectedResult.isEmployed, resultfromDB.isEmployed);
 

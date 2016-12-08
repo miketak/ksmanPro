@@ -8,12 +8,16 @@ namespace DataObjects
 {
     public class UserRoles
     {
-        public int UserRolesId { get; set; }
+        public string UserRolesId { get; set; }
 
+
+        /// <summary>
+        /// Job Position
+        /// </summary>
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        public int DepartmentId { get; set; }
+        public string DepartmentId { get; set; }
     }
 }

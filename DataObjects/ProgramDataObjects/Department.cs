@@ -14,5 +14,7 @@ namespace DataObjects
 
         public string Description { get; set; }
 
+        public bool Visibility { get; set; }
+
     }
 }

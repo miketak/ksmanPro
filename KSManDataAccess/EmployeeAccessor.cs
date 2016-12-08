@@ -93,5 +93,142 @@ namespace DataAccessLayer
 
             return employeesInDB;
         }
+
+        /// <summary>
+        /// Retrieve Departments based on visibility
+        /// </summary>
+        /// <param name="isVisible"></param>
+        /// <returns>List of Department Objects</returns>
+        public List<Department> RetrieveDepartments(bool isVisible)
+        {
+            var departmentsInDB = new List<Department>();
+
+            //Getting connection
+            var conn = DBConnection.GetConnection();
+
+            //Using stored procedure
+            var cmdText = @"sp_retrieve_departments";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+
+            // add a parameter to the command
+            int visibilityBit = isVisible ? 1 : 0;
+            cmd.Parameters.Add("@Visibility", SqlDbType.Bit);
+            cmd.Parameters["@Visibility"].Value = visibilityBit;
+
+            try
+            {
+                // you have to open a connection before using it
+                conn.Open();
+
+                // create a data reader with our command
+                var reader = cmd.ExecuteReader();
+
+                // check to make sure the reader has data
+                if (reader.HasRows)
+                {
+                    // process the data reader
+                    while (reader.Read())
+                    {
+                        // create an employee object
+                        var dept = new Department()
+                        {
+                            DepartmentId = reader.GetString(0),
+                            Name = reader.GetString(1),
+                            Description = reader.GetString(2),
+                            Visibility = reader.GetBoolean(3)      
+                        };
+
+                        // Save Employees into List
+                        departmentsInDB.Add(dept);
+                    }
+                    // close the reader
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new ApplicationException("There was a problem retrieving your data.", ex);
+            }
+            finally
+            {
+                // final housekeeping
+                conn.Close();
+            }
+
+            return departmentsInDB;
+        }
+
+        /// <summary>
+        /// Retrieve user roles by department
+        /// </summary>
+        /// <param name="departmentId">Department Id user for retrieval</param>
+        /// <param name="isAll">Indicator to retrieve all roles irrespective departmentId</param>
+        /// <returns>Returns a list of UserRole Objects</returns>
+        public List<UserRoles> RetrieveUserRoles(string departmentId, bool isAll)
+        {
+            var userRolesInDb = new List<UserRoles>();
+
+            //Getting connection
+            var conn = DBConnection.GetConnection();
+
+            //Using stored procedure
+            var cmdText = @"sp_retrieve_userroles";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+
+            // add a parameter to the command based on selection type
+            cmd.Parameters.Add("@DepartmentId", SqlDbType.VarChar);
+            string departmentIdParameter = isAll ? "dbsall" : departmentId;
+            cmd.Parameters["@DepartmentId"].Value = departmentIdParameter;
+            
+
+            try
+            {
+                // you have to open a connection before using it
+                conn.Open();
+
+                // create a data reader with our command
+                var reader = cmd.ExecuteReader();
+
+                // check to make sure the reader has data
+                if (reader.HasRows)
+                {
+                    // process the data reader
+                    while (reader.Read())
+                    {
+                        // create an employee object
+                        var roles = new UserRoles()
+                        {
+                            UserRolesId = reader.GetString(0),
+                            Name = reader.GetString(1),
+                            Description = reader.GetString(2),
+                            DepartmentId = reader.GetString(3)
+                        };
+
+                        // Save Employees into List
+                        userRolesInDb.Add(roles);
+                    }
+                    // close the reader
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new ApplicationException("There was a problem retrieving user roles data.", ex);
+            }
+            finally
+            {
+                // final housekeeping
+                conn.Close();
+            }
+
+            return userRolesInDb;
+            
+        }
     }
 }
