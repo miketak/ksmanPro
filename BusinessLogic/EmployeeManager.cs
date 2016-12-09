@@ -31,27 +31,45 @@ namespace BusinessLogic
             return employeeList;
         }
 
-
         /// <summary>
         /// Retrieves Employee from database using Employee Id or User Id
         /// </summary>
-        /// <param name="employeeId"></param>
-        /// <returns></returns>
-        public Employee RetrieveEmployeeByUsername(string employeeId)
+        /// <param name="username">Paramter used to extract Employee Details</param>
+        /// <returns>Employee Object Containing All Details</returns>
+        public Employee RetrieveEmployeeByUsername(string username)
         {
             var employee = new Employee();
             
-            //Basic employee informaation
-            var userBasicDataInDB = UserAccessor.RetrieveUserByUsername(employeeId);
-            employee.Username = userBasicDataInDB.Username;
-            employee.FirstName = userBasicDataInDB.FirstName;
-            employee.LastName = userBasicDataInDB.LastName;
-            employee.OtherNames = userBasicDataInDB.OtherNames;
-            employee.DepartmentId = userBasicDataInDB.DepartmentId;
-            employee.UserRolesId = userBasicDataInDB.UserRolesId;
-            employee.Department = userBasicDataInDB.Department;
-            employee.isEmployed = userBasicDataInDB.isEmployed;
+            //Retrieve all employee information
+            var allUserDataInDB = EmployeeAccessor.RetrieveEmployeeByUsername(username);
 
+            employee.Username = allUserDataInDB.Username;
+            employee.FirstName = allUserDataInDB.FirstName;
+            employee.LastName = allUserDataInDB.LastName;
+            employee.OtherNames = allUserDataInDB.OtherNames;
+            employee.DepartmentId = allUserDataInDB.DepartmentId;
+            employee.Department = allUserDataInDB.Department;
+            employee.PhoneNumber = allUserDataInDB.PhoneNumber;
+            employee.Email = allUserDataInDB.Email;
+            employee.PicUrl = allUserDataInDB.PicUrl;
+            employee.isEmployed = allUserDataInDB.isEmployed;
+            employee.isBlocked = allUserDataInDB.isBlocked;
+            employee.UserRolesId = allUserDataInDB.UserRolesId;
+            employee.JobDesignation = allUserDataInDB.JobDesignation;
+            employee.ClearanceLevelId = allUserDataInDB.ClearanceLevelId;
+            employee.ClearanceLevel = allUserDataInDB.ClearanceLevel;
+            employee.userPersonalInfoId = allUserDataInDB.userPersonalInfoId;
+            employee.Gender = allUserDataInDB.Gender;
+            employee.DateOfBirth = allUserDataInDB.DateOfBirth;
+            employee.CountryId = allUserDataInDB.CountryId;
+            employee.Nationality = allUserDataInDB.Nationality; //might need to go
+            employee.AdditionalInfoId = allUserDataInDB.AdditionalInfoId; //might need to also go
+            employee.AdditonalInfo = allUserDataInDB.AdditonalInfo;
+            employee.Address = allUserDataInDB.Address; //this is a list
+            employee.HireDate = allUserDataInDB.HireDate;
+            employee.MaritalStatus = allUserDataInDB.MaritalStatus;
+            employee.PersonalEmail = allUserDataInDB.PersonalEmail;
+            employee.PersonalPhoneNumber = allUserDataInDB.PersonalPhoneNumber;
 
             return employee;
         }

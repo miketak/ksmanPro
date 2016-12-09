@@ -43,17 +43,30 @@ namespace PresentationLayer
         List<UserRoles> _jobPositions = new List<UserRoles>();
 
         /// <summary>
+        /// Indicates whether form is in edit mode
+        /// </summary>
+        bool _isEditMode;
+
+        /// <summary>
+        /// Department lists for departments combobox
+        /// </summary>
+        List<Department> _departments = new List<Department>();
+
+        /// <summary>
         /// Constructor Edit Mode
         /// </summary>
         public subfrmCreateUpdateEmployee(User user, String employeeUsername)
         {
             _user = user;
             _employeeUsername = employeeUsername;
+            _isEditMode = true;
             InitializeComponent();
-            setupWindowEditMode();
-            
+            setupWindow();
+
         }
-        
+
+
+
         /// <summary>
         /// Constructor for Add Mode
         /// </summary>
@@ -61,24 +74,41 @@ namespace PresentationLayer
         public subfrmCreateUpdateEmployee(User user)
         {
             _user = user;
+            _isEditMode = false;
             InitializeComponent();
-            setupWindowAddMode();
+            setupWindow();
 
         }
 
 
+        /// <summary>
+        /// Subform to edit and add new addresses to parent form.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEditAddress(object sender, RoutedEventArgs e)
         {
             var subfrmAddAddress = new subfrmAddAddress();
             subfrmAddAddress.ShowDialog();
         }
 
+        /// <summary>
+        /// Subform to edit and add new new emails to parent form.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddPersonEmails(object sender, RoutedEventArgs e)
         {
             var subfrmAddEmail = new subfrmAddEmail();
             subfrmAddEmail.ShowDialog();
         }
 
+
+        /// <summary>
+        /// Subform to edit and add new personal telphone numbers to parent form.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddPersonalTelephone(object sender, RoutedEventArgs e)
         {
             var subfrmAddPersonalTelephone = new subfrmAddPersonalTelephone();
@@ -88,39 +118,42 @@ namespace PresentationLayer
         /// <summary>
         /// Sets up window elements from User information
         /// </summary>
-        private void setupWindowEditMode()
+        private void setupWindow()
         {
-            //Set up user environment
-            txtNameTag.Text = _user.FirstName + " " + _user.LastName;
-            
-            //Sets _employee private field with employee data
-            getEmployeeDetails(_employeeUsername);
-            this.Title = "Edit Employee: " + _employee.FirstName + " " + _employee.LastName;
+            if (_isEditMode)
+            {
+                //Set up user environment
+                txtNameTag.Text = _user.FirstName + " " + _user.LastName;
 
-            //Set all combo boxes
-            fillComboBoxes();
+                //Sets _employee private field with employee data
+                getEmployeeDetails(_employeeUsername);
+                this.Title = "Edit Employee: " + _employee.FirstName + " " + _employee.LastName;
+
+                //Set all combo boxes
+                fillComboBoxes();
 
 
-            //Set all textboxes for Employee information
-            txtUsername.Text = _employee.Username;
-            txtFirstName.Text = _employee.FirstName;
-            txtLastName.Text = _employee.LastName;
-            txtOtherNames.Text = _employee.OtherNames;
-            cmbDepartment.SelectedItem = _employee.Department;
+                //Set all textboxes for Employee information
+                txtUsername.Text = _employee.Username;
+                txtFirstName.Text = _employee.FirstName;
+                txtLastName.Text = _employee.LastName;
+                txtOtherNames.Text = _employee.OtherNames;
+                cmbDepartment.SelectedItem = _employee.Department;
+         
+                //Get selected role
+                UserRoles loadedEmployeeRole = _jobPositions.Find(x => x.UserRolesId == _employee.UserRolesId);
+                cmbJobPosition.SelectedItem = loadedEmployeeRole.Name;
 
-            //Get selected role
-            UserRoles loadedEmployeeRole = _jobPositions.Find( x => x.UserRolesId == _employee.UserRolesId );
-            cmbJobPosition.SelectedItem = loadedEmployeeRole.Name;
+                //Active or Inactive
+                chkisActive.IsChecked = _employee.isEmployed;
+            }
+            else
+            {
+                //Setup user environment
+                txtNameTag.Text = _user.FirstName + " " + _user.LastName;
+                fillComboBoxes();
 
-            //Active or Inactive
-            chkisActive.IsChecked = _employee.isEmployed;
-        }
-
-        private void setupWindowAddMode()
-        {
-            //Setup user environment
-            txtNameTag.Text = _user.FirstName + " " + _user.LastName;
-            fillComboBoxes();
+            }
 
         }
 
@@ -129,39 +162,59 @@ namespace PresentationLayer
         /// </summary>
         private void fillComboBoxes()
         {
-            //fill department box
-            List<Department> departments = new List<Department>();
-            var employeeManager = new EmployeeManager();
-
-            //retrieve visible departments
-            departments = employeeManager.RetrieveDepartmentsByVisibility(true);
-            foreach ( Department d in departments)
-            {
-                cmbDepartment.Items.Add(d.Name);
-            }
-            
-
-            //fill jobs position box based on selected department
-            fillJobPositions(_employee.DepartmentId);
-
-            //fill clearance levels
-            //cmbClearanceLevel.Items.Add
-
-            //fill nationality box
-            //cmbNationality.Items.Add
-
-            //fill email types
-            //cmbEmailTypes.Items.Add
-
-            //fill telephone types
-            //cmbTelephoneTypes.Items.Add
-
             //fill gender types
             cmbGender.Items.Add("Male");
             cmbGender.Items.Add("Female");
 
-            //Address types
-            //cmbAddressTypes.Items.Add
+            if (_isEditMode) //edit mode
+            {
+                //fill department all departments
+                var employeeManager = new EmployeeManager();
+
+                //retrieve visible departments
+                _departments = employeeManager.RetrieveDepartmentsByVisibility(true);
+                foreach (Department d in _departments)
+                {
+                    cmbDepartment.Items.Add(d.Name);
+                }
+
+
+                //fill jobs position box based on selected department
+                fillJobPositions(_employee.DepartmentId);
+
+                //fill clearance levels
+                //cmbClearanceLevel.Items.Add
+
+                //fill nationality box
+                //cmbNationality.Items.Add
+
+                //fill email types
+                //cmbEmailTypes.Items.Add
+
+                //fill telephone types
+                //cmbTelephoneTypes.Items.Add
+
+                
+
+                //Address types
+                //cmbAddressTypes.Items.Add
+            }
+            else //add mode
+            {
+                //fill department all departments
+                var employeeManager = new EmployeeManager();
+
+                //retrieve visible departments
+                _departments = employeeManager.RetrieveDepartmentsByVisibility(true);
+                foreach (Department d in _departments)
+                {
+                    cmbDepartment.Items.Add(d.Name);
+                }
+
+                //do not fill job positions box. indicate to user to select department
+                cmbJobPosition.Items.Add("Select Department");
+            }
+            
 
         }
 
@@ -171,16 +224,21 @@ namespace PresentationLayer
         /// <param name="departmentId"></param>
         private void fillJobPositions(string departmentId)
         {
-            //var jobPositions = new List<UserRoles>();
+            //fill job positions by department
             var employeeManager = new EmployeeManager();
-            bool isRetrieveAll = false;
-            _jobPositions = employeeManager.RetrieveJobPositionByDeptId(departmentId, isRetrieveAll);    
 
-            foreach( UserRoles roles in _jobPositions)
+            //clear job positions and combo box
+            _jobPositions = null;
+            cmbJobPosition.Items.Clear();
+
+            //fill job positions
+            _jobPositions = employeeManager.RetrieveJobPositionByDeptId(departmentId,false); //true means select all departments
+
+            foreach (UserRoles roles in _jobPositions)
             {
                 cmbJobPosition.Items.Add(roles.Name);
             }
-    
+
         }
 
 
@@ -194,6 +252,24 @@ namespace PresentationLayer
             //Get full employee details
             _employee = ld.RetrieveEmployeeByUsername(employeeUsername);
 
+        }
+
+        private void cmbDepartment_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //clear _departments object
+            _departments.Clear();
+            
+            //reload departments
+            var employeeManager = new EmployeeManager();
+            _departments = employeeManager.RetrieveDepartmentsByVisibility(true);
+
+
+            //Get selected department id for _departments enumerable
+            Department loadedDepartments = _departments.Find(x => x.Name == (string)cmbDepartment.SelectedItem);
+            fillJobPositions(loadedDepartments.DepartmentId);
+
+            
+                
         }
     }
 }

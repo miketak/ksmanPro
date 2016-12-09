@@ -338,7 +338,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Content="Department:"/>
-                        <ComboBox Name="cmbDepartment" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0"/>
+                        <ComboBox Name="cmbDepartment" SelectionChanged="cmbDepartment_SelectionChanged" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0"/>
                     </Grid>
                 </StackPanel>
                 <!--End of Department Line-->

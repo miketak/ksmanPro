@@ -61,6 +61,7 @@ namespace PresentationLayer
 
         }
 
+
         private void btnSearch(object sender, RoutedEventArgs e)
         {
 
@@ -89,6 +90,7 @@ namespace PresentationLayer
             //option for inactive employees
         }
 
+
         /// <summary>
         /// Opens Create Update Employee in Add mode
         /// </summary>
@@ -101,6 +103,11 @@ namespace PresentationLayer
             subfrmCreateUpdateDelete.ShowDialog();
         }
 
+        /// <summary>
+        /// Action Event Handler for Edit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEdit(object sender, RoutedEventArgs e)
         {
             //Get username from datagrid

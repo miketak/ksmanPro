@@ -17,7 +17,7 @@ namespace DataAccessLayer
     {
 
         /// <summary>
-        /// Retrieve active or inactive employee based on paramater
+        /// Retrieve active or inactive employee based on paramater. Retrieves all details
         /// </summary>
         /// <param name="isEmployed"></param>
         /// <returns></returns>
@@ -162,9 +162,9 @@ namespace DataAccessLayer
         }
 
         /// <summary>
-        /// Retrieve user roles by department
+        /// Retrieve employee roles by department
         /// </summary>
-        /// <param name="departmentId">Department Id user for retrieval</param>
+        /// <param name="departmentId">Department Id employee for retrieval</param>
         /// <param name="isAll">Indicator to retrieve all roles irrespective departmentId</param>
         /// <returns>Returns a list of UserRole Objects</returns>
         public List<UserRoles> RetrieveUserRoles(string departmentId, bool isAll)
@@ -219,7 +219,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
 
-                throw new ApplicationException("There was a problem retrieving user roles data.", ex);
+                throw new ApplicationException("There was a problem retrieving employee roles data.", ex);
             }
             finally
             {
@@ -229,6 +229,63 @@ namespace DataAccessLayer
 
             return userRolesInDb;
             
+        }
+
+
+        /// <summary>
+        /// Retrieves all data of a single employee.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public static Employee RetrieveEmployeeByUsername(string username)
+        {
+            //Retrieve all details
+            User employee = null;
+
+            var conn = DBConnection.GetConnection();
+            var cmdText = @"sp_retrieve_all_employee_data_by_username";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@Username", SqlDbType.VarChar, 20);
+            cmd.Parameters["@Username"].Value = username;
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    employee = new User()
+                    {
+                        UserId = reader.GetInt32(0),
+                        Username = reader.GetString(1),
+                        FirstName = reader.GetString(2),
+                        LastName = reader.GetString(3),
+                        OtherNames = reader.GetString(4),
+                        DepartmentId = reader.GetString(5),
+                        Department = reader.GetString(6),
+                        isEmployed = reader.GetBoolean(7),
+                        isBlocked = reader.GetBoolean(8),
+                        UserRolesId = reader.GetString(9),
+                        ClearanceLevelId = reader.GetInt32(10)
+                    };
+                }
+                reader.Close();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return employee;
+            
+            return new Employee();
         }
     }
 }

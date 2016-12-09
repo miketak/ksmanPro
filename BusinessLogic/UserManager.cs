@@ -46,7 +46,7 @@ namespace BusinessLogic
         
 
         /// <summary>
-        /// Authenticates user
+        /// Authenticates employee
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
@@ -70,9 +70,9 @@ namespace BusinessLogic
                 if ( UserAccessor.verifyUsernameAndPassword( username, HashSHA256(password) ) )
                 {
                     password = null;
-                    // need to create a user object to use as an access token
+                    // need to create a employee object to use as an access token
 
-                    // get a user object
+                    // get a employee object
                     user = UserAccessor.RetrieveUserByUsername(username);
                 }
                 else
