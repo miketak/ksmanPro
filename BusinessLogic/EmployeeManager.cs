@@ -128,5 +128,15 @@ namespace BusinessLogic
             return countries;
 
         }
+
+        public List<ClearanceLevel> RetrieveClearanceByDeptID(string departmentId, bool retrieveAll)
+        {
+            var clearanceLevels = new List<ClearanceLevel>();
+            var clearanceAccess = new EmployeeAccessor();
+
+            clearanceLevels = clearanceAccess.RetrieveClearanceByDeptID(departmentId, retrieveAll);
+
+            return clearanceLevels;
+        }
     }
 }

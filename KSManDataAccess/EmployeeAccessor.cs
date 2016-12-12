@@ -367,5 +367,72 @@ namespace DataAccessLayer
             return countriesInDB;
             
         }
+
+
+        /// <summary>
+        /// Retreive Clearance Levels from Database based on Department
+        /// </summary>
+        /// <param name="departmentId">Department ID</param>
+        /// <param name="retrieveAll">Signal to Retrieve all irresepective of Department ID</param>
+        /// <returns>Returns a List of Clearance Levels</returns>
+        public List<ClearanceLevel> RetrieveClearanceByDeptID(string departmentId, bool retrieveAll)
+        {
+            var clearanceLevelInDB = new List<ClearanceLevel>();
+
+            //Getting connection
+            var conn = DBConnection.GetConnection();
+
+            //Using stored procedure
+            var cmdText = @"sp_retrieve_clearance_levels_by_deptId";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@DepartmentId", SqlDbType.VarChar);
+            string departmentIdParameter = retrieveAll ? "dbsall" : departmentId;
+            cmd.Parameters["@DepartmentId"].Value = departmentIdParameter;
+
+            try
+            {
+                // you have to open a connection before using it
+                conn.Open();
+
+                // create a data reader with our command
+                var reader = cmd.ExecuteReader();
+
+                // check to make sure the reader has data
+                if (reader.HasRows)
+                {
+                    // process the data reader
+                    while (reader.Read())
+                    {
+                        // create an clearancelevel object
+                        var cll = new ClearanceLevel()
+                        {
+                            PriorityNumber = reader.GetInt32(0),
+                            Name = reader.GetString(1),
+                            Description = reader.GetString(2),
+                            DepartmentId = reader.GetString(3)
+
+                        };
+
+                        // Save Employees into List
+                        clearanceLevelInDB.Add(cll);
+                    }
+                    // close the reader
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new ApplicationException("There was a problem retrieving clearance level data.", ex);
+            }
+            finally
+            {
+                // final housekeeping
+                conn.Close();
+            }
+
+            return clearanceLevelInDB;
+        }
     }
 }

@@ -136,8 +136,8 @@
 
                         <Label Content="Telephone:"/>
                         <TextBox Width="200" Name="txtPersonalTelephone" Grid.Column="1" HorizontalAlignment="Left"/>
-                        <Button Content="+" Click="btnAddPersonalTelephone" Grid.Column="2" Width="20" HorizontalAlignment="Left" />
-                        <ComboBox Grid.Column="3" Name="cmbTelephoneTypes"/>
+                        <!--<Button Content="+" Click="btnAddPersonalTelephone" Grid.Column="2" Width="20" HorizontalAlignment="Left" />
+                        <ComboBox Grid.Column="3" Name="cmbTelephoneTypes"/>-->
                     </Grid>
                 </StackPanel>
                 <!--End of Telephone Line-->
@@ -154,8 +154,8 @@
 
                         <Label Content="Email:"/>
                         <TextBox Width="200" Name="txtPersonalEmail" Grid.Column="1" HorizontalAlignment="Left"/>
-                        <Button Content="+" Grid.Column="2" Width="20" HorizontalAlignment="Left" Click="btnAddPersonEmails"/>
-                        <ComboBox Grid.Column="3" Name="cmbEmailTypes"/>
+                        <!--<Button Content="+" Grid.Column="2" Width="20" HorizontalAlignment="Left" Click="btnAddPersonEmails"/>
+                        <ComboBox Grid.Column="3" Name="cmbEmailTypes"/>-->
                     </Grid>
                 </StackPanel>
                 <!--End of Personal Email Line-->
@@ -394,7 +394,7 @@
         
         <!--Function Buttons-->
         <StackPanel Orientation="Horizontal" Grid.Row="14" Grid.Column="11" Grid.ColumnSpan="4" FlowDirection="RightToLeft">
-            <Button Content="Cancel" Width="100" Margin="0 0 0 0" BorderBrush="{StaticResource blueOutline}"/>
+            <Button Click="btnCancel" Content="Cancel" Width="100" Margin="0 0 0 0" BorderBrush="{StaticResource blueOutline}"/>
             <Button Content="Save" Width="100" Margin="10 0 0 0" BorderBrush="{StaticResource blueOutline}"/>
         </StackPanel>
         <!--End of Function Buttons-->

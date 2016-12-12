@@ -12,11 +12,11 @@ namespace DataObjects
 
         public int PriorityNumber { get; set; }
 
-        public int Name { get; set; }
+        public string Name { get; set; }
 
-        public int Description { get; set; }
+        public string Description { get; set; }
 
-        public int DepartmentId { get; set; }
+        public string DepartmentId { get; set; }
 
         public bool IsBlocked { get; set; }
 

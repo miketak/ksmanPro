@@ -1,5 +1,6 @@
 ﻿using BusinessLogic;
 using DataObjects;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,11 @@ namespace PresentationLayer
         /// Department lists for departments combobox
         /// </summary>
         List<Department> _departments = new List<Department>();
+
+        /// <summary>
+        /// Clearance Levels list for Clearance Level Combo Box
+        /// </summary>
+        List<ClearanceLevel> _clearanceLevels = new List<ClearanceLevel>();
 
         /// <summary>
         /// Constructor Edit Mode
@@ -156,13 +162,10 @@ namespace PresentationLayer
                 }
                 txtCompanyTelephone.Text = _employee.PhoneNumber;
                 txtCompanyEmail.Text = _employee.Email;
+                cmbClearanceLevel.SelectedItem = _employee.ClearanceLevel;
                 chkisActive.IsChecked = _employee.isEmployed;
                 txtAdditionalInfo.Text = _employee.AdditonalInfo;
 
-                //clearance level set
-                //cmbClearanceLevel.SelectedItem = _employee.ClearanceLevel;
-                
-         
                 //Get selected role
                 UserRoles loadedEmployeeRole = _jobPositions.Find(x => x.UserRolesId == _employee.UserRolesId);
                 cmbJobPosition.SelectedItem = loadedEmployeeRole.Name;
@@ -190,39 +193,44 @@ namespace PresentationLayer
         /// </summary>
         private void fillComboBoxes()
         {
+            var employeeManager = new EmployeeManager();
+
             //fill gender types
             cmbGender.Items.Add("Male");
             cmbGender.Items.Add("Female");
 
+            //fill departments combobox
+            _departments = employeeManager.RetrieveDepartmentsByVisibility(true);
+            foreach (Department d in _departments)
+            {
+                cmbDepartment.Items.Add(d.Name);
+            }
+
+            //fill nationality box
+            _countries = employeeManager.RetrieveCountries();
+            foreach (String s in _countries)
+            {
+                cmbNationality.Items.Add(s);
+            }
+
+
+
+
             if (_isEditMode) //edit mode
             {
                 
-                var employeeManager = new EmployeeManager();
-
-                //fill departments combobox
-                _departments = employeeManager.RetrieveDepartmentsByVisibility(true);
-                foreach (Department d in _departments)
-                {
-                    cmbDepartment.Items.Add(d.Name);
-                }
+                //var employeeManager = new EmployeeManager();
 
                 //fill jobs position box based on selected department               
                 fillJobPositions(_employee.DepartmentId);
 
-
-
                 //fill clearance levels
-                //cmbClearanceLevel.Items.Add
-
-                //fill nationality box
-                _countries = employeeManager.RetrieveCountries();
-                foreach (String s in _countries)
+                _clearanceLevels = employeeManager.RetrieveClearanceByDeptID(_employee.DepartmentId, true);
+                foreach (ClearanceLevel cl in _clearanceLevels)
                 {
-                    cmbNationality.Items.Add(s);
+                    cmbClearanceLevel.Items.Add(cl.Name);
                 }
 
-                
-                //cmbNationality.Items.Add
 
                 //fill email types
                 //cmbEmailTypes.Items.Add
@@ -230,21 +238,24 @@ namespace PresentationLayer
                 //fill telephone types
                 //cmbTelephoneTypes.Items.Add
 
-                
-
                 //Address types
                 //cmbAddressTypes.Items.Add
             }
             else //add mode
             {
                 //fill department all departments
-                var employeeManager = new EmployeeManager();
+                //_departments = employeeManager.RetrieveDepartmentsByVisibility(true);
+                //foreach (Department d in _departments)
+                //{
+                //    cmbDepartment.Items.Add(d.Name);
+                //}
 
-                //retrieveCountry visible departments
-                _departments = employeeManager.RetrieveDepartmentsByVisibility(true);
-                foreach (Department d in _departments)
+
+                //fill clearance levels
+                _clearanceLevels = employeeManager.RetrieveClearanceByDeptID("", true);
+                foreach (ClearanceLevel cl in _clearanceLevels)
                 {
-                    cmbDepartment.Items.Add(d.Name);
+                    cmbClearanceLevel.Items.Add(cl.Name);
                 }
 
                 //do not fill job positions box. indicate to user to select department
@@ -313,9 +324,26 @@ namespace PresentationLayer
             //Get selected department id for _departments enumerable
             Department loadedDepartments = _departments.Find(x => x.Name == (string)cmbDepartment.SelectedItem);
             fillJobPositions(loadedDepartments.DepartmentId);
+        
+        }
 
+        private async void btnCancel(object sender, RoutedEventArgs e)
+        {
+             var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Yes",
+                NegativeButtonText = "Cancel",
+                ColorScheme = MetroDialogColorScheme.Theme
+            };
+
+             MessageDialogResult result =  await this.ShowMessageAsync("Warning", "Closing might result in loss of Data. Do you still want to cancel?",
+                 MessageDialogStyle.AffirmativeAndNegative, mySettings);
+
+            if (result == MessageDialogResult.Affirmative)
+            {
+                this.Close();
+            }
             
-                
         }
     }
 }
