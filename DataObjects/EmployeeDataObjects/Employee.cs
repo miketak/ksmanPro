@@ -8,17 +8,15 @@ namespace DataObjects
 {
     public class Employee : User
     {
-        public string userPersonalInfoId { get; set; }
+        public int PersonalInfoId { get; set; }
 
-        public bool Gender { get; set; }
+        public bool? Gender { get; set; }
 
         public DateTime DateOfBirth { get; set; }
 
         public int CountryId { get; set; }
 
         public string Nationality { get; set; }
-
-        public string AdditionalInfoId { get; set; }
 
         public string AdditonalInfo { get; set; }
 

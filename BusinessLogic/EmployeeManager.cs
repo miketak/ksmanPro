@@ -20,7 +20,7 @@ namespace BusinessLogic
         /// <summary>
         /// Retrieves all Active Employees From Database
         /// </summary>
-        /// <param name="isEmployed">True or False boolean paramter to retrieve active or inactive employees respecetively</param>
+        /// <param name="isEmployed">True or False boolean paramter to retrieveCountry active or inactive employees respecetively</param>
         /// <returns>A list of active or inactive Employee objects from Database.</returns>
         public List<Employee> RetrieveEmployees(bool isEmployed)
         {
@@ -41,35 +41,45 @@ namespace BusinessLogic
             var employee = new Employee();
             
             //Retrieve all employee information
-            var allUserDataInDB = EmployeeAccessor.RetrieveEmployeeByUsername(username);
+            try
+            {
+                var allUserDataInDB = EmployeeAccessor.RetrieveEmployeeByUsername(username);
+                employee.Username = allUserDataInDB.Username;
+                employee.FirstName = allUserDataInDB.FirstName;
+                employee.LastName = allUserDataInDB.LastName;
+                employee.OtherNames = allUserDataInDB.OtherNames;
+                employee.DepartmentId = allUserDataInDB.DepartmentId;
+                employee.Department = allUserDataInDB.Department;
+                employee.PhoneNumber = allUserDataInDB.PhoneNumber;
+                employee.Email = allUserDataInDB.Email;
+                employee.PicUrl = allUserDataInDB.PicUrl;
+                employee.isEmployed = allUserDataInDB.isEmployed;
+                employee.isBlocked = allUserDataInDB.isBlocked;
+                employee.UserRolesId = allUserDataInDB.UserRolesId;
+                employee.JobDesignation = allUserDataInDB.JobDesignation;
+                employee.ClearanceLevelId = allUserDataInDB.ClearanceLevelId;
+                employee.ClearanceLevel = allUserDataInDB.ClearanceLevel;
+                employee.PersonalInfoId = allUserDataInDB.PersonalInfoId;
+                employee.Gender = allUserDataInDB.Gender;
+                employee.DateOfBirth = allUserDataInDB.DateOfBirth;
+                employee.CountryId = allUserDataInDB.CountryId;
+                employee.Nationality = allUserDataInDB.Nationality;
+                employee.AdditonalInfo = allUserDataInDB.AdditonalInfo;
+                employee.Address = allUserDataInDB.Address; //this is a list
+                employee.HireDate = allUserDataInDB.HireDate;
+                employee.MaritalStatus = allUserDataInDB.MaritalStatus;
+                employee.PersonalEmail = allUserDataInDB.PersonalEmail;
+                employee.PersonalPhoneNumber = allUserDataInDB.PersonalPhoneNumber;
 
-            employee.Username = allUserDataInDB.Username;
-            employee.FirstName = allUserDataInDB.FirstName;
-            employee.LastName = allUserDataInDB.LastName;
-            employee.OtherNames = allUserDataInDB.OtherNames;
-            employee.DepartmentId = allUserDataInDB.DepartmentId;
-            employee.Department = allUserDataInDB.Department;
-            employee.PhoneNumber = allUserDataInDB.PhoneNumber;
-            employee.Email = allUserDataInDB.Email;
-            employee.PicUrl = allUserDataInDB.PicUrl;
-            employee.isEmployed = allUserDataInDB.isEmployed;
-            employee.isBlocked = allUserDataInDB.isBlocked;
-            employee.UserRolesId = allUserDataInDB.UserRolesId;
-            employee.JobDesignation = allUserDataInDB.JobDesignation;
-            employee.ClearanceLevelId = allUserDataInDB.ClearanceLevelId;
-            employee.ClearanceLevel = allUserDataInDB.ClearanceLevel;
-            employee.userPersonalInfoId = allUserDataInDB.userPersonalInfoId;
-            employee.Gender = allUserDataInDB.Gender;
-            employee.DateOfBirth = allUserDataInDB.DateOfBirth;
-            employee.CountryId = allUserDataInDB.CountryId;
-            employee.Nationality = allUserDataInDB.Nationality; //might need to go
-            employee.AdditionalInfoId = allUserDataInDB.AdditionalInfoId; //might need to also go
-            employee.AdditonalInfo = allUserDataInDB.AdditonalInfo;
-            employee.Address = allUserDataInDB.Address; //this is a list
-            employee.HireDate = allUserDataInDB.HireDate;
-            employee.MaritalStatus = allUserDataInDB.MaritalStatus;
-            employee.PersonalEmail = allUserDataInDB.PersonalEmail;
-            employee.PersonalPhoneNumber = allUserDataInDB.PersonalPhoneNumber;
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
+
+           
 
             return employee;
         }
@@ -104,6 +114,19 @@ namespace BusinessLogic
             jobPositions = jobPositionAccess.RetrieveUserRoles(departmentId, isRetrieveAll);
 
             return jobPositions;
+        }
+
+        /// <summary>
+        /// Retrieves all countriesInDB from database
+        /// </summary>
+        /// <returns></returns>
+        public List<String> RetrieveCountries()
+        {
+            var retrieveCountry = new EmployeeAccessor();
+            List<String> countries = retrieveCountry.RetrieveCountries();
+
+            return countries;
+
         }
     }
 }

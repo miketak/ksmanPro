@@ -42,6 +42,8 @@ namespace PresentationLayer
         /// </summary>
         List<UserRoles> _jobPositions = new List<UserRoles>();
 
+        List<String> _countries = new List<String>();
+
         /// <summary>
         /// Indicates whether form is in edit mode
         /// </summary>
@@ -132,6 +134,8 @@ namespace PresentationLayer
                 //Set all combo boxes
                 fillComboBoxes();
 
+                //disable passwordbox
+                txtPassword.IsEnabled = false;
 
                 //Set all textboxes for Employee information
                 txtUsername.Text = _employee.Username;
@@ -139,18 +143,42 @@ namespace PresentationLayer
                 txtLastName.Text = _employee.LastName;
                 txtOtherNames.Text = _employee.OtherNames;
                 cmbDepartment.SelectedItem = _employee.Department;
+                txtPersonalTelephone.Text = _employee.PersonalPhoneNumber;
+                txtPersonalEmail.Text = _employee.PersonalEmail;
+                cmbNationality.SelectedItem = _employee.Nationality;                 
+                chkMaritalStatus.IsChecked = _employee.MaritalStatus ? true : false;
+                if (_employee.Gender != null)
+                    cmbGender.SelectedItem = _employee.Gender == true ? "Male" : "Female";
+                dateDOB.SelectedDate = _employee.DateOfBirth;
+                if ( dateDOB.SelectedDate == DateTime.MinValue )
+                {
+                    dateDOB.SelectedDate = null;
+                }
+                txtCompanyTelephone.Text = _employee.PhoneNumber;
+                txtCompanyEmail.Text = _employee.Email;
+                chkisActive.IsChecked = _employee.isEmployed;
+                txtAdditionalInfo.Text = _employee.AdditonalInfo;
+
+                //clearance level set
+                //cmbClearanceLevel.SelectedItem = _employee.ClearanceLevel;
+                
          
                 //Get selected role
                 UserRoles loadedEmployeeRole = _jobPositions.Find(x => x.UserRolesId == _employee.UserRolesId);
                 cmbJobPosition.SelectedItem = loadedEmployeeRole.Name;
 
-                //Active or Inactive
-                chkisActive.IsChecked = _employee.isEmployed;
+                
+                
             }
             else
             {
                 //Setup user environment
                 txtNameTag.Text = _user.FirstName + " " + _user.LastName;
+
+                //disable passwordbox
+                txtPassword.IsEnabled = false;
+
+                //fillComboBoxes
                 fillComboBoxes();
 
             }
@@ -168,24 +196,32 @@ namespace PresentationLayer
 
             if (_isEditMode) //edit mode
             {
-                //fill department all departments
+                
                 var employeeManager = new EmployeeManager();
 
-                //retrieve visible departments
+                //fill departments combobox
                 _departments = employeeManager.RetrieveDepartmentsByVisibility(true);
                 foreach (Department d in _departments)
                 {
                     cmbDepartment.Items.Add(d.Name);
                 }
 
-
-                //fill jobs position box based on selected department
+                //fill jobs position box based on selected department               
                 fillJobPositions(_employee.DepartmentId);
+
+
 
                 //fill clearance levels
                 //cmbClearanceLevel.Items.Add
 
                 //fill nationality box
+                _countries = employeeManager.RetrieveCountries();
+                foreach (String s in _countries)
+                {
+                    cmbNationality.Items.Add(s);
+                }
+
+                
                 //cmbNationality.Items.Add
 
                 //fill email types
@@ -204,7 +240,7 @@ namespace PresentationLayer
                 //fill department all departments
                 var employeeManager = new EmployeeManager();
 
-                //retrieve visible departments
+                //retrieveCountry visible departments
                 _departments = employeeManager.RetrieveDepartmentsByVisibility(true);
                 foreach (Department d in _departments)
                 {
@@ -232,7 +268,7 @@ namespace PresentationLayer
             cmbJobPosition.Items.Clear();
 
             //fill job positions
-            _jobPositions = employeeManager.RetrieveJobPositionByDeptId(departmentId,false); //true means select all departments
+            _jobPositions = employeeManager.RetrieveJobPositionByDeptId(departmentId, false); //true means select all departments
 
             foreach (UserRoles roles in _jobPositions)
             {
@@ -250,7 +286,17 @@ namespace PresentationLayer
         {
             var ld = new EmployeeManager();
             //Get full employee details
-            _employee = ld.RetrieveEmployeeByUsername(employeeUsername);
+            try
+            {
+                _employee = ld.RetrieveEmployeeByUsername(employeeUsername);
+
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show("Message" + e.Message);
+            }
+            
 
         }
 

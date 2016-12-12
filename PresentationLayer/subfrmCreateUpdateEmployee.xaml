@@ -135,7 +135,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Content="Telephone:"/>
-                        <TextBox Width="200" Name="txtTelephone" Grid.Column="1" HorizontalAlignment="Left"/>
+                        <TextBox Width="200" Name="txtPersonalTelephone" Grid.Column="1" HorizontalAlignment="Left"/>
                         <Button Content="+" Click="btnAddPersonalTelephone" Grid.Column="2" Width="20" HorizontalAlignment="Left" />
                         <ComboBox Grid.Column="3" Name="cmbTelephoneTypes"/>
                     </Grid>
@@ -240,14 +240,14 @@
 
                                 <Label Content="Birth Date:"/>
                                 <DatePickerTextBox Width="200" Grid.Column="1" HorizontalAlignment="Left" Height="25"/>
-                                <DatePicker Width="200" Grid.Column="1" HorizontalAlignment="Left" Height="25"/>
+                                <DatePicker Name="dateDOB" Width="200" Grid.Column="1" HorizontalAlignment="Left" Height="25"/>
                             </Grid>
                         </StackPanel>
                         <!--End of Birth Date Line-->
                         
                         <!--Additional Information-->
                         <Label Content="Additional Information" Grid.Row="1" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                        <TextBox Grid.Row="2" Grid.RowSpan="3" Grid.Column="3"/>
+                        <TextBox Name="txtAdditionalInfo" TextWrapping="WrapWithOverflow" Grid.Row="2" Grid.RowSpan="3" Grid.Column="3"/>
                         <!--End of Additional Information-->
                
                     </Grid>

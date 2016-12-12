@@ -14,11 +14,11 @@ namespace DataObjects
 
         public string City { get; set; }
 
-        public string State { get; set; }
+        public int StateID { get; set; }
 
         public string Zip { get; set; }
 
-        public string Country { get; set; }
+        public int CountryID { get; set; }
 
         public int AddressTypeId { get; set; }
 
