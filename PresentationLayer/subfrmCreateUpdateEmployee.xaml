@@ -4,7 +4,7 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="Create New Employee" Height="570" Width="950" 
                       GlowBrush="Black" ResizeMode="NoResize" WindowTransitionsEnabled="True" 
-                      WindowStartupLocation="CenterScreen" >
+                      WindowStartupLocation="CenterScreen" Closing="Window_Closing" >
     
     <!--Window Resources-->
     <Window.Resources>
@@ -182,7 +182,7 @@
                         <!--Address Line-->
                         <Label Content="Address:"/>
                         <TextBox Width="200" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left"
-                                 Name="txtAddress" AcceptsReturn="True" TextWrapping="WrapWithOverflow"/>
+                                 Name="txtAddress" IsReadOnly="True" MouseDoubleClick="msdEditAddress" ToolTip="Double Click To Edit" ToolTipOpening="txtAddress_ToolTipOpening" ToolTipClosing="txtAddress_ToolTipClosing" AcceptsReturn="True" TextWrapping="WrapWithOverflow"/>
 
                         <Button Content="+" Grid.Column="2" Width="20" HorizontalAlignment="Left" Click="btnEditAddress"/>
                         <ComboBox Grid.Column="3" Name="cmbAddressTypes"/>

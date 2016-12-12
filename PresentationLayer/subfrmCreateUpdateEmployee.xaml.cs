@@ -60,6 +60,8 @@ namespace PresentationLayer
         /// </summary>
         List<ClearanceLevel> _clearanceLevels = new List<ClearanceLevel>();
 
+        bool actualClose = false;
+
         /// <summary>
         /// Constructor Edit Mode
         /// </summary>
@@ -67,6 +69,7 @@ namespace PresentationLayer
         {
             _user = user;
             _employeeUsername = employeeUsername;
+
             _isEditMode = true;
             InitializeComponent();
             setupWindow();
@@ -329,6 +332,7 @@ namespace PresentationLayer
 
         private async void btnCancel(object sender, RoutedEventArgs e)
         {
+            actualClose = true;
              var mySettings = new MetroDialogSettings()
             {
                 AffirmativeButtonText = "Yes",
@@ -344,6 +348,57 @@ namespace PresentationLayer
                 this.Close();
             }
             
+        }
+
+        private void msdEditAddress(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("Hey");
+        }
+
+        private void txtAddress_ToolTipOpening(object sender, ToolTipEventArgs e)
+        {
+            if ( txtStatusMessage.Text.Length < 17)
+                txtStatusMessage.Text += "Double Click to Edit Address";
+
+        }
+
+        private void txtAddress_ToolTipClosing(object sender, ToolTipEventArgs e)
+        {
+            txtStatusMessage.Text = "Status Message: ";
+        }
+
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
+
+        private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if ( !actualClose )
+            {
+                e.Cancel = true;
+            }
+            
+             var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Yes",
+                NegativeButtonText = "Cancel",
+                ColorScheme = MetroDialogColorScheme.Theme
+            };
+
+             MessageDialogResult result =  await this.ShowMessageAsync("Warning", "Closing might result in loss of Data. Do you still want to cancel?",
+                 MessageDialogStyle.AffirmativeAndNegative, mySettings);
+
+            if (result == MessageDialogResult.Affirmative)
+            {
+                actualClose = true;
+                this.Close();  
+            }
+            else
+            {
+                actualClose = false;
+            }
+
         }
     }
 }
