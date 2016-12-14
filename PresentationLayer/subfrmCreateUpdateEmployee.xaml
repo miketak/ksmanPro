@@ -184,8 +184,8 @@
                         <TextBox Width="200" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left"
                                  Name="txtAddress" IsReadOnly="True" MouseDoubleClick="msdEditAddress" ToolTip="Double Click To Edit" ToolTipOpening="txtAddress_ToolTipOpening" ToolTipClosing="txtAddress_ToolTipClosing" AcceptsReturn="True" TextWrapping="WrapWithOverflow"/>
 
-                        <Button Content="+" Grid.Column="2" Width="20" HorizontalAlignment="Left" Click="btnEditAddress"/>
-                        <ComboBox Grid.Column="3" Name="cmbAddressTypes"/>
+                        <Button Content="+" Grid.Column="2" Width="20" HorizontalAlignment="Left" Click="btnAddAddress"/>
+                        <ComboBox SelectionChanged="cmbAddressTypes_SelectionChanged" Grid.Column="3" Name="cmbAddressTypes"/>
                         <!--End of Address Line-->
                         
                         <!--Nationality Line-->

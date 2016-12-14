@@ -158,7 +158,7 @@
 
         <!--Function Buttons-->
         <StackPanel Orientation="Horizontal" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="4" FlowDirection="RightToLeft">
-            <Button Content="Cancel" Width="100" Margin="0 0 0 0" BorderBrush="Blue"/>
+            <Button Content="Cancel" Width="100" Margin="0 0 0 0" BorderBrush="Blue" Click="btnCancel_Click"/>
             <Button Content="Save" Width="100" Margin="10 0 0 0" BorderBrush="Blue"/>
         </StackPanel>
         <!--End of Function Buttons-->

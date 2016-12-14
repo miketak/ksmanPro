@@ -1,5 +1,6 @@
 ﻿using BusinessLogic;
 using DataObjects;
+using DataObjects.ProgramDataObjects;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -30,23 +31,27 @@ namespace PresentationLayer
         /// <summary>
         /// Employee from database
         /// </summary>
-        Employee _employee = new Employee();
+        Employee _employee;
 
         /// <summary>
         /// Employee username from calling class.
         /// </summary>
         String _employeeUsername;
 
+        /// <summary>
+        /// Address Type list
+        /// </summary>
+        List<AddressType> _addressTypes; //might probably go away
 
         /// <summary>
         /// Job positions field for form
         /// </summary>
-        List<UserRoles> _jobPositions = new List<UserRoles>();
+        List<UserRoles> _jobPositions;
 
-        List<String> _countries = new List<String>();
+        List<Country> _countries;
 
         /// <summary>
-        /// Indicates whether form is in edit mode
+        /// Indicates whether form is in editAddress mode
         /// </summary>
         bool _isEditMode;
 
@@ -69,11 +74,9 @@ namespace PresentationLayer
         {
             _user = user;
             _employeeUsername = employeeUsername;
-
             _isEditMode = true;
             InitializeComponent();
             setupWindow();
-
         }
 
 
@@ -93,18 +96,18 @@ namespace PresentationLayer
 
 
         /// <summary>
-        /// Subform to edit and add new addresses to parent form.
+        /// Subform to editAddress and add new addresses to parent form.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnEditAddress(object sender, RoutedEventArgs e)
+        private void btnAddAddress(object sender, RoutedEventArgs e)
         {
             var subfrmAddAddress = new subfrmAddAddress();
             subfrmAddAddress.ShowDialog();
         }
 
         /// <summary>
-        /// Subform to edit and add new new emails to parent form.
+        /// Subform to editAddress and add new new emails to parent form.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -116,7 +119,7 @@ namespace PresentationLayer
 
 
         /// <summary>
-        /// Subform to edit and add new personal telphone numbers to parent form.
+        /// Subform to editAddress and add new personal telphone numbers to parent form.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -154,15 +157,20 @@ namespace PresentationLayer
                 cmbDepartment.SelectedItem = _employee.Department;
                 txtPersonalTelephone.Text = _employee.PersonalPhoneNumber;
                 txtPersonalEmail.Text = _employee.PersonalEmail;
-                cmbNationality.SelectedItem = _employee.Nationality;                 
+
+                cmbNationality.SelectedItem = _employee.Nationality;
+                 
                 chkMaritalStatus.IsChecked = _employee.MaritalStatus ? true : false;
+
                 if (_employee.Gender != null)
                     cmbGender.SelectedItem = _employee.Gender == true ? "Male" : "Female";
+
                 dateDOB.SelectedDate = _employee.DateOfBirth;
                 if ( dateDOB.SelectedDate == DateTime.MinValue )
                 {
                     dateDOB.SelectedDate = null;
                 }
+
                 txtCompanyTelephone.Text = _employee.PhoneNumber;
                 txtCompanyEmail.Text = _employee.Email;
                 cmbClearanceLevel.SelectedItem = _employee.ClearanceLevel;
@@ -198,6 +206,7 @@ namespace PresentationLayer
         {
             var employeeManager = new EmployeeManager();
 
+            //Execute for Edit Mode - False or True------------------------------------------
             //fill gender types
             cmbGender.Items.Add("Male");
             cmbGender.Items.Add("Female");
@@ -211,19 +220,18 @@ namespace PresentationLayer
 
             //fill nationality box
             _countries = employeeManager.RetrieveCountries();
-            foreach (String s in _countries)
+            foreach (Country c in _countries)
             {
-                cmbNationality.Items.Add(s);
+                cmbNationality.Items.Add(c.NiceName);
             }
 
+            //load addressesOfEmployee types into memory
+            _addressTypes = employeeManager.RetrieveAddressTypeByID(-1, true);
 
+            //----------------------------------------------------------------------------------
 
-
-            if (_isEditMode) //edit mode
+            if (_isEditMode) //editAddress mode
             {
-                
-                //var employeeManager = new EmployeeManager();
-
                 //fill jobs position box based on selected department               
                 fillJobPositions(_employee.DepartmentId);
 
@@ -234,26 +242,33 @@ namespace PresentationLayer
                     cmbClearanceLevel.Items.Add(cl.Name);
                 }
 
+                // fill Address types---------------------------------------------------------------------------------
+                List<Address> addressesOfEmployee = _employee.Address;
+                if ( addressesOfEmployee != null)
+                {
+                    foreach (var addType in addressesOfEmployee)
+                    {
+                        AddressType addressType = _addressTypes.Find(x => x.AddressTypeId == addType.AddressTypeId);
+                        cmbAddressTypes.Items.Add(addressType.Name);
+                    }
+                    cmbAddressTypes.SelectedItem = _addressTypes.Find(x => x.AddressTypeId == addressesOfEmployee[0].AddressTypeId).Name;
+                    // fill Address TextBox
+                    txtAddress.Clear();
+                    foreach (var adtext in addressesOfEmployee[0].AddressLines)
+                    {
+                        if (!adtext.Equals(null))
+                        {
+                            txtAddress.Text += adtext + "\n";
+                        }
+                    }                    
+                }                
+                //------------------------------------------------------------------------------------------------------
+                
 
-                //fill email types
-                //cmbEmailTypes.Items.Add
-
-                //fill telephone types
-                //cmbTelephoneTypes.Items.Add
-
-                //Address types
-                //cmbAddressTypes.Items.Add
+                
             }
             else //add mode
             {
-                //fill department all departments
-                //_departments = employeeManager.RetrieveDepartmentsByVisibility(true);
-                //foreach (Department d in _departments)
-                //{
-                //    cmbDepartment.Items.Add(d.Name);
-                //}
-
-
                 //fill clearance levels
                 _clearanceLevels = employeeManager.RetrieveClearanceByDeptID("", true);
                 foreach (ClearanceLevel cl in _clearanceLevels)
@@ -263,10 +278,46 @@ namespace PresentationLayer
 
                 //do not fill job positions box. indicate to user to select department
                 cmbJobPosition.Items.Add("Select Department");
+
+                // fill Address types
+                cmbAddressTypes.Items.Add("No Addresses Yet");
             }
             
 
         }
+
+        /// <summary>
+        /// Changes Address Text Box Based on selected option
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmbAddressTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ( _employee.Address != null )
+            {
+                //clear Address Text Box
+                txtAddress.Clear();
+
+                //Get Selection and addresstypeID
+                string selectedAddressText = (string)cmbAddressTypes.SelectedItem;
+                var selectedAddress = _addressTypes.Find(x => x.Name == selectedAddressText);
+
+                //Search in employee object for addressesOfEmployee
+                var addressFromEmployee = _employee.Address;
+                var newAddressToDisplay = addressFromEmployee.Find(x => x.AddressTypeId == selectedAddress.AddressTypeId);
+
+                //Set Address Box
+                foreach (var adtext in newAddressToDisplay.AddressLines)
+                {
+                    if (!adtext.Equals(null))
+                    {
+                        txtAddress.Text += adtext + "\n";
+                    }
+                } 
+            }
+        }
+
+
 
         /// <summary>
         /// Fill departments based on Department Id.
@@ -352,7 +403,9 @@ namespace PresentationLayer
 
         private void msdEditAddress(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("Hey");
+            //Open form in edit mode
+            var editAddress = new subfrmAddAddress(_employee.Address);
+            editAddress.ShowDialog();
         }
 
         private void txtAddress_ToolTipOpening(object sender, ToolTipEventArgs e)
@@ -400,5 +453,7 @@ namespace PresentationLayer
             }
 
         }
+
+        
     }
 }

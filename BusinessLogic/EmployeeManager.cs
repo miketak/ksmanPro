@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer;
 using DataObjects;
+using DataObjects.ProgramDataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,7 +88,7 @@ namespace BusinessLogic
         /// <summary>
         /// Retrieves Department by visibility
         /// </summary>
-        /// <param name="p">Visibility indicator</param>
+        /// <param name="PersonalInformationID">Visibility indicator</param>
         /// <returns>Returns a list of departments</returns>
         public List<Department> RetrieveDepartmentsByVisibility(bool p)
         {
@@ -120,15 +121,22 @@ namespace BusinessLogic
         /// Retrieves all countriesInDB from database
         /// </summary>
         /// <returns></returns>
-        public List<String> RetrieveCountries()
+        public List<Country> RetrieveCountries()
         {
             var retrieveCountry = new EmployeeAccessor();
-            List<String> countries = retrieveCountry.RetrieveCountries();
+
+            List<Country> countries = retrieveCountry.RetrieveCountries();
 
             return countries;
 
         }
 
+        /// <summary>
+        /// Retrieves Employee Clearance Data
+        /// </summary>
+        /// <param name="departmentId"></param>
+        /// <param name="retrieveAll"></param>
+        /// <returns></returns>
         public List<ClearanceLevel> RetrieveClearanceByDeptID(string departmentId, bool retrieveAll)
         {
             var clearanceLevels = new List<ClearanceLevel>();
@@ -137,6 +145,30 @@ namespace BusinessLogic
             clearanceLevels = clearanceAccess.RetrieveClearanceByDeptID(departmentId, retrieveAll);
 
             return clearanceLevels;
+        }
+
+        /// <summary>
+        /// Retrieves AddressTypes by ID
+        /// </summary>
+        /// <param name="addresstypeID"></param>
+        /// <param name="retrieveAll"></param>
+        /// <returns>A list of Address Types</returns>
+        public List<AddressType> RetrieveAddressTypeByID(int addresstypeID, bool retrieveAll)
+        {
+            List<AddressType> addressTypesList = new List<AddressType>();
+
+            addressTypesList = EmployeeAccessor.RetrieveAddressTypesByID(addresstypeID, retrieveAll);
+
+            return addressTypesList;
+        }
+
+        public List<State> RetrieveStates()
+        {
+            List<State> stateList = new List<State>();
+
+            stateList = EmployeeAccessor.RetrieveStates();
+
+            return stateList;
         }
     }
 }
