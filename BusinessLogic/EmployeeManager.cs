@@ -17,7 +17,6 @@ namespace BusinessLogic
     {
        
 
-
         /// <summary>
         /// Retrieves all Active Employees From Database
         /// </summary>
@@ -117,18 +116,6 @@ namespace BusinessLogic
             return jobPositions;
         }
 
-        /// <summary>
-        /// Retrieves all countriesInDB from database
-        /// </summary>
-        /// <returns>Returns a list of Country Objects</returns>
-        public List<Country> RetrieveCountries()
-        {
-
-            List<Country> countries = UtilityAccessor.RetrieveCountries();
-
-            return countries;
-
-        }
 
         /// <summary>
         /// Retrieves Employee Clearance Data
@@ -161,13 +148,5 @@ namespace BusinessLogic
             return addressTypesList;
         }
 
-        public List<State> RetrieveStates()
-        {
-            List<State> stateList = new List<State>();
-
-            stateList = UtilityAccessor.RetrieveStates();
-
-            return stateList;
-        }
     }
 }

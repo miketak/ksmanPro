@@ -214,6 +214,7 @@ namespace PresentationLayer
         private void fillComboBoxes()
         {
             var employeeManager = new EmployeeManager();
+            var utilityManager = new UtilityManager();
 
             //Execute for Edit Mode - False or True------------------------------------------
             //fill gender types
@@ -228,7 +229,7 @@ namespace PresentationLayer
             }
 
             //fill nationality box
-            _countries = employeeManager.RetrieveCountries();
+            _countries = utilityManager.RetrieveCountries();
             foreach (Country c in _countries)
             {
                 cmbNationality.Items.Add(c.NiceName);
@@ -253,7 +254,7 @@ namespace PresentationLayer
 
                 // fill Address types---------------------------------------------------------------------------------
                 List<Address> addressesOfEmployee = _employee.Address;
-                if ( addressesOfEmployee != null)
+                if ( addressesOfEmployee.Count != 0)
                 {
                     foreach (var addType in addressesOfEmployee)
                     {

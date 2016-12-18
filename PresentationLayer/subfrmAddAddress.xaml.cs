@@ -105,11 +105,12 @@ namespace PresentationLayer
         public void fillComboBoxes()
         {
             var employeeManager = new EmployeeManager();
+            var utilityManager = new UtilityManager();
 
             //Execute for Edit Mode - False or True------------------------------------------
 
             //fill country box
-            _countries = employeeManager.RetrieveCountries();
+            _countries = utilityManager.RetrieveCountries();
             foreach (Country c in _countries)
             {
                 cmbCountry.Items.Add(c.NiceName);
@@ -119,7 +120,7 @@ namespace PresentationLayer
             _addressTypes = employeeManager.RetrieveAddressTypeByID(-1, true);
 
             //load states box
-            _states = employeeManager.RetrieveStates();
+            _states = utilityManager.RetrieveStates();
             foreach ( State st in _states)
             {
                 cmbState.Items.Add(st.StateCode);
