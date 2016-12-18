@@ -199,7 +199,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="userID"></param>
         /// <returns></returns>
-        public static bool UpdateEmployeeByID( int userID)
+        public static bool UpdateEmployeeByID( Employee employee )
         {
             return false;
         }
@@ -299,7 +299,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="departmentID"></param>
         /// <returns></returns>
-        public static bool UpdateDepartment ( string departmentID )
+        public static bool UpdateDepartment ( Department department )
         {
             return false;
         }
@@ -402,7 +402,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="userRolesID"></param>
         /// <returns></returns>
-        public static bool UpdateUserRoles ( string userRolesID )
+        public static bool UpdateUserRoles ( UserRoles userRoles )
         {
             return false;
         }
@@ -412,7 +412,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="userRolesID"></param>
         /// <returns></returns>
-        public static bool DeleteUserRoles ( string userRolesID )
+        public static bool DeleteUserRoles ( int userRolesID )
         {
             return false;
         }
@@ -599,7 +599,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="addressTypeID"></param>
         /// <returns></returns>
-        public static bool UpdateAddressType ( int addressTypeID )
+        public static bool UpdateAddressType ( AddressType addressType )
         {
             return false;
         }
@@ -633,7 +633,7 @@ namespace DataAccessLayer
         /// <param name="departmentId">Department ID</param>
         /// <param name="retrieveAll">Signal to Retrieve all irresepective of Department ID</param>
         /// <returns>Returns a List of Clearance Levels</returns>
-        public List<ClearanceLevel> RetrieveClearanceByDeptID(string departmentId, bool retrieveAll)
+        public static List<ClearanceLevel> RetrieveClearanceByDeptID(string departmentId, bool retrieveAll)
         {
             var clearanceLevelInDB = new List<ClearanceLevel>();
 
@@ -698,7 +698,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="clearanceLevelID">Clearance Level ID</param>
         /// <returns></returns>
-        public static bool UpdateClearanceLevel ( int clearanceLevelID ) //potentially dangerous method
+        public static bool UpdateClearanceLevel ( ClearanceLevel clearanceLevel ) //potentially dangerous method
         {
             return false;
         }

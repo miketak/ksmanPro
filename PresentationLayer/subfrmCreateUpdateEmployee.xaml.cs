@@ -352,7 +352,7 @@ namespace PresentationLayer
             cmbJobPosition.Items.Clear();
 
             //fill job positions
-            _jobPositions = employeeManager.RetrieveJobPositionByDeptId(departmentId, false); //true means select all departments
+            _jobPositions = employeeManager.RetrieveUserRolesByDeptID(departmentId, false); //true means select all departments
 
             foreach (UserRoles roles in _jobPositions)
             {

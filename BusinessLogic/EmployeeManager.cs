@@ -15,20 +15,21 @@ namespace BusinessLogic
     /// </summary>
     public class EmployeeManager
     {
-       
+        // Employee CRUD
 
         /// <summary>
-        /// Retrieves all Active Employees From Database
+        /// Create new Employee
         /// </summary>
-        /// <param name="isEmployed">True or False boolean paramter to retrieveCountry active or inactive employees respecetively</param>
-        /// <returns>A list of active or inactive Employee objects from Database.</returns>
-        public List<Employee> RetrieveEmployees(bool isEmployed)
+        /// <param name="employee"></param>
+        /// <returns>Return Confirmation Result</returns>
+        public bool CreateEmployee ( Employee employee )
         {
-            var employeeList = new List<Employee>();
+            bool result = false;
 
-            employeeList = EmployeeAccessor.RetrieveEmployees(isEmployed);
+            result = EmployeeAccessor.CreateEmployee(employee);
 
-            return employeeList;
+            return result;
+
         }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace BusinessLogic
         public Employee RetrieveEmployeeByUsername(string username)
         {
             var employee = new Employee();
-            
+
             //Retrieve all employee information
             try
             {
@@ -74,14 +75,73 @@ namespace BusinessLogic
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
-            
 
-           
+
+
 
             return employee;
+        }
+
+        /// <summary>
+        /// Retrieves all Active Employees From Database
+        /// </summary>
+        /// <param name="isEmployed">True or False boolean paramter to retrieveCountry active or inactive employees respecetively</param>
+        /// <returns>A list of active or inactive Employee objects from Database.</returns>
+        public List<Employee> RetrieveEmployees(bool isEmployed)
+        {
+            var employeeList = new List<Employee>();
+
+            employeeList = EmployeeAccessor.RetrieveEmployees(isEmployed);
+
+            return employeeList;
+        }
+
+        /// <summary>
+        /// Updates Employee information
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns></returns>
+        public bool UpdateEmployeeByID ( Employee employee )
+        {
+            bool result = false;
+
+            result = EmployeeAccessor.UpdateEmployeeByID( employee );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Delete Employee By ID
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns>Returns Confirmation</returns>
+        public bool DeleteEmployeeByID ( int userID )
+        {
+            bool result = false;
+
+            result = EmployeeAccessor.DeleteEmployeeByID( userID );
+
+            return result;
+        }
+
+
+        // Department CRUD
+
+        /// <summary>
+        /// Creates new Department
+        /// </summary>
+        /// <param name="department"></param>
+        /// <returns></returns>
+        public bool CreateDepartment ( Department department )
+        {
+            bool result = false;
+
+            result = EmployeeAccessor.CreateDepartment(department);
+
+            return result;
         }
 
         /// <summary>
@@ -89,16 +149,63 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="userID">Visibility indicator</param>
         /// <returns>Returns a list of departments</returns>
-        public List<Department> RetrieveDepartmentsByVisibility(bool p)
+        public List<Department> RetrieveDepartmentsByVisibility(bool retrieveAll)
         {
             var departments = new List<Department>();
 
             var departmentAccess = new EmployeeAccessor();
-            departments = departmentAccess.RetrieveDepartments(p);
+            departments = departmentAccess.RetrieveDepartments(retrieveAll);
 
 
             return departments;
         }
+
+        /// <summary>
+        /// Updates Department Information
+        /// </summary>
+        /// <param name="department"></param>
+        /// <returns></returns>
+        public bool UpdateDepartment ( Department department )
+        {
+            bool result = false;
+
+            result = EmployeeAccessor.UpdateDepartment(department);
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// Deletes Departments
+        /// </summary>
+        /// <param name="departmentID"></param>
+        /// <returns></returns>
+        public bool DeleteDepartment ( string departmentID ) //potentially dangerous
+        {
+            bool result = false;
+
+            result = EmployeeAccessor.DeleteDepartment(departmentID);
+
+            return result;
+        }
+
+
+        //UserRole CRUD
+
+        /// <summary>
+        /// Creates new User Roles
+        /// </summary>
+        /// <param name="userRole"></param>
+        /// <returns>Returns confirmation</returns>
+        public bool CreateUserRole ( UserRoles userRole )
+        {
+            bool result = false;
+
+            result = EmployeeAccessor.CreateUserRole(userRole);
+
+            return result;
+        }
+
 
         /// <summary>
         /// Retrieves Job Positions based on DepartmentID
@@ -106,7 +213,7 @@ namespace BusinessLogic
         /// <param name="departmentId">Retrieves ID</param>
         /// <param name="isRetrieveAll">Paramter to indicate if all should be retrieved</param>
         /// <returns>List of User Roles</returns>
-        public List<UserRoles> RetrieveJobPositionByDeptId(string departmentId, bool isRetrieveAll)
+        public List<UserRoles> RetrieveUserRolesByDeptID(string departmentId, bool isRetrieveAll)
         {
             var jobPositions = new List<UserRoles>();
 
@@ -116,6 +223,51 @@ namespace BusinessLogic
             return jobPositions;
         }
 
+        /// <summary>
+        /// Updates User Roles
+        /// </summary>
+        /// <param name="userRoles"></param>
+        /// <returns></returns>
+        public bool UpdateUserRoles( UserRoles userRoles )
+        {
+            bool result = false;
+
+            result = EmployeeAccessor.UpdateUserRoles(userRoles);
+
+            return result; 
+        }
+
+        /// <summary>
+        /// Delete User Role By ID
+        /// </summary>
+        /// <param name="userRolesID"></param>
+        /// <returns></returns>
+        public bool DeleteUserRoleByID (int userRolesID )
+        {
+            bool result = false;
+
+            result = EmployeeAccessor.DeleteUserRoles(userRolesID);
+
+            return result;
+        }
+
+
+
+        //Clearance Level CRUD
+
+        /// <summary>
+        /// Create clearance levels
+        /// </summary>
+        /// <param name="clearanceLevel"></param>
+        /// <returns></returns>
+        public bool CreateClearanceLevel(ClearanceLevel clearanceLevel)
+        {
+            bool result = false;
+
+            result = EmployeeAccessor.CreateClearanceLevel(clearanceLevel);
+
+            return result;
+        }
 
         /// <summary>
         /// Retrieves Employee Clearance Data
@@ -125,12 +277,57 @@ namespace BusinessLogic
         /// <returns></returns>
         public List<ClearanceLevel> RetrieveClearanceByDeptID(string departmentId, bool retrieveAll)
         {
-            var clearanceLevels = new List<ClearanceLevel>();
-            var clearanceAccess = new EmployeeAccessor();
-
-            clearanceLevels = clearanceAccess.RetrieveClearanceByDeptID(departmentId, retrieveAll);
+            var clearanceLevels = EmployeeAccessor.RetrieveClearanceByDeptID(departmentId, retrieveAll);
 
             return clearanceLevels;
+        }
+
+        /// <summary>
+        /// Update Clearance levels
+        /// </summary>
+        /// <param name="clearanceLevel"></param>
+        /// <returns></returns>
+        public bool UpdateClearanceLevel(ClearanceLevel clearanceLevel)
+        {
+            bool result = false;
+
+            result = EmployeeAccessor.UpdateClearanceLevel(clearanceLevel);
+
+            return result;
+
+        }
+
+        /// <summary>
+        /// Deletes Clearance Level
+        /// </summary>
+        /// <param name="clearanceLevelId"></param>
+        /// <returns></returns>
+        public bool DeleteCleranceLevel(int clearanceLevelId)
+        {
+            bool result = false;
+
+            result = EmployeeAccessor.DeleteClearanceLevel(clearanceLevelId);
+
+            return result;
+        }
+
+
+
+
+        //AddressTypes CRUD
+
+        /// <summary>
+        /// Creates new Address Type
+        /// </summary>
+        /// <param name="addressType"></param>
+        /// <returns></returns>
+        public bool CreateAddressType ( AddressType addressType )
+        {
+            bool result = false;
+
+            result = EmployeeAccessor.CreateAddressType(addressType);
+
+            return result;
         }
 
         /// <summary>
@@ -146,6 +343,34 @@ namespace BusinessLogic
             addressTypesList = EmployeeAccessor.RetrieveAddressTypesByID(addresstypeID, retrieveAll);
 
             return addressTypesList;
+        }
+
+        /// <summary>
+        /// Updates Address Type Information
+        /// </summary>
+        /// <param name="addressType"></param>
+        /// <returns></returns>
+        public bool UpdateAddressType ( AddressType addressType )
+        {
+            bool result = false;
+
+            result = EmployeeAccessor.UpdateAddressType(addressType);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Delete AddressType
+        /// </summary>
+        /// <param name="addressTypeID"></param>
+        /// <returns></returns>
+        public bool DeleteAddressType ( int addressTypeID )
+        {
+            bool result = false;
+
+            result = EmployeeAccessor.DeleteAddresstype(addressTypeID);
+
+            return result;
         }
 
     }

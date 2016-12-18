@@ -23,7 +23,7 @@ namespace BusinessLogic.Test
         {
             var umg = new UserManager();
 
-            var userfromDB = umg.authenticateUser("SCSYMCX", "hello");
+            var userfromDB = umg.AuthenticateUser("SCSYMCX", "hello");
             // Assert.AreEqual(expectedResult, userfromDB);
             Assert.AreEqual(userfromDB.FirstName, "Martin");
             Assert.AreEqual(userfromDB.LastName, "Cox");

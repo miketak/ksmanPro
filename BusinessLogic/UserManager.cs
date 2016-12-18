@@ -16,6 +16,11 @@ namespace BusinessLogic
     public class UserManager
     {
 
+        /// <summary>
+        /// Hash Encryption for Password
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
         internal string HashSHA256(string source)   //change back to internal
         {
             var result = "";
@@ -51,7 +56,7 @@ namespace BusinessLogic
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public User authenticateUser(string username, string password)
+        public User AuthenticateUser(string username, string password)
         {
             User user = null;
             

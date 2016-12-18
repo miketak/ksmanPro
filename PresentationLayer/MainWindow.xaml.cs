@@ -48,7 +48,7 @@ namespace PresentationLayer
 
             try
             {
-                _user = authenticate.authenticateUser(txtUsername.Text, txtPassword.Password);
+                _user = authenticate.AuthenticateUser(txtUsername.Text, txtPassword.Password);
                 this.Hide();
                 var frmCentralDashboard = new frmCentralDashboard(_user);
                 frmCentralDashboard.ShowDialog();
