@@ -60,9 +60,7 @@
                 <StackPanel Orientation="Horizontal" >
                     <Ellipse Width="40" Height="40"
                    Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                        <Ellipse.OpacityMask>
-                            <ImageBrush Stretch="Fill" ImageSource="C:\Users\Mike T\documents\visual studio 2013\Projects\KSMANPRO\PresentationLayer\Resources\arrow.png" ></ImageBrush>
-                        </Ellipse.OpacityMask>
+                        <!--Employee Image-->
                     </Ellipse>
                     <TextBlock Margin="4 0 0 0"
                    VerticalAlignment="Center"

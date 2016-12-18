@@ -67,7 +67,7 @@ namespace BusinessLogic
 
             try
             {
-                if ( UserAccessor.verifyUsernameAndPassword( username, HashSHA256(password) ) )
+                if ( UserAccessor.VerifyUsernameAndPassword( username, HashSHA256(password) ) )
                 {
                     password = null;
                     // need to create a employee object to use as an access token

@@ -49,7 +49,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Content="Address Type:"/>
-                        <ComboBox Name="cmbAddressType" Grid.Column="2" Width="Auto" Margin="5 0 0 0" />
+                        <ComboBox Name="cmbAddressType" Grid.Column="2" Width="Auto" Margin="5 0 0 0" SelectionChanged="cmbAddressType_SelectionChanged" />
                     </Grid>
                 </StackPanel>
                 <!--End of Address Type Line-->
@@ -159,7 +159,7 @@
         <!--Function Buttons-->
         <StackPanel Orientation="Horizontal" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="4" FlowDirection="RightToLeft">
             <Button Content="Cancel" Width="100" Margin="0 0 0 0" BorderBrush="Blue" Click="btnCancel_Click"/>
-            <Button Content="Save" Width="100" Margin="10 0 0 0" BorderBrush="Blue"/>
+            <Button  Click="btnSave_Click" Content="Save" Width="100" Margin="10 0 0 0" BorderBrush="Blue"/>
         </StackPanel>
         <!--End of Function Buttons-->
 

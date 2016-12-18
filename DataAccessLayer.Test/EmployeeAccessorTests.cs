@@ -12,16 +12,19 @@ namespace DataAccessLayer.Test
         [TestMethod]
         public void retrieveAddressesByPeronalInfoId()
         {
-            int personalInformationID = 60000;
-            //var empAccess = new EmployeeAccessor();
-
-            List<Address> add = EmployeeAccessor.retrieveAddressesByPeronalInfoId(personalInformationID);
-            List<Address> lad = new List<Address>();
-
-            //Manually create some data
+            //moved to utility acessor
 
 
-            Assert.AreEqual(lad, add);
+            //int personalInformationID = 60000;
+            ////var empAccess = new EmployeeAccessor();
+
+            //List<Address> add = EmployeeAccessor.retrieveAddressesByUserID(personalInformationID);
+            //List<Address> lad = new List<Address>();
+
+            ////Manually create some data
+
+
+            //Assert.AreEqual(lad, add);
         }
     }
 }

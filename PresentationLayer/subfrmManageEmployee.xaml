@@ -35,14 +35,12 @@
         <Border Background="AntiqueWhite" Grid.Column="0" Grid.ColumnSpan="12" Grid.Row="0">
             <StackPanel Orientation="Horizontal" >
                 <Ellipse Width="20" Height="20"
-                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                    <Ellipse.OpacityMask>
-                        <ImageBrush Stretch="Fill" ImageSource="pack://siteoforigin:,,,/Resources/Turbomachinery_consulting_turbine.png" ></ImageBrush>
-                    </Ellipse.OpacityMask>
+                   Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" Margin="0,2,0,3">
+                    <!--Employee Image-->
                 </Ellipse>
                 <TextBlock Margin="4 0 0 0"
                    VerticalAlignment="Center"
-                   Name ="txtName" Text="_nameTag" Foreground="Black" FontWeight="Bold" FontSize="15"/>
+                   x:Name ="txtName" Text="_nameTag" Foreground="Black" FontWeight="Bold" FontSize="15"/>
             </StackPanel>
         </Border>
 
@@ -81,7 +79,7 @@
             </Expander.Content>
 
         </Expander>
-  
+
 
         <!--List Box for Employees-->
         <ListBox  Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="10"/>
@@ -100,7 +98,7 @@
                 <DataGridTextColumn Header="ClearanceLevel" Width="130*" Binding="{Binding ClearanceLevel}"/>
             </DataGrid.Columns>
         </DataGrid>
-        
+
         <!--Add/Edit/Delete Buttons-->
         <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="7" FlowDirection="RightToLeft">
             <Button Content="Add" Width="100" Margin="0 0 0 0" Click="btnAdd"/>

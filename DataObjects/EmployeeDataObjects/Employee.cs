@@ -8,7 +8,6 @@ namespace DataObjects
 {
     public class Employee : User
     {
-        public int PersonalInfoId { get; set; }
 
         public bool? Gender { get; set; }
 

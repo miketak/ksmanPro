@@ -60,7 +60,7 @@ namespace BusinessLogic
                 employee.JobDesignation = allUserDataInDB.JobDesignation;
                 employee.ClearanceLevelId = allUserDataInDB.ClearanceLevelId;
                 employee.ClearanceLevel = allUserDataInDB.ClearanceLevel;
-                employee.PersonalInfoId = allUserDataInDB.PersonalInfoId;
+                //employee.PersonalInfoId = allUserDataInDB.PersonalInfoId;
                 employee.Gender = allUserDataInDB.Gender;
                 employee.DateOfBirth = allUserDataInDB.DateOfBirth;
                 employee.CountryId = allUserDataInDB.CountryId;
@@ -88,7 +88,7 @@ namespace BusinessLogic
         /// <summary>
         /// Retrieves Department by visibility
         /// </summary>
-        /// <param name="PersonalInformationID">Visibility indicator</param>
+        /// <param name="userID">Visibility indicator</param>
         /// <returns>Returns a list of departments</returns>
         public List<Department> RetrieveDepartmentsByVisibility(bool p)
         {
@@ -120,12 +120,11 @@ namespace BusinessLogic
         /// <summary>
         /// Retrieves all countriesInDB from database
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns a list of Country Objects</returns>
         public List<Country> RetrieveCountries()
         {
-            var retrieveCountry = new EmployeeAccessor();
 
-            List<Country> countries = retrieveCountry.RetrieveCountries();
+            List<Country> countries = UtilityAccessor.RetrieveCountries();
 
             return countries;
 
@@ -166,7 +165,7 @@ namespace BusinessLogic
         {
             List<State> stateList = new List<State>();
 
-            stateList = EmployeeAccessor.RetrieveStates();
+            stateList = UtilityAccessor.RetrieveStates();
 
             return stateList;
         }

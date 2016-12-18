@@ -16,6 +16,105 @@ namespace DataAccessLayer
     /// </summary>
     public class EmployeeAccessor
     {
+        //Employee CRUD
+
+        /// <summary>
+        /// Creates a new Employee
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns>Returns a boolean on success/failure</returns>
+        public static bool CreateEmployee(Employee employee)
+        {
+            //Insert into Users Table
+
+            //Insert into Personal Information Table
+
+            //Insert into UserAddress Table
+            return false;
+        }
+
+        /// <summary>
+        /// Retrieves all Employee Data by Username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public static Employee RetrieveEmployeeByUsername(string username)
+        {
+            //Retrieve all details
+            Employee employee = null;
+
+            var conn = DBConnection.GetConnection();
+            var cmdText = @"sp_retrieve_all_employee_data_by_username";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@Username", SqlDbType.VarChar, 20);
+            cmd.Parameters["@Username"].Value = username;
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    employee = new Employee()
+                    {
+                        UserId = reader.GetInt32(0),
+                        Username = reader.GetString(1),
+                        FirstName = reader.GetString(2),
+                        LastName = reader.GetString(3),
+                        OtherNames = reader.IsDBNull(4) ? null : reader.GetString(4),
+                        DepartmentId = reader.IsDBNull(5) ? null : reader.GetString(5),
+                        Department = reader.IsDBNull(6) ? null : reader.GetString(6),
+                        PhoneNumber = reader.IsDBNull(7) ? null : reader.GetString(7),
+                        Email = reader.IsDBNull(8) ? null : reader.GetString(8),
+                        PicUrl = reader.IsDBNull(9) ? null : reader.GetString(9),
+                        isEmployed = reader.IsDBNull(10) ? false : reader.GetBoolean(10),
+                        isBlocked = reader.IsDBNull(11) ? false : reader.GetBoolean(11),
+                        UserRolesId = reader.IsDBNull(12) ? null : reader.GetString(12),
+                        JobDesignation = reader.IsDBNull(13) ? null : reader.GetString(13), //role name
+                        ClearanceLevelId = reader.IsDBNull(14) ? -1 : reader.GetInt32(14),
+                        ClearanceLevel = reader.IsDBNull(15) ? null : reader.GetString(15),
+                        //PersonalInfoId = reader.IsDBNull(16) ? -1 : reader.GetInt32(16),
+                        //Gender = reader.IsDBNull(17) ? null : reader.GetBoolean(17),
+                        DateOfBirth = reader.IsDBNull(17) ? DateTime.MinValue : reader.GetDateTime(17),
+                        CountryId = reader.IsDBNull(18) ? -1 : reader.GetInt32(18),
+                        Nationality = reader.IsDBNull(19) ? null : reader.GetString(19),
+                        AdditonalInfo = reader.IsDBNull(20) ? null : reader.GetString(20),
+                        HireDate = reader.IsDBNull(21) ? DateTime.MinValue : reader.GetDateTime(21),
+                        MaritalStatus = reader.IsDBNull(22) ? false : reader.GetBoolean(22),
+                        PersonalEmail = reader.IsDBNull(23) ? null : reader.GetString(23),
+                        PersonalPhoneNumber = reader.IsDBNull(24) ? null : reader.GetString(24)
+                    };
+
+                    //Null gender if not exists in database
+                    if (reader.IsDBNull(16))
+                        employee.Gender = null;
+                    else
+                        employee.Gender = reader.GetBoolean(16);
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            //Get List of Personal Addresses
+            var addressList = new List<Address>();
+            addressList = retrieveAddressesByUserID(employee.UserId);
+            employee.Address = addressList;
+            
+
+            return employee;
+
+        }
 
         /// <summary>
         /// Retrieve active or inactive employee based on paramater. Retrieves all details
@@ -96,6 +195,39 @@ namespace DataAccessLayer
         }
 
         /// <summary>
+        /// Updates Employee Records
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public static bool UpdateEmployeeByID( int userID)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Deletes employee records
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public static bool DeleteEmployeeByID ( int userID)
+        {
+            return false;
+        }
+
+
+        // Department CRUD
+
+        /// <summary>
+        /// Creates a new departments
+        /// </summary>
+        /// <param name="depertment"></param>
+        /// <returns></returns>
+        public static bool CreateDepartment ( Department depertment)
+        {
+            return false;
+        }
+
+        /// <summary>
         /// Retrieve Departments based on visibility
         /// </summary>
         /// <param name="isVisible"></param>
@@ -163,7 +295,40 @@ namespace DataAccessLayer
         }
 
         /// <summary>
-        /// Retrieve employee roles by department
+        /// Updates Department Information
+        /// </summary>
+        /// <param name="departmentID"></param>
+        /// <returns></returns>
+        public static bool UpdateDepartment ( string departmentID )
+        {
+            return false;
+        }
+        
+        /// <summary>
+        /// Deletes Department
+        /// </summary>
+        /// <param name="departmentID"></param>
+        /// <returns></returns>
+        public static bool DeleteDepartment ( string departmentID)
+        {
+            return false;
+        }
+
+
+        // User Role CRUD
+
+        /// <summary>
+        /// Create User Roles
+        /// </summary>
+        /// <param name="userRoles"></param>
+        /// <returns></returns>
+        public static bool CreateUserRole ( UserRoles userRoles )
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Retrieve employee roles by department.
         /// </summary>
         /// <param name="departmentId">Department Id employee for retrieval</param>
         /// <param name="isAll">Indicator to retrieve all roles irrespective departmentId</param>
@@ -233,96 +398,44 @@ namespace DataAccessLayer
         }
 
         /// <summary>
-        /// Retrieves all data of a single employee.
+        /// Updates User Role Information
         /// </summary>
-        /// <param name="username"></param>
+        /// <param name="userRolesID"></param>
         /// <returns></returns>
-        public static Employee RetrieveEmployeeByUsername(string username)
+        public static bool UpdateUserRoles ( string userRolesID )
         {
-            //Retrieve all details
-            Employee employee = null;
+            return false;
+        }
 
-            var conn = DBConnection.GetConnection();
-            var cmdText = @"sp_retrieve_all_employee_data_by_username";
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
+        /// <summary>
+        /// Deletes User Roles.
+        /// </summary>
+        /// <param name="userRolesID"></param>
+        /// <returns></returns>
+        public static bool DeleteUserRoles ( string userRolesID )
+        {
+            return false;
+        }
 
-            cmd.Parameters.Add("@Username", SqlDbType.VarChar, 20);
-            cmd.Parameters["@Username"].Value = username;
 
-            try
-            {
-                conn.Open();
-                var reader = cmd.ExecuteReader();
+        // User Address CRUD
 
-                if (reader.HasRows)
-                {
-                    reader.Read();
-                    employee = new Employee()
-                    {
-                        UserId = reader.GetInt32(0),
-                        Username = reader.GetString(1),
-                        FirstName = reader.GetString(2),
-                        LastName = reader.GetString(3),
-                        OtherNames = reader.IsDBNull(4) ? null : reader.GetString(4),
-                        DepartmentId = reader.IsDBNull(5) ? null : reader.GetString(5),
-                        Department = reader.IsDBNull(6) ? null : reader.GetString(6),
-                        PhoneNumber = reader.IsDBNull(7) ? null : reader.GetString(7),
-                        Email = reader.IsDBNull(8) ? null : reader.GetString(8),
-                        PicUrl = reader.IsDBNull(9) ? null : reader.GetString(9),
-                        isEmployed = reader.IsDBNull(10) ? false : reader.GetBoolean(10),
-                        isBlocked = reader.IsDBNull(11) ? false : reader.GetBoolean(11),
-                        UserRolesId = reader.IsDBNull(12) ? null :  reader.GetString(12),
-                        JobDesignation = reader.IsDBNull(13) ? null : reader.GetString(13), //role name
-                        ClearanceLevelId = reader.IsDBNull(14) ? -1 : reader.GetInt32(14),
-                        ClearanceLevel = reader.IsDBNull(15) ? null : reader.GetString(15),
-                        PersonalInfoId = reader.IsDBNull(16) ? -1 : reader.GetInt32(16),
-                        //Gender = reader.IsDBNull(17) ? null : reader.GetBoolean(17),
-                        DateOfBirth = reader.IsDBNull(18) ? DateTime.MinValue : reader.GetDateTime(18),
-                        CountryId = reader.IsDBNull(19) ? -1 : reader.GetInt32(19),
-                        Nationality = reader.IsDBNull(20) ? null : reader.GetString(20),
-                        AdditonalInfo = reader.IsDBNull(21) ? null : reader.GetString(21),
-                        HireDate = reader.IsDBNull(22) ? DateTime.MinValue : reader.GetDateTime(22),
-                        MaritalStatus = reader.IsDBNull(23) ? false : reader.GetBoolean(23),
-                        PersonalEmail = reader.IsDBNull(24) ? null : reader.GetString(24),
-                        PersonalPhoneNumber = reader.IsDBNull(25) ? null : reader.GetString(25)
-                    };
-
-                    //Null gender if not exists in database
-                    if (reader.IsDBNull(17))
-                        employee.Gender = null;
-                    else
-                        employee.Gender = reader.GetBoolean(17);
-
-                }}
-            catch (Exception e)
-            {
-                throw;
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-            //Get List of Personal Addresses
-            var addressList = new List<Address>();
-            if ( employee.PersonalInfoId != -1)
-            {
-                addressList.Clear();
-                addressList = retrieveAddressesByPeronalInfoId(employee.PersonalInfoId);
-                employee.Address = addressList;
-            }
-            
-            return employee;
-           
+        /// <summary>
+        /// Creates Address with User ID.
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns></returns>
+        private static bool CreateAddressByUserID( Employee employee )
+        {
+            return false;
         }
 
         /// <summary>
         /// Retrieves Addresses By Personal Information ID
         /// </summary>
-        /// <param name="PersonalInformationID">Personal Information ID Parameter for Select Query</param>
+        /// <param name="userID">Personal Information ID Parameter for Select Query</param>
         /// <returns>Returns a list of Addresses</returns>
-        public static List<Address> retrieveAddressesByPeronalInfoId(int PersonalInformationID) //change back to private
+        private static List<Address> retrieveAddressesByUserID(int userID) //remember there is a test here.
         {
             //Retrieve all details
             Address address = null;
@@ -330,12 +443,12 @@ namespace DataAccessLayer
             var addressLinesInDB = new List<String>();
 
             var conn = DBConnection.GetConnection();
-            var cmdText = @"sp_retrieve_address_by_personalID";
+            var cmdText = @"sp_retrieve_address_by_userID";
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@PersonalInformationID", SqlDbType.Int);
-            cmd.Parameters["@PersonalInformationID"].Value = PersonalInformationID;
+            cmd.Parameters.Add("@userID", SqlDbType.Int);
+            cmd.Parameters["@userID"].Value = userID;
 
             try
             {
@@ -387,186 +500,58 @@ namespace DataAccessLayer
         }
 
         /// <summary>
-        /// Data Access Method to Retrieve Countries from Database
+        /// Updates User Address By ID
         /// </summary>
-        /// <returns>List of Countries</returns>
-        public List<Country> RetrieveCountries()
-        {
-            var countriesInDB = new List<Country>();
-
-            //Getting connection
-            var conn = DBConnection.GetConnection();
-
-            //Using stored procedure
-            var cmdText = @"sp_retrieve_country_by_country_id";
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.Add("@CountryID", SqlDbType.Int);
-            cmd.Parameters["@CountryID"].Value = -1;
-
-            try
-            {
-                // you have to open a connection before using it
-                conn.Open();
-
-                // create a data reader with our command
-                var reader = cmd.ExecuteReader();
-                
-
-                // check to make sure the reader has data
-                if (reader.HasRows)
-                {
-                    // process the data reader
-                    while (reader.Read())
-                    {
-                        var country = new Country()
-                        {
-                            CountryID = reader.GetInt32(0),
-                            ISO = reader.IsDBNull(1) ? null : reader.GetString(1),
-                            Name = reader.IsDBNull(2) ? null : reader.GetString(2),
-                            NiceName = reader.IsDBNull(3) ? null : reader.GetString(3),
-                            ISO3 = reader.IsDBNull(4) ? null : reader.GetString(4),
-                            NumCode = reader.IsDBNull(5) ? -1 : reader.GetInt32(5),
-                            PhoneCode = reader.IsDBNull(6) ? -1 : reader.GetInt32(6)
-                        };
-                       countriesInDB.Add( country );
-                    }
-                    // close the reader
-                    reader.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw new ApplicationException("There was a problem retrieving countries list data." + ex);
-            }
-            finally
-            {
-                // final housekeeping
-                conn.Close();
-            }
-
-            return countriesInDB;
-            
-        }
-
-        /// <summary>
-        /// Retrieves Country By ID
-        /// </summary>
-        /// <param name="countryID"></param>
-        /// <returns>Country Object</returns>
-        public Country RetrieveCountryByID(int countryID)
-        {
-            //Retrieve country by Id
-            Country country = null;
-
-            var conn = DBConnection.GetConnection();
-            var cmdText = @"sp_retrieve_country_by_country_id";
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.Add("@CountryID", SqlDbType.Int);
-            cmd.Parameters["@CountryID"].Value = countryID;
-
-            try
-            {
-                conn.Open();
-                var reader = cmd.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    reader.Read();
-                    country = new Country()
-                    {
-                        CountryID = reader.GetInt32(0),
-                        ISO = reader.GetString(1),
-                        Name = reader.GetString(2),
-                        NiceName = reader.GetString(3),
-                        ISO3 = reader.GetString(4),
-                        NumCode = reader.GetInt32(5),
-                        PhoneCode = reader.GetInt32(6)              
-                    };
-                }
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-            return country;
-        }
-
-        /// <summary>
-        /// Retrieves state by ID
-        /// </summary>
-        /// <param name="stateID">ID for Query</param>
-        /// <param name="retrieveAll">Signal to retrieve all</param>
+        /// <param name="employee"></param>
         /// <returns></returns>
-        public static State RetrieveStateByID(int stateID)
+        private static bool UpdateAddressByUserID ( Employee employee )
         {
-            //Retrieve country by Id
-            State state = null;
+            return false;
+        }
 
-            var conn = DBConnection.GetConnection();
-            var cmdText = @"sp_retrieve_state_by_state_id";
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.Add("@StateID", SqlDbType.Int);
-            cmd.Parameters["@StateID"].Value = stateID;
-
-            try
-            {
-                conn.Open();
-                var reader = cmd.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    reader.Read();
-                    state = new State()
-                    {
-                        StateID = reader.GetInt32(0),
-                        StateCode = reader.GetString(1),
-                        StateName = reader.GetString(2)                       
-                    };
-                }
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-            return state;
+        /// <summary>
+        /// Deletes Address By User ID.
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        private static bool DeleteAddressByUserID ( int userID )
+        {
+            return false;
         }
 
 
+        // Address Types CRUD
+
         /// <summary>
-        /// Retrieves States Data into List
+        /// Creates new Address Type
         /// </summary>
-        /// <returns>States List</returns>
-        public static List<State> RetrieveStates()
+        /// <param name="addressType"></param>
+        /// <returns></returns>
+        public static bool CreateAddressType ( AddressType addressType )
         {
-            var statesList = new List<State>();
+            return false;
+        }
+
+        /// <summary>
+        /// Retrieve AddressTypes by AddressType ID
+        /// </summary>
+        /// <param name="addresstypeID"></param>
+        /// <param name="retrieveAll"></param>
+        /// <returns>Returns a list of AddressTypes</returns>
+        public static List<AddressType> RetrieveAddressTypesByID(int addresstypeID, bool retrieveAll)
+        {
+            var addressTypeList = new List<AddressType>();
 
             //Getting connection
             var conn = DBConnection.GetConnection();
 
             //Using stored procedure
-            var cmdText = @"sp_retrieve_state_by_state_id";
+            var cmdText = @"sp_retrieve_addresstype_by_id";
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.Add("@StateID", SqlDbType.Int);
-            cmd.Parameters["@StateID"].Value = -1;
+            cmd.Parameters.Add("@AddressTypeID", SqlDbType.Int);
+            int addressTypeIdParameter = retrieveAll ? -1 : addresstypeID;
+            cmd.Parameters["@AddressTypeID"].Value = addressTypeIdParameter;
 
             try
             {
@@ -575,23 +560,22 @@ namespace DataAccessLayer
 
                 // create a data reader with our command
                 var reader = cmd.ExecuteReader();
-                State state;
 
                 // check to make sure the reader has data
+
                 if (reader.HasRows)
                 {
                     // process the data reader
                     while (reader.Read())
                     {
-                        state = new State()
+                        var addresstype = new AddressType()
                         {
-                            StateID = reader.GetInt32(0),
-                            StateCode = reader.GetString(1),
-                            StateName = reader.GetString(2)
+                            AddressTypeId = reader.GetInt32(0),
+                            Name = reader.GetString(1),
+                            Description = reader.GetString(2)
                         };
-                        statesList.Add(state);
+                        addressTypeList.Add(addresstype);
                     }
-                    
                     // close the reader
                     reader.Close();
                 }
@@ -599,7 +583,7 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
 
-                throw new ApplicationException("There was a problem retrieving states data.", ex);
+                throw new ApplicationException("There was a problem retrieving address type data.", ex);
             }
             finally
             {
@@ -607,8 +591,40 @@ namespace DataAccessLayer
                 conn.Close();
             }
 
-            return statesList;
+            return addressTypeList;
+        }
 
+        /// <summary>
+        /// Updates Address Types
+        /// </summary>
+        /// <param name="addressTypeID"></param>
+        /// <returns></returns>
+        public static bool UpdateAddressType ( int addressTypeID )
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Deletes Address Type
+        /// </summary>
+        /// <param name="addressTypeID"></param>
+        /// <returns></returns>
+        public static bool DeleteAddresstype ( int addressTypeID ) //very dangerous message
+        {
+            return false;
+        }
+
+
+        // Clearance Level CRUD
+
+        /// <summary>
+        /// Creates new clearance level
+        /// </summary>
+        /// <param name="clearanceLevel">Clerance Level DTO</param>
+        /// <returns></returns>
+        public static bool CreateClearanceLevel ( ClearanceLevel clearanceLevel )
+        {
+            return false;
         }
 
         /// <summary>
@@ -678,65 +694,24 @@ namespace DataAccessLayer
         }
 
         /// <summary>
-        /// Retrieve AddressTypes by AddressType ID
+        /// Updates Clearance Level By Clearancelevel ID
         /// </summary>
-        /// <param name="addresstypeID"></param>
-        /// <param name="retrieveAll"></param>
-        /// <returns>Returns a list of AddressTypes</returns>
-        public static List<AddressType> RetrieveAddressTypesByID(int addresstypeID, bool retrieveAll)
+        /// <param name="clearanceLevelID">Clearance Level ID</param>
+        /// <returns></returns>
+        public static bool UpdateClearanceLevel ( int clearanceLevelID ) //potentially dangerous method
         {
-            var addressTypeList = new List<AddressType>();
-
-            //Getting connection
-            var conn = DBConnection.GetConnection();
-
-            //Using stored procedure
-            var cmdText = @"sp_retrieve_addresstype_by_id";
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@AddressTypeID", SqlDbType.Int);
-            int addressTypeIdParameter = retrieveAll ? -1 : addresstypeID;
-            cmd.Parameters["@AddressTypeID"].Value = addressTypeIdParameter;
-
-            try
-            {
-                // you have to open a connection before using it
-                conn.Open();
-
-                // create a data reader with our command
-                var reader = cmd.ExecuteReader();
-
-                // check to make sure the reader has data
-                
-                if (reader.HasRows)
-                {
-                    // process the data reader
-                    while (reader.Read())
-                    {
-                        var addresstype = new AddressType()
-                        {
-                            AddressTypeId = reader.GetInt32(0),
-                            Name = reader.GetString(1),
-                            Description = reader.GetString(2)
-                        };
-                        addressTypeList.Add(addresstype);
-                    }
-                    // close the reader
-                    reader.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw new ApplicationException("There was a problem retrieving address type data.", ex);
-            }
-            finally
-            {
-                // final housekeeping
-                conn.Close();
-            }
-
-            return addressTypeList;            
+            return false;
         }
+
+        /// <summary>
+        /// Deletes Clearance Level by ID
+        /// </summary>
+        /// <param name="clearanceLevelID">Clerance Level ID</param>
+        /// <returns></returns>
+        public static bool DeleteClearanceLevel ( int clearanceLevelID )
+        {
+            return false;
+        }
+
     }
 }

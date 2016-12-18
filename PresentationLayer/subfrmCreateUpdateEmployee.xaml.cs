@@ -75,11 +75,20 @@ namespace PresentationLayer
             _user = user;
             _employeeUsername = employeeUsername;
             _isEditMode = true;
+            subfrmAddAddress.SomethingHappened += new EventHandler(pageHome_SomethingHappened);
             InitializeComponent();
             setupWindow();
         }
 
+        void pageHome_SomethingHappened(object sender, EventArgs e)
+        {
 
+            //Update _employee address section
+            
+            //Refresh combo boxes - especially address drop down
+
+
+        }
 
         /// <summary>
         /// Constructor for Add Mode
@@ -306,14 +315,23 @@ namespace PresentationLayer
                 var addressFromEmployee = _employee.Address;
                 var newAddressToDisplay = addressFromEmployee.Find(x => x.AddressTypeId == selectedAddress.AddressTypeId);
 
-                //Set Address Box
-                foreach (var adtext in newAddressToDisplay.AddressLines)
+                if ( newAddressToDisplay != null)
                 {
-                    if (!adtext.Equals(null))
+                    //Set Address Box
+                    foreach (var adtext in newAddressToDisplay.AddressLines)
                     {
-                        txtAddress.Text += adtext + "\n";
-                    }
-                } 
+                        if (!adtext.Equals(null))
+                        {
+                            txtAddress.Text += adtext + "\n";
+                        }
+                    } 
+                }
+                else
+                {
+                    txtAddress.Text = "No Address Saved";
+                }
+
+                
             }
         }
 

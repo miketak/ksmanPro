@@ -16,14 +16,13 @@ namespace DataAccessLayer
     public class UserAccessor
     {
 
-
         /// <summary>
         /// Verifies username and password
         /// </summary>
         /// <param name="username"></param>
         /// <param name="passwordHash"></param>
         /// <returns></returns>
-        public static bool verifyUsernameAndPassword(string username, string passwordHash)
+        public static bool VerifyUsernameAndPassword(string username, string passwordHash)
         {
             var result = false;
 

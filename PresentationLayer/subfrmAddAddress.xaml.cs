@@ -47,8 +47,6 @@ namespace PresentationLayer
         /// </summary>
         List<Country> _countries;
 
-
-
         /// <summary>
         /// Add addressesOfEmployee to Parent form Manage Employee
         /// </summary>
@@ -160,13 +158,81 @@ namespace PresentationLayer
 
         }
 
-
-
-
-
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
+        private void cmbAddressType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_addressList != null)
+            {
+                //clear all text boxes
+                txtAddressLine1.Clear();
+                txtAddressLine2.Clear();
+                txtAddressLine3.Clear();
+                txtCity.Clear();
+                cmbState.SelectedItem = null;
+                txtZip.Clear();
+                cmbCountry.SelectedItem = null;
+
+
+                //Get Selection and addresstypeID
+                string selectedAddressText = (string)cmbAddressType.SelectedItem;
+                var selectedAddress = _addressTypes.Find(x => x.Name == selectedAddressText);
+
+                //Search in employee object for addressesOfEmployee
+                var addressFromEmployee = _addressList;
+                var newAddressToDisplay = addressFromEmployee.Find(x => x.AddressTypeId == selectedAddress.AddressTypeId);
+
+                if (newAddressToDisplay != null )
+                {
+                    //Set New Information
+                    txtAddressLine1.Text = newAddressToDisplay.AddressLines[0];
+                    txtAddressLine2.Text = newAddressToDisplay.AddressLines[1];
+                    txtAddressLine3.Text = newAddressToDisplay.AddressLines[2];
+                    txtCity.Text = newAddressToDisplay.City;
+                    txtZip.Text = newAddressToDisplay.Zip;
+
+                    //Set Combo Boxes
+                    //State
+                    State employeesState = _states.Find(x => x.StateID == newAddressToDisplay.StateID);
+                    cmbState.SelectedItem = employeesState.StateCode;
+
+                    //Country
+                    Country employeesCountry = _countries.Find(x => x.CountryID == newAddressToDisplay.CountryID);
+                    cmbCountry.SelectedItem = employeesCountry.NiceName;
+
+                }
+
+                
+
+            }
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+
+
+
+        }
+
+
+        public static event EventHandler SomethingHappened;
+        private void MakeSomethingHappen(EventArgs e)
+        {
+            if (_addressList != null)
+            {
+                SomethingHappened(this, e);
+            }
+        }
+
+
     }
 }
