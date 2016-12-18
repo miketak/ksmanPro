@@ -22,6 +22,9 @@ namespace PresentationLayer
     /// </summary>
     public partial class frmCentralDashboard 
     {
+        /// <summary>
+        /// Current User
+        /// </summary>
         User _user = null;
 
         /// <summary>
@@ -52,16 +55,31 @@ namespace PresentationLayer
                 MessageDialogStyle.Affirmative, mySettings);
         }
 
+        /// <summary>
+        /// Toggles fly out open and closed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             mySettings.IsOpen = true;
         }
 
+        /// <summary>
+        /// Toggles fly out open and closed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             mySettings.IsOpen = false;
         }
 
+        /// <summary>
+        /// Opens Admin Central App
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAdminCentral(object sender, RoutedEventArgs e)
         {
             //this.Hide();
@@ -69,6 +87,11 @@ namespace PresentationLayer
             frmAdminCentral.Show();
         }
 
+        /// <summary>
+        /// Update Password function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnChangePassword(object sender, RoutedEventArgs e)
         {
             

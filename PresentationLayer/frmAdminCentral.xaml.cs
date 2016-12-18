@@ -20,6 +20,9 @@ namespace PresentationLayer
     /// </summary>
     public partial class frmAdminCentral
     {
+        /// <summary>
+        /// Current User
+        /// </summary>
         User _user = null;
 
         /// <summary>

@@ -25,7 +25,12 @@ namespace PresentationLayer
     /// </summary>
     public partial class MainWindow 
     {
+        
         internal readonly string failure = "Wrong username or password.";
+
+        /// <summary>
+        /// Current User
+        /// </summary>
         User _user = null;
 
         /// <summary>
@@ -37,11 +42,21 @@ namespace PresentationLayer
             txtUsername.Focus();
         }
 
+        /// <summary>
+        /// Close function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Login Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             var authenticate = new UserManager();
@@ -70,7 +85,6 @@ namespace PresentationLayer
             lblPrompt.Content = "";
 
         }
-
 
         private void txtPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {

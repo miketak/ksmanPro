@@ -29,6 +29,11 @@ namespace PresentationLayer
         User _user = new User();
 
         /// <summary>
+        /// Indicates whether form is in editAddress mode
+        /// </summary>
+        bool _isEditMode;
+
+        /// <summary>
         /// Employee from database
         /// </summary>
         Employee _employee;
@@ -48,24 +53,28 @@ namespace PresentationLayer
         /// </summary>
         List<UserRoles> _jobPositions;
 
-        List<Country> _countries;
-
         /// <summary>
-        /// Indicates whether form is in editAddress mode
+        /// List of countries
         /// </summary>
-        bool _isEditMode;
+        List<Country> _countries;
 
         /// <summary>
         /// Department lists for departments combobox
         /// </summary>
-        List<Department> _departments = new List<Department>();
+        List<Department> _departments;
 
         /// <summary>
         /// Clearance Levels list for Clearance Level Combo Box
         /// </summary>
-        List<ClearanceLevel> _clearanceLevels = new List<ClearanceLevel>();
+        List<ClearanceLevel> _clearanceLevels;
 
+        /// <summary>
+        /// Close event trigger
+        /// </summary>
         bool actualClose = false;
+
+
+
 
         /// <summary>
         /// Constructor Edit Mode
@@ -75,18 +84,22 @@ namespace PresentationLayer
             _user = user;
             _employeeUsername = employeeUsername;
             _isEditMode = true;
-            subfrmAddAddress.SomethingHappened += new EventHandler(pageHome_SomethingHappened);
+            subfrmAddAddress.UpdateEvent += new EventHandler(update_EmployeeAddress_Event);
             InitializeComponent();
             setupWindow();
         }
 
-        void pageHome_SomethingHappened(object sender, EventArgs e)
+        /// <summary>
+        /// Update Employee Address Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void update_EmployeeAddress_Event(object sender, EventArgs e)
         {
 
             //Update _employee address section
             
             //Refresh combo boxes - especially address drop down
-
 
         }
 
@@ -102,7 +115,6 @@ namespace PresentationLayer
             setupWindow();
 
         }
-
 
         /// <summary>
         /// Subform to editAddress and add new addresses to parent form.
@@ -126,7 +138,6 @@ namespace PresentationLayer
             subfrmAddEmail.ShowDialog();
         }
 
-
         /// <summary>
         /// Subform to editAddress and add new personal telphone numbers to parent form.
         /// </summary>
@@ -137,6 +148,9 @@ namespace PresentationLayer
             var subfrmAddPersonalTelephone = new subfrmAddPersonalTelephone();
             subfrmAddPersonalTelephone.ShowDialog();
         }
+
+
+
 
         /// <summary>
         /// Sets up window elements from User information
@@ -337,7 +351,6 @@ namespace PresentationLayer
         }
 
 
-
         /// <summary>
         /// Fill departments based on Department Id.
         /// </summary>
@@ -360,7 +373,6 @@ namespace PresentationLayer
             }
 
         }
-
 
         /// <summary>
         /// Sets _employee id private field with employee basie date

@@ -55,7 +55,6 @@ namespace PresentationLayer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
         private void globalEmployeeList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
@@ -74,7 +73,6 @@ namespace PresentationLayer
 
         }
 
-
         /// <summary>
         /// Loads employees from database both active and inactive.
         /// </summary>
@@ -89,7 +87,6 @@ namespace PresentationLayer
 
             //option for inactive employees
         }
-
 
         /// <summary>
         /// Opens Create Update Employee in Add mode

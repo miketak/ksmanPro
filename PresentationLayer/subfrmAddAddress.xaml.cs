@@ -48,7 +48,7 @@ namespace PresentationLayer
         List<Country> _countries;
 
         /// <summary>
-        /// Add addressesOfEmployee to Parent form Manage Employee
+        /// Constructor call in edit mode.
         /// </summary>
         public subfrmAddAddress(List<Address> address)
         {
@@ -58,6 +58,9 @@ namespace PresentationLayer
             setupWindow();
         }
 
+        /// <summary>
+        /// Constructor call in add mode
+        /// </summary>
         public subfrmAddAddress( )
         {
             isEditMode = false;
@@ -65,11 +68,17 @@ namespace PresentationLayer
             setupWindow();
         }
 
+
+        /// <summary>
+        /// Sets Up Window
+        /// </summary>
         private void setupWindow()
         {
             if (isEditMode)
             {
+                //Set form title
                 this.Title = "Edit Address";
+
 
                 fillComboBoxes();
 
@@ -140,9 +149,6 @@ namespace PresentationLayer
                 {
                     cmbAddressType.Items.Add(ad.Name);
                 }
-
-                
-
 
                 //add new address functionality required
             }
@@ -224,13 +230,15 @@ namespace PresentationLayer
 
         }
 
-
-        public static event EventHandler SomethingHappened;
+        /// <summary>
+        /// Event Handler to update parent form
+        /// </summary>
+        public static event EventHandler UpdateEvent;
         private void MakeSomethingHappen(EventArgs e)
         {
             if (_addressList != null)
             {
-                SomethingHappened(this, e);
+                UpdateEvent(this, e);
             }
         }
 
