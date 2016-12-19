@@ -73,9 +73,6 @@ namespace PresentationLayer
         /// </summary>
         bool actualClose = false;
 
-
-
-
         /// <summary>
         /// Constructor Edit Mode
         /// </summary>
@@ -84,7 +81,7 @@ namespace PresentationLayer
             _user = user;
             _employeeUsername = employeeUsername;
             _isEditMode = true;
-            subfrmAddAddress.UpdateEvent += new EventHandler(update_EmployeeAddress_Event);
+            subfrmAddAddress.UpdateEvent += new EventHandler(Update_EmployeeAddress_Event);
             InitializeComponent();
             setupWindow();
         }
@@ -94,12 +91,17 @@ namespace PresentationLayer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void update_EmployeeAddress_Event(object sender, EventArgs e)
+        void Update_EmployeeAddress_Event(object sender, EventArgs e)
         {
+            //Update address
+            var addAddressForm = new subfrmAddAddress();
+            _employee.Address = addAddressForm.getUpdatedAddress();
 
-            //Update _employee address section
-            
+
+            MessageBox.Show("Hey I'm working");
+
             //Refresh combo boxes - especially address drop down
+            //fillComboBoxes();
 
         }
 
@@ -204,8 +206,6 @@ namespace PresentationLayer
                 UserRoles loadedEmployeeRole = _jobPositions.Find(x => x.UserRolesId == _employee.UserRolesId);
                 cmbJobPosition.SelectedItem = loadedEmployeeRole.Name;
 
-                
-                
             }
             else
             {
@@ -435,8 +435,17 @@ namespace PresentationLayer
         private void msdEditAddress(object sender, MouseButtonEventArgs e)
         {
             //Open form in edit mode
-            var editAddress = new subfrmAddAddress(_employee.Address);
-            editAddress.ShowDialog();
+            if ( txtAddress.Text.Count() == 0)
+            {
+                MessageBox.Show("Kindly add an address");
+                txtStatusMessage.Text += "Kindly add an address";
+            }
+            else
+            {
+                var editAddress = new subfrmAddAddress(_employee.Address);
+                editAddress.ShowDialog();
+            }
+           
         }
 
         private void txtAddress_ToolTipOpening(object sender, ToolTipEventArgs e)

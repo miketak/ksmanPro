@@ -469,7 +469,7 @@ namespace DataAccessLayer
                            Zip = reader.IsDBNull(8) ? null : reader.GetString(8),
                            CountryID = reader.IsDBNull(9) ? -1 : reader.GetInt32(9),
                            AddressTypeId = reader.IsDBNull(11) ? -1 : reader.GetInt32(11),
-                           UserPersonalInformationId = reader.IsDBNull(13) ? -1 : reader.GetInt32(13)                            
+                           //UserPersonalInformationId = reader.IsDBNull(13) ? -1 : reader.GetInt32(13)                            
                         };
 
                         //Process AddressLines

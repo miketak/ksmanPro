@@ -22,7 +22,6 @@ namespace DataObjects
 
         public int AddressTypeId { get; set; }
 
-        public int UserPersonalInformationId { get; set; }
 
     }
 }

@@ -48,6 +48,11 @@ namespace PresentationLayer
         List<Country> _countries;
 
         /// <summary>
+        /// Holds old Address Type Name for Combo box selection change
+        /// </summary>
+        string _oldAddressTypeName;
+
+        /// <summary>
         /// Constructor call in edit mode.
         /// </summary>
         public subfrmAddAddress(List<Address> address)
@@ -61,7 +66,7 @@ namespace PresentationLayer
         /// <summary>
         /// Constructor call in add mode
         /// </summary>
-        public subfrmAddAddress( )
+        public subfrmAddAddress()
         {
             isEditMode = false;
             InitializeComponent();
@@ -85,13 +90,15 @@ namespace PresentationLayer
                 //Set Address Type
                 AddressType addressType = _addressTypes.Find(x => x.AddressTypeId == _addressList[0].AddressTypeId);
                 cmbAddressType.SelectedItem = addressType.Name;
+                _oldAddressTypeName = addressType.Name; //setting instance variable
 
                 //Initial Setting
                 txtAddressLine1.Text = _addressList[0].AddressLines[0];
                 txtAddressLine2.Text = _addressList[0].AddressLines[1];
                 txtAddressLine3.Text = _addressList[0].AddressLines[2];
-                txtCity.Text = _addressList[0].City;     
-           
+                txtCity.Text = _addressList[0].City;
+
+                //Select Employee State
                 State employeesState = _states.Find(x => x.StateID == _addressList[0].StateID);
                 cmbState.SelectedItem = employeesState.StateCode;
 
@@ -100,8 +107,8 @@ namespace PresentationLayer
                 Country employeesCountry = _countries.Find(x => x.CountryID == _addressList[0].CountryID);
                 cmbCountry.SelectedItem = employeesCountry.NiceName;
 
-               
-                
+
+
             }
             else
             {
@@ -111,6 +118,9 @@ namespace PresentationLayer
 
         }
 
+        /// <summary>
+        /// Fills Combo Boxes
+        /// </summary>
         public void fillComboBoxes()
         {
             var employeeManager = new EmployeeManager();
@@ -130,13 +140,13 @@ namespace PresentationLayer
 
             //load states box
             _states = utilityManager.RetrieveStates();
-            foreach ( State st in _states)
+            foreach (State st in _states)
             {
                 cmbState.Items.Add(st.StateCode);
             }
 
 
-            if ( isEditMode )
+            if (isEditMode)
             {
                 //fill only loaded employee types
                 //foreach (var addType in _addressList)
@@ -155,7 +165,7 @@ namespace PresentationLayer
             else
             {
                 //Add all types into combo box
-                foreach ( var ad in _addressTypes)
+                foreach (var ad in _addressTypes)
                 {
                     cmbAddressType.Items.Add(ad.Name);
                 }
@@ -172,8 +182,14 @@ namespace PresentationLayer
 
         private void cmbAddressType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+       
             if (_addressList != null)
             {
+                Console.WriteLine("Address List Count on selection change = " + _addressList.Count().ToString());
+
+                //Update _addressList
+                updateAddressList();
+
                 //clear all text boxes
                 txtAddressLine1.Clear();
                 txtAddressLine2.Clear();
@@ -192,7 +208,7 @@ namespace PresentationLayer
                 var addressFromEmployee = _addressList;
                 var newAddressToDisplay = addressFromEmployee.Find(x => x.AddressTypeId == selectedAddress.AddressTypeId);
 
-                if (newAddressToDisplay != null )
+                if (newAddressToDisplay != null)
                 {
                     //Set New Information
                     txtAddressLine1.Text = newAddressToDisplay.AddressLines[0];
@@ -212,9 +228,8 @@ namespace PresentationLayer
 
                 }
 
-                
-
             }
+
 
         }
 
@@ -223,10 +238,72 @@ namespace PresentationLayer
 
         }
 
+        /// <summary>
+        /// Updates Local Address List
+        /// </summary>
+        private void updateAddressList()
+        {
+            //int addressCount = _addressTypes.Count();
+
+            if (txtAddressLine1.Text.Count() + txtAddressLine2.Text.Count() + txtAddressLine3.Text.Count() != 0)
+            {
+
+                //int addressIndex = 0;
+                foreach (var address in _addressList)
+                {
+                    Console.WriteLine(address.AddressTypeId.ToString() );
+
+                        if ( address.AddressTypeId ==  _addressTypes.Find( x => x.Name == _oldAddressTypeName/*(string)cmbAddressType.SelectedItem*/ ).AddressTypeId )//doesn't change
+                        {
+                            int addressIndex = address.AddressTypeId - 1;
+                            Console.WriteLine("Address Type Name: " + _addressTypes.Find( x => x.AddressTypeId == address.AddressTypeId).Name );
+                            Console.WriteLine("Selected Item: " + (string)cmbAddressType.SelectedItem);
+                            Console.WriteLine("@ Address List Index: " + addressIndex);
+                            int lineIndex = 0;
+
+                            if (
+                                _addressList[addressIndex].AddressLines[lineIndex] != txtAddressLine1.Text ||
+                                _addressList[addressIndex].AddressLines[lineIndex + 1] != txtAddressLine2.Text ||
+                                _addressList[addressIndex].AddressLines[lineIndex + 2] != txtAddressLine3.Text ||
+                                _addressList[addressIndex].City != txtCity.Text ||
+                                _addressList[addressIndex].StateID != _states.Find(x => x.StateCode == (string)cmbState.SelectedItem).StateID ||
+                                _addressList[addressIndex].CountryID != _countries.Find(x => x.NiceName == (string)cmbCountry.SelectedItem).CountryID
+
+                                )
+                            {
+
+                                Console.WriteLine("I have set the textboxes");
+
+                                _addressList[addressIndex].AddressLines[lineIndex] = txtAddressLine1.Text;
+                                _addressList[addressIndex].AddressLines[lineIndex + 1] = txtAddressLine2.Text;
+                                _addressList[addressIndex].AddressLines[lineIndex + 2] = txtAddressLine2.Text;
+                                _addressList[addressIndex].City = txtCity.Text;
+                                _addressList[addressIndex].StateID = _states.Find(x => x.StateCode == (string)cmbState.SelectedItem).StateID;
+                                _addressList[addressIndex].CountryID = _countries.Find(x => x.NiceName == (string)cmbCountry.SelectedItem).CountryID;
+
+                            }  
+                        } // end of if statement
+                        else if (  _addressList.Count() < cmbAddressType.SelectedIndex && txtAddressLine1.Text.Count() + txtAddressLine2.Text.Count() + txtAddressLine3.Text.Count() != 0 )
+                        {
+                            var newAddress = new Address();
+                            newAddress.AddressLines.Add(txtAddressLine1.Text);
+                            newAddress.AddressLines.Add(txtAddressLine2.Text);
+                            newAddress.AddressLines.Add(txtAddressLine3.Text);
+                            newAddress.City = txtCity.Text;
+                            newAddress.StateID = _states.Find(x => x.StateCode == (string)cmbState.SelectedItem).StateID;
+                            newAddress.CountryID = _countries.Find(x => x.NiceName == (string)cmbCountry.SelectedItem).CountryID;
+                            _addressList.Add(newAddress);
+                        }
+                        
+                } //end of foreach statement [addresses]      
+            }
+            _oldAddressTypeName = (string)cmbAddressType.SelectedItem;
+        }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-
-
+            //Raise event to update parent form
+            this.UpdateParentForm(e);
 
         }
 
@@ -234,12 +311,21 @@ namespace PresentationLayer
         /// Event Handler to update parent form
         /// </summary>
         public static event EventHandler UpdateEvent;
-        private void MakeSomethingHappen(EventArgs e)
+        private void UpdateParentForm(EventArgs e)
         {
             if (_addressList != null)
             {
                 UpdateEvent(this, e);
             }
+        }
+
+        /// <summary>
+        /// Method Declaration for Parent form Call
+        /// </summary>
+        /// <returns></returns>
+        public List<Address> getUpdatedAddress()
+        {
+            return _addressList;
         }
 
 
