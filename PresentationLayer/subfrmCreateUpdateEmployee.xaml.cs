@@ -83,7 +83,7 @@ namespace PresentationLayer
             _isEditMode = true;
             subfrmAddAddress.UpdateEvent += new EventHandler(Update_EmployeeAddress_Event);
             InitializeComponent();
-            setupWindow();
+            initialWindowSetup();
         }
 
         /// <summary>
@@ -91,17 +91,45 @@ namespace PresentationLayer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void Update_EmployeeAddress_Event(object sender, EventArgs e)
+        async void Update_EmployeeAddress_Event(object sender, EventArgs e)
         {
             //Update address
-            var addAddressForm = new subfrmAddAddress();
-            _employee.Address = addAddressForm.getUpdatedAddress();
+            //var addAddressForm = new subfrmAddAddress();
+            _employee.Address = subfrmAddAddress.getUpdatedAddress();
+            //MessageBox.Show("Hey I'm working");
 
-
-            MessageBox.Show("Hey I'm working");
-
+            //Set Address Boxes
             //Refresh combo boxes - especially address drop down
-            //fillComboBoxes();
+            List<Address> addressesOfEmployee = _employee.Address;
+            cmbAddressTypes.Items.Clear();
+            if (addressesOfEmployee.Count != 0)
+            {
+                foreach (var addType in addressesOfEmployee)
+                {
+                    AddressType addressType = _addressTypes.Find(x => x.AddressTypeId == addType.AddressTypeId);
+                    cmbAddressTypes.Items.Add(addressType.Name);
+                }
+                cmbAddressTypes.SelectedItem = _addressTypes.Find(x => x.AddressTypeId == addressesOfEmployee[0].AddressTypeId).Name;
+                // fill Address TextBox
+                txtAddress.Clear();
+                foreach (var adtext in addressesOfEmployee[0].AddressLines)
+                {
+                    if (!adtext.Equals(null))
+                    {
+                        txtAddress.Text += adtext + "\n";
+                    }
+                }
+            } 
+
+            //Indicate Success
+             var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Ok",
+                ColorScheme = MetroDialogColorScheme.Theme
+            };
+
+             await this.ShowMessageAsync("Success", "Addresses Saved Successfully",
+                 MessageDialogStyle.AffirmativeAndNegative, mySettings);
 
         }
 
@@ -114,7 +142,7 @@ namespace PresentationLayer
             _user = user;
             _isEditMode = false;
             InitializeComponent();
-            setupWindow();
+            initialWindowSetup();
 
         }
 
@@ -151,13 +179,10 @@ namespace PresentationLayer
             subfrmAddPersonalTelephone.ShowDialog();
         }
 
-
-
-
         /// <summary>
         /// Sets up window elements from User information
         /// </summary>
-        private void setupWindow()
+        private void initialWindowSetup()
         {
             if (_isEditMode)
             {
@@ -221,6 +246,7 @@ namespace PresentationLayer
             }
 
         }
+
 
         /// <summary>
         /// Fills all combo boxes
@@ -317,29 +343,38 @@ namespace PresentationLayer
         /// <param name="e"></param>
         private void cmbAddressTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Console.WriteLine("CMB ADDRESS Selection Change");
+
             if ( _employee.Address != null )
             {
                 //clear Address Text Box
                 txtAddress.Clear();
+                Address newAddressToDisplay = new Address();
 
                 //Get Selection and addresstypeID
-                string selectedAddressText = (string)cmbAddressTypes.SelectedItem;
-                var selectedAddress = _addressTypes.Find(x => x.Name == selectedAddressText);
+                if ( (string)cmbAddressTypes.SelectedItem != null)
+                {
+                    string selectedAddressText = (string)cmbAddressTypes.SelectedItem;
+                    var selectedAddress = _addressTypes.Find(x => x.Name == selectedAddressText);
 
-                //Search in employee object for addressesOfEmployee
-                var addressFromEmployee = _employee.Address;
-                var newAddressToDisplay = addressFromEmployee.Find(x => x.AddressTypeId == selectedAddress.AddressTypeId);
+                    //Search in employee object for addressesOfEmployee
+                    var addressFromEmployee = _employee.Address;
+                    newAddressToDisplay = addressFromEmployee.Find(x => x.AddressTypeId == selectedAddress.AddressTypeId);
+                }
 
-                if ( newAddressToDisplay != null)
+                if ( newAddressToDisplay != null )
                 {
                     //Set Address Box
-                    foreach (var adtext in newAddressToDisplay.AddressLines)
+                    if ( newAddressToDisplay.AddressLines != null)
                     {
-                        if (!adtext.Equals(null))
+                        foreach (var adtext in newAddressToDisplay.AddressLines)
                         {
-                            txtAddress.Text += adtext + "\n";
-                        }
-                    } 
+                            if (!adtext.Equals(null))
+                            {
+                                txtAddress.Text += adtext + "\n";
+                            }
+                        } 
+                    }  
                 }
                 else
                 {
