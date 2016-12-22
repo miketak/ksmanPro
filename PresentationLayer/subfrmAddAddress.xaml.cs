@@ -66,7 +66,7 @@ namespace PresentationLayer
             loadFormData();
             isEditMode = true;
             InitializeComponent();
-            initialWindowSetup();
+            WindowSetup();
         }
 
         /// <summary>
@@ -77,12 +77,13 @@ namespace PresentationLayer
             loadFormData();
             isEditMode = false;
             InitializeComponent();
-            initialWindowSetup();
+            WindowSetup();
         }
 
         private void splitAddresses()
         {
             Console.WriteLine("Why I'm I here");
+
 
             foreach (var add in _addressList)
             {
@@ -117,16 +118,17 @@ namespace PresentationLayer
             var employeeManager = new EmployeeManager();
             var utilityManager = new UtilityManager();
 
-            //split addresses
-            splitAddresses();
+            //split Addresses
+            if ( _addressList != null)
+                splitAddresses();
 
-            // load addresses types
+            // load Addresses types
             _addressTypes = employeeManager.RetrieveAddressTypeByID(-1, true);
 
-            // load countries
+            // load Countries
             _countries = utilityManager.RetrieveCountries();
 
-            // load states
+            // load States
             _states = utilityManager.RetrieveStates();
 
         }
@@ -134,7 +136,7 @@ namespace PresentationLayer
         /// <summary>
         /// Sets Up Window
         /// </summary>
-        private void initialWindowSetup()
+        private void WindowSetup()
         {
             if (isEditMode)
             {
@@ -166,6 +168,7 @@ namespace PresentationLayer
             else
             {
                 this.Title = "Add Address";
+                _oldAddressTypeName = "Primary";
                 fillComboBoxes();
             }
 
@@ -409,10 +412,16 @@ namespace PresentationLayer
             updateTargetAddress();
 
             //Update _addressList to parent form
-            _addressList.Clear();
+            if (_addressList != null)
+                _addressList.Clear();
+            else //Initialize Object
+            {
+                _addressList = new List<Address>();
+            }
 
             if ( _primary != null )
             {
+                
                 _addressList.Add(_primary);
             }
             if (_secondary1 != null)
@@ -433,9 +442,19 @@ namespace PresentationLayer
             }
 
             //Raise event to update parent form
-            this.UpdateParentForm(e);
+            if ( _addressList != null)
+            {
+                this.UpdateParentForm(e);
 
-            this.Close();
+                this.Close();
+            }
+            else //Notify User that nothing was loaded
+            {
+                MessageBox.Show("No Addresses Saved");
+                this.Close();
+            }
+
+            
         }
 
         /// <summary>

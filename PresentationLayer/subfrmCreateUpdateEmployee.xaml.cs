@@ -87,6 +87,20 @@ namespace PresentationLayer
         }
 
         /// <summary>
+        /// Constructor for Add Mode
+        /// </summary>
+        /// <param name="user"></param>
+        public subfrmCreateUpdateEmployee(User user)
+        {
+            _user = user;
+            _isEditMode = false;
+            subfrmAddAddress.UpdateEvent += new EventHandler(Update_EmployeeAddress_Event);
+            InitializeComponent();
+            initialWindowSetup();
+
+        }
+
+        /// <summary>
         /// Update Employee Address Event
         /// </summary>
         /// <param name="sender"></param>
@@ -94,13 +108,22 @@ namespace PresentationLayer
         async void Update_EmployeeAddress_Event(object sender, EventArgs e)
         {
             //Update address
-            //var addAddressForm = new subfrmAddAddress();
-            _employee.Address = subfrmAddAddress.getUpdatedAddress();
+            if ( _employee != null)
+            {
+                _employee.Address = subfrmAddAddress.getUpdatedAddress();
+            }
+            else //Instantiate Employee
+            {
+                _employee = new Employee();
+                _employee.Address = subfrmAddAddress.getUpdatedAddress();
+            }
+            
             //MessageBox.Show("Hey I'm working");
 
             //Set Address Boxes
             //Refresh combo boxes - especially address drop down
             List<Address> addressesOfEmployee = _employee.Address;
+            cmbAddressTypes.IsEnabled = true;
             cmbAddressTypes.Items.Clear();
             if (addressesOfEmployee.Count != 0)
             {
@@ -130,19 +153,6 @@ namespace PresentationLayer
 
              await this.ShowMessageAsync("Success", "Addresses Saved Successfully",
                  MessageDialogStyle.AffirmativeAndNegative, mySettings);
-
-        }
-
-        /// <summary>
-        /// Constructor for Add Mode
-        /// </summary>
-        /// <param name="user"></param>
-        public subfrmCreateUpdateEmployee(User user)
-        {
-            _user = user;
-            _isEditMode = false;
-            InitializeComponent();
-            initialWindowSetup();
 
         }
 
@@ -330,7 +340,10 @@ namespace PresentationLayer
                 cmbJobPosition.Items.Add("Select Department");
 
                 // fill Address types
-                cmbAddressTypes.Items.Add("No Addresses Yet");
+                string noAddressPrompt = "No Addresses Yet";
+                cmbAddressTypes.Items.Add( noAddressPrompt );
+                //cmbAddressTypes.SelectedItem = noAddressPrompt;
+                cmbAddressTypes.IsEnabled = false;
             }
             
 
@@ -495,11 +508,6 @@ namespace PresentationLayer
             txtStatusMessage.Text = "Status Message: ";
         }
 
-        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
-        }
-
         private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if ( !actualClose )
@@ -527,6 +535,52 @@ namespace PresentationLayer
                 actualClose = false;
             }
 
+        }
+
+        private void btnSave(object sender, RoutedEventArgs e)
+        {
+            if ( _employee.UserId == 0) //Create Employee
+            {
+
+                _employee.FirstName = txtFirstName.Text;
+                _employee.LastName = txtLastName.Text;
+                _employee.OtherNames = txtOtherNames.Text;
+                _employee.PersonalPhoneNumber = txtPersonalTelephone.Text;
+                _employee.PersonalEmail = txtPersonalEmail.Text;
+                //_employee.Address :: Already Set in Add/Edit Address SubForm
+                
+
+                if ( cmbNationality.SelectedItem != null )
+                    _employee.CountryId = _countries.Find(x => x.NiceName == (string)cmbNationality.SelectedItem).CountryID;
+
+                _employee.MaritalStatus = (bool)chkMaritalStatus.IsChecked;
+                _employee.Gender = (string)cmbGender.SelectedItem == "Male" ? true : false;
+                _employee.DateOfBirth = (DateTime)dateDOB.SelectedDate;
+                _employee.Username = txtUsername.Text; //Create check for username existence
+                //_employee.PasswordHash :: Set At Business Layer
+                _employee.PhoneNumber = txtCompanyTelephone.Text;
+                _employee.Email = txtCompanyEmail.Text;
+
+                if ( cmbDepartment.SelectedItem != null )
+                    _employee.DepartmentId = _departments.Find(x => x.Name == (string)cmbDepartment.SelectedItem ).DepartmentId;
+
+                if ( cmbJobPosition.SelectedItem != null )
+                    _employee.UserRolesId = _jobPositions.Find(x => x.Name == (string)cmbJobPosition.SelectedItem).UserRolesId;
+
+                if ( cmbClearanceLevel.SelectedItem != null )
+                    _employee.ClearanceLevelId = _clearanceLevels.Find(x => x.Name == (string)cmbClearanceLevel.SelectedItem).ClearanceLevelId;
+
+                _employee.isEmployed = (bool)chkisActive.IsChecked;
+
+                // Write Employee Data to Database
+                var employeeManager = new EmployeeManager();
+                employeeManager.CreateEmployee(_employee);
+            }
+            else //Update Employee
+            {
+                var employeeManager = new EmployeeManager();
+                employeeManager.UpdateEmployeeByID(_employee);
+            }
         }
 
         

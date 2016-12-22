@@ -26,7 +26,24 @@ namespace BusinessLogic
         {
             bool result = false;
 
-            result = EmployeeAccessor.CreateEmployee(employee);
+            //Set Password
+            var userEncode = new UserManager();
+            employee.PasswordHash = userEncode.HashSHA256(employee.Username.ToUpper());
+            
+            //Write Employee and Get new UserId
+            employee.UserId = EmployeeAccessor.CreateEmployee(employee);
+
+
+            //Write Addresses
+            int count = 0;
+            foreach ( var addressElement in employee.Address)
+            {
+                count += EmployeeAccessor.CreateAddressByUserID(employee.UserId, addressElement);
+            }
+
+            // Check for write succcess
+            if (employee.UserId != 0 && count == employee.Address.Count)
+                result = true;
 
             return result;
 

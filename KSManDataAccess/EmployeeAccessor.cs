@@ -21,16 +21,57 @@ namespace DataAccessLayer
         /// <summary>
         /// Creates a new Employee
         /// </summary>
-        /// <param name="employee"></param>
+        /// <param name="m"></param>
         /// <returns>Returns a boolean on success/failure</returns>
-        public static bool CreateEmployee(Employee employee)
+        public static int CreateEmployee(Employee m)
         {
+            int count = 0;
+
+            var conn = DBConnection.GetConnection();
+            var cmdText = @"sp_create_new_user";
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@FirstName", m.FirstName );
+            cmd.Parameters.AddWithValue("@LastName", m.LastName);
+            cmd.Parameters.AddWithValue("@OtherNames", m.OtherNames);
+            cmd.Parameters.AddWithValue("@PhoneNumber", m.PhoneNumber);
+            cmd.Parameters.AddWithValue("@Email", m.Email);
+            cmd.Parameters.AddWithValue("@ssnNo", m.SSNo);
+            cmd.Parameters.AddWithValue("@picUrl", m.PicUrl);
+            cmd.Parameters.AddWithValue("@isEmployed", m.isEmployed);
+            cmd.Parameters.AddWithValue("@isBlocked", m.isBlocked);
+            cmd.Parameters.AddWithValue("@UserRolesID", m.UserRolesId);
+            cmd.Parameters.AddWithValue("@ClearanceLevelID", m.ClearanceLevelId);
+            cmd.Parameters.AddWithValue("@Username", m.Username);
+            cmd.Parameters.AddWithValue("@HireDate", m.HireDate); //hasn't been set in business layer and presentation layer
+            cmd.Parameters.AddWithValue("@PasswordHash", m.PasswordHash);
+            cmd.Parameters.AddWithValue("@Gender", m.Gender);
+            cmd.Parameters.AddWithValue("@BirthDate", m.DateOfBirth);
+            cmd.Parameters.AddWithValue("@CountryID", m.CountryId);
+            cmd.Parameters.AddWithValue("@MaritalStatus", m.MaritalStatus);
+            cmd.Parameters.AddWithValue("@PersonalEmail", m.PersonalEmail);
+            cmd.Parameters.AddWithValue("@PersonalPhoneNumber", m.PersonalPhoneNumber);
+            cmd.Parameters.AddWithValue("@AdditionalInfo", m.AdditonalInfo);
+
+            try
+            {
+                conn.Open();
+                count = cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return count;
             //Insert into Users Table
 
-            //Insert into Personal Information Table
-
-            //Insert into UserAddress Table
-            return false;
+            //Returns the User ID
+            return -1;
         }
 
         /// <summary>
@@ -425,9 +466,39 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="employee"></param>
         /// <returns></returns>
-        private static bool CreateAddressByUserID( Employee employee )
+        public static int CreateAddressByUserID( int userID, Address address)
         {
-            return false;
+            int count = 0;
+
+            var conn = DBConnection.GetConnection();
+            var cmdText = @"sp_create_new_user_address";
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue( "@AddressLine1", address.AddressLines[0] );
+            cmd.Parameters.AddWithValue( "@AddressLine2", address.AddressLines[1] );
+            cmd.Parameters.AddWithValue( "@AddressLine3", address.AddressLines[2] );
+            cmd.Parameters.AddWithValue("@City", address.City);
+            cmd.Parameters.AddWithValue("@StateID", address.StateID);
+            cmd.Parameters.AddWithValue("@Zip", address.Zip);
+            cmd.Parameters.AddWithValue("@CountryID", address.CountryID);
+            cmd.Parameters.AddWithValue("@AddressTypeID", address.AddressTypeId);
+            cmd.Parameters.AddWithValue("@UserID", address);
+
+            try
+            {
+                conn.Open();
+                count = cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return count;
         }
 
         /// <summary>
@@ -712,6 +783,9 @@ namespace DataAccessLayer
         {
             return false;
         }
+
+
+
 
     }
 }

@@ -13,9 +13,9 @@ namespace DataObjects
 
         public DateTime DateOfBirth { get; set; }
 
-        public int CountryId { get; set; }
+        public int CountryId { get; set; }  // :: Serves as Nationality
 
-        public string Nationality { get; set; }
+        public string Nationality { get; set; }   //shall be scrapped
 
         public string AdditonalInfo { get; set; }
 

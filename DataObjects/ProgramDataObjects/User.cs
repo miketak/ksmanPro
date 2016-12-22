@@ -19,7 +19,9 @@ namespace DataObjects
 
         public string DepartmentId { get; set; }
 
-        public string Department { get; set; } //new guy
+        public string Department { get; set; } //new guy //Shall be scrapped
+
+        public string PasswordHash { get; set; }
 
         public string SSNo { get; set; }
 
@@ -29,17 +31,17 @@ namespace DataObjects
 
         public string PicUrl { get; set; }
 
-        public bool isEmployed { get; set; } //might change back to bool
+        public bool isEmployed { get; set; } //might change back to bool //placeholder of isActive in database
 
         public bool isBlocked { get; set; } //might change back to bool
 
         public string UserRolesId { get; set; }
 
-        public string JobDesignation { get; set; } //new guy
+        public string JobDesignation { get; set; } //new guy  //Shall be Scrapped
 
         public int ClearanceLevelId { get; set; }
 
-        public string ClearanceLevel { get; set; } //new guy
+        public string ClearanceLevel { get; set; } //new guy //Shall be scrapped
 
     }
 }
