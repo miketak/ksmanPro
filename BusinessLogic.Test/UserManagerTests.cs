@@ -2,32 +2,97 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BusinessLogic;
 using DataObjects;
+using System.Collections.Generic;
 
 namespace BusinessLogic.Test
 {
     [TestClass]
     public class UserManagerTests
     {
-        //[TestMethod]
-        //[Ignore]
-        //public void TryHashSHA256()
-        //{
-        //    var umg = new UserManager();
-        //    string hashedString = umg.HashSHA256("word");
-        //    Assert.AreEqual("98c1eb4ee93476743763878fcb96a25fbc9a175074d64004779ecb5242f645e6", hashedString);
-
-        //}
 
         [TestMethod]
         public void TryAuthentication()
         {
             var umg = new UserManager();
 
-            var userfromDB = umg.AuthenticateUser("SCSYMCX", "hello");
+            var userfromDB = umg.AuthenticateUser("SCSYMCX", "password2");
             // Assert.AreEqual(expectedResult, userfromDB);
             Assert.AreEqual(userfromDB.FirstName, "Martin");
             Assert.AreEqual(userfromDB.LastName, "Cox");
 
+        }
+
+
+        [TestMethod]
+        public void CreateEmployeeTestWithAddress()
+        {
+            var employee = new Employee();
+
+            employee.FirstName = "Michael";
+            employee.LastName = "Takrama";
+            employee.OtherNames = "Worlanyo";
+            employee.PersonalPhoneNumber = "233245042433";
+            employee.PersonalEmail = "mtaks@gmail.com";
+
+            employee.CountryId = 45;
+
+            employee.MaritalStatus = false;
+            employee.Gender = true;
+            employee.DateOfBirth = DateTime.Now;
+            employee.Username = "SCSYCMQ";
+            //employee.PasswordHash = "SCSYCCM";
+            employee.PhoneNumber = "2332222";
+            employee.Email = "taks@ksman.com";
+            //employee.HireDate = DateTime.Now;
+            employee.SSNo = ""; //needs to be added in presentation
+            employee.PicUrl = ""; //needs to be added in presentation
+
+
+            employee.UserRolesId = "DESENG";
+            employee.ClearanceLevelId = 30001;
+            employee.isEmployed = true;
+            employee.AdditonalInfo = "Additional Info";
+
+
+            //Address
+            Address ad = new Address();
+
+            List<string> addresslines = new List<string>();
+            addresslines.Add("St Louis St");
+            addresslines.Add("Block C");
+            addresslines.Add("Apt J");
+
+            ad.AddressLines = addresslines;
+            ad.City = "Dubuque";
+            ad.StateID = 45;
+            ad.Zip = "52334";
+            ad.CountryID = 45;
+            ad.AddressTypeId = 3;
+
+            List<Address> adList = new List<Address>();
+            adList.Add(ad);
+
+            employee.Address = adList;
+
+            var emp = new EmployeeManager();
+            bool result = emp.CreateEmployee(employee);
+           
+
+            int actual;
+
+            if (result == true)
+            {
+                actual = 1;
+            }
+            else
+            {
+                actual = 0;
+            }
+
+
+            int expected = 1;
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }

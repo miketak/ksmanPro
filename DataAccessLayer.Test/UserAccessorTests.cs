@@ -12,7 +12,7 @@ namespace DataAccessLayer.Test
         public void ValidateUsernameAndPasswordCorrectInfo()
         {
             bool expectedResult = true;
-            bool result = UserAccessor.VerifyUsernameAndPassword("SCSYMCX", "hello");
+            bool result = UserAccessor.VerifyUsernameAndPassword("SCSYMCX", "6cf615d5bcaac778352a8f1f3360d23f02f34ec182e259897fd6ce485d7870d4");
 
             Assert.AreEqual(expectedResult, result);
 
@@ -23,7 +23,7 @@ namespace DataAccessLayer.Test
         public void ValidateUsernameAndPasswordWrongUsername()
         {
             bool expectedResult = true;
-            bool result = UserAccessor.VerifyUsernameAndPassword("SCSYMAA", "hello");
+            bool result = UserAccessor.VerifyUsernameAndPassword("SCSYMCK", "6cf615d5bcaac778352a8f1f3360d23f02f34ec182e259897fd6ce485d7870d4");
             Assert.AreNotEqual(expectedResult, result);
 
         }

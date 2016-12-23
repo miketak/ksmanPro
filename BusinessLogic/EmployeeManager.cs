@@ -29,6 +29,9 @@ namespace BusinessLogic
             //Set Password
             var userEncode = new UserManager();
             employee.PasswordHash = userEncode.HashSHA256(employee.Username.ToUpper());
+
+            //Set Hire Date - control must be created in presentation layer
+            employee.HireDate = DateTime.Now;
             
             //Write Employee and Get new UserId
             employee.UserId = EmployeeAccessor.CreateEmployee(employee);
@@ -54,7 +57,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="username">Paramter used to extract Employee Details</param>
         /// <returns>Employee Object Containing All Details</returns>
-        public Employee RetrieveEmployeeByUsername(string username)
+        public Employee RetrieveEmployeeByUsername( string username )
         {
             var employee = new Employee();
 
@@ -107,7 +110,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="isEmployed">True or False boolean paramter to retrieveCountry active or inactive employees respecetively</param>
         /// <returns>A list of active or inactive Employee objects from Database.</returns>
-        public List<Employee> RetrieveEmployees(bool isEmployed)
+        public List<Employee> RetrieveEmployees( bool isEmployed )
         {
             var employeeList = new List<Employee>();
 
@@ -166,7 +169,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="userID">Visibility indicator</param>
         /// <returns>Returns a list of departments</returns>
-        public List<Department> RetrieveDepartmentsByVisibility(bool retrieveAll)
+        public List<Department> RetrieveDepartmentsByVisibility( bool retrieveAll )
         {
             var departments = new List<Department>();
 

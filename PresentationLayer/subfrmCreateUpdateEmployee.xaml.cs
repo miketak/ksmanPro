@@ -542,8 +542,8 @@ namespace PresentationLayer
             if ( _employee.UserId == 0) //Create Employee
             {
 
-                _employee.FirstName = txtFirstName.Text;
-                _employee.LastName = txtLastName.Text;
+                _employee.FirstName = txtFirstName.Text != null ? txtFirstName.Text : String.Empty;
+                _employee.LastName = txtLastName.Text != null ? txtLastName.Text : String.Empty;
                 _employee.OtherNames = txtOtherNames.Text;
                 _employee.PersonalPhoneNumber = txtPersonalTelephone.Text;
                 _employee.PersonalEmail = txtPersonalEmail.Text;
@@ -557,12 +557,9 @@ namespace PresentationLayer
                 _employee.Gender = (string)cmbGender.SelectedItem == "Male" ? true : false;
                 _employee.DateOfBirth = (DateTime)dateDOB.SelectedDate;
                 _employee.Username = txtUsername.Text; //Create check for username existence
-                //_employee.PasswordHash :: Set At Business Layer
                 _employee.PhoneNumber = txtCompanyTelephone.Text;
                 _employee.Email = txtCompanyEmail.Text;
 
-                if ( cmbDepartment.SelectedItem != null )
-                    _employee.DepartmentId = _departments.Find(x => x.Name == (string)cmbDepartment.SelectedItem ).DepartmentId;
 
                 if ( cmbJobPosition.SelectedItem != null )
                     _employee.UserRolesId = _jobPositions.Find(x => x.Name == (string)cmbJobPosition.SelectedItem).UserRolesId;
@@ -571,6 +568,8 @@ namespace PresentationLayer
                     _employee.ClearanceLevelId = _clearanceLevels.Find(x => x.Name == (string)cmbClearanceLevel.SelectedItem).ClearanceLevelId;
 
                 _employee.isEmployed = (bool)chkisActive.IsChecked;
+
+                _employee.AdditonalInfo = txtAdditionalInfo.Text;
 
                 // Write Employee Data to Database
                 var employeeManager = new EmployeeManager();

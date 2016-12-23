@@ -21,43 +21,47 @@ namespace DataAccessLayer
         /// <summary>
         /// Creates a new Employee
         /// </summary>
-        /// <param name="m"></param>
+        /// <param name="em"></param>
         /// <returns>Returns a boolean on success/failure</returns>
-        public static int CreateEmployee(Employee m)
+        public static int CreateEmployee(Employee em)
         {
-            int count = 0;
+            int userId = 0;
 
             var conn = DBConnection.GetConnection();
             var cmdText = @"sp_create_new_user";
             var cmd = new SqlCommand(cmdText, conn);
 
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@FirstName", m.FirstName );
-            cmd.Parameters.AddWithValue("@LastName", m.LastName);
-            cmd.Parameters.AddWithValue("@OtherNames", m.OtherNames);
-            cmd.Parameters.AddWithValue("@PhoneNumber", m.PhoneNumber);
-            cmd.Parameters.AddWithValue("@Email", m.Email);
-            cmd.Parameters.AddWithValue("@ssnNo", m.SSNo);
-            cmd.Parameters.AddWithValue("@picUrl", m.PicUrl);
-            cmd.Parameters.AddWithValue("@isEmployed", m.isEmployed);
-            cmd.Parameters.AddWithValue("@isBlocked", m.isBlocked);
-            cmd.Parameters.AddWithValue("@UserRolesID", m.UserRolesId);
-            cmd.Parameters.AddWithValue("@ClearanceLevelID", m.ClearanceLevelId);
-            cmd.Parameters.AddWithValue("@Username", m.Username);
-            cmd.Parameters.AddWithValue("@HireDate", m.HireDate); //hasn't been set in business layer and presentation layer
-            cmd.Parameters.AddWithValue("@PasswordHash", m.PasswordHash);
-            cmd.Parameters.AddWithValue("@Gender", m.Gender);
-            cmd.Parameters.AddWithValue("@BirthDate", m.DateOfBirth);
-            cmd.Parameters.AddWithValue("@CountryID", m.CountryId);
-            cmd.Parameters.AddWithValue("@MaritalStatus", m.MaritalStatus);
-            cmd.Parameters.AddWithValue("@PersonalEmail", m.PersonalEmail);
-            cmd.Parameters.AddWithValue("@PersonalPhoneNumber", m.PersonalPhoneNumber);
-            cmd.Parameters.AddWithValue("@AdditionalInfo", m.AdditonalInfo);
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+            cmd.Parameters["@UserID"].Value = userId;
+            cmd.Parameters.AddWithValue("@FirstName", em.FirstName );
+            cmd.Parameters.AddWithValue("@LastName", em.LastName);
+            cmd.Parameters.AddWithValue("@OtherNames", em.OtherNames);
+            cmd.Parameters.AddWithValue("@PhoneNumber", em.PhoneNumber);
+            cmd.Parameters.AddWithValue("@Email", em.Email);
+            cmd.Parameters.AddWithValue("@ssnNo", em.SSNo);
+            cmd.Parameters.AddWithValue("@picUrl", em.PicUrl);
+            cmd.Parameters.AddWithValue("@isEmployed", em.isEmployed);
+            cmd.Parameters.AddWithValue("@isBlocked", em.isBlocked);
+            cmd.Parameters.AddWithValue("@UserRolesID", em.UserRolesId);
+            cmd.Parameters.AddWithValue("@ClearanceLevelID", em.ClearanceLevelId);
+            cmd.Parameters.AddWithValue("@Username", em.Username);
+            cmd.Parameters.AddWithValue("@HireDate", em.HireDate); //hasn't been set in business layer and presentation layer
+            cmd.Parameters.AddWithValue("@PasswordHash", em.PasswordHash);
+            cmd.Parameters.AddWithValue("@Gender", em.Gender);
+            cmd.Parameters.AddWithValue("@BirthDate", em.DateOfBirth);
+            cmd.Parameters.AddWithValue("@CountryID", em.CountryId);
+            cmd.Parameters.AddWithValue("@MaritalStatus", em.MaritalStatus);
+            cmd.Parameters.AddWithValue("@PersonalEmail", em.PersonalEmail);
+            cmd.Parameters.AddWithValue("@PersonalPhoneNumber", em.PersonalPhoneNumber);
+            cmd.Parameters.AddWithValue("@AdditionalInfo", em.AdditonalInfo);
 
             try
             {
                 conn.Open();
-                count = cmd.ExecuteNonQuery();
+                Console.WriteLine("About to run Execute Scalar");
+                userId = (int)cmd.ExecuteScalar();
+                Console.WriteLine("User ID = " + userId);
             }
             catch (Exception)
             {
@@ -67,11 +71,11 @@ namespace DataAccessLayer
             {
                 conn.Close();
             }
-            return count;
+            
             //Insert into Users Table
 
             //Returns the User ID
-            return -1;
+            return userId;
         }
 
         /// <summary>
@@ -475,7 +479,7 @@ namespace DataAccessLayer
             var cmd = new SqlCommand(cmdText, conn);
 
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue( "@AddressLine1", address.AddressLines[0] );
+            cmd.Parameters.AddWithValue("@AddressLine1", address.AddressLines[0] );
             cmd.Parameters.AddWithValue( "@AddressLine2", address.AddressLines[1] );
             cmd.Parameters.AddWithValue( "@AddressLine3", address.AddressLines[2] );
             cmd.Parameters.AddWithValue("@City", address.City);
@@ -483,7 +487,7 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@Zip", address.Zip);
             cmd.Parameters.AddWithValue("@CountryID", address.CountryID);
             cmd.Parameters.AddWithValue("@AddressTypeID", address.AddressTypeId);
-            cmd.Parameters.AddWithValue("@UserID", address);
+            cmd.Parameters.AddWithValue("@UserID", userID);
 
             try
             {
