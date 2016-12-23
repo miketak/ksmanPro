@@ -22,7 +22,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="employee"></param>
         /// <returns>Return Confirmation Result</returns>
-        public bool CreateEmployee ( Employee employee )
+        public bool CreateEmployee(Employee employee)
         {
             bool result = false;
 
@@ -32,20 +32,28 @@ namespace BusinessLogic
 
             //Set Hire Date - control must be created in presentation layer
             employee.HireDate = DateTime.Now;
-            
+
             //Write Employee and Get new UserId
             employee.UserId = EmployeeAccessor.CreateEmployee(employee);
 
-
-            //Write Addresses
+            //Write Addresses if not null
             int count = 0;
-            foreach ( var addressElement in employee.Address)
+            if (employee.Address != null)
             {
-                count += EmployeeAccessor.CreateAddressByUserID(employee.UserId, addressElement);
+                foreach (var addressElement in employee.Address)
+                {
+                    count += EmployeeAccessor.CreateAddressByUserID(employee.UserId, addressElement);
+                }
+
+                if (employee.UserId != 0 && count == employee.Address.Count)
+                    result = true;
+
+                return result;
             }
 
+
             // Check for write succcess
-            if (employee.UserId != 0 && count == employee.Address.Count)
+            if (employee.UserId != 0 )
                 result = true;
 
             return result;
@@ -57,7 +65,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="username">Paramter used to extract Employee Details</param>
         /// <returns>Employee Object Containing All Details</returns>
-        public Employee RetrieveEmployeeByUsername( string username )
+        public Employee RetrieveEmployeeByUsername(string username)
         {
             var employee = new Employee();
 
@@ -110,7 +118,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="isEmployed">True or False boolean paramter to retrieveCountry active or inactive employees respecetively</param>
         /// <returns>A list of active or inactive Employee objects from Database.</returns>
-        public List<Employee> RetrieveEmployees( bool isEmployed )
+        public List<Employee> RetrieveEmployees(bool isEmployed)
         {
             var employeeList = new List<Employee>();
 
@@ -124,11 +132,11 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="employee"></param>
         /// <returns></returns>
-        public bool UpdateEmployeeByID ( Employee employee )
+        public bool UpdateEmployeeByID(Employee employee)
         {
             bool result = false;
 
-            result = EmployeeAccessor.UpdateEmployeeByID( employee );
+            result = EmployeeAccessor.UpdateEmployeeByID(employee);
 
             return result;
         }
@@ -138,11 +146,11 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="userID"></param>
         /// <returns>Returns Confirmation</returns>
-        public bool DeleteEmployeeByID ( int userID )
+        public bool DeleteEmployeeByID(int userID)
         {
             bool result = false;
 
-            result = EmployeeAccessor.DeleteEmployeeByID( userID );
+            result = EmployeeAccessor.DeleteEmployeeByID(userID);
 
             return result;
         }
@@ -155,7 +163,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="department"></param>
         /// <returns></returns>
-        public bool CreateDepartment ( Department department )
+        public bool CreateDepartment(Department department)
         {
             bool result = false;
 
@@ -169,7 +177,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="userID">Visibility indicator</param>
         /// <returns>Returns a list of departments</returns>
-        public List<Department> RetrieveDepartmentsByVisibility( bool retrieveAll )
+        public List<Department> RetrieveDepartmentsByVisibility(bool retrieveAll)
         {
             var departments = new List<Department>();
 
@@ -185,7 +193,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="department"></param>
         /// <returns></returns>
-        public bool UpdateDepartment ( Department department )
+        public bool UpdateDepartment(Department department)
         {
             bool result = false;
 
@@ -200,7 +208,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="departmentID"></param>
         /// <returns></returns>
-        public bool DeleteDepartment ( string departmentID ) //potentially dangerous
+        public bool DeleteDepartment(string departmentID) //potentially dangerous
         {
             bool result = false;
 
@@ -217,7 +225,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="userRole"></param>
         /// <returns>Returns confirmation</returns>
-        public bool CreateUserRole ( UserRoles userRole )
+        public bool CreateUserRole(UserRoles userRole)
         {
             bool result = false;
 
@@ -248,13 +256,13 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="userRoles"></param>
         /// <returns></returns>
-        public bool UpdateUserRoles( UserRoles userRoles )
+        public bool UpdateUserRoles(UserRoles userRoles)
         {
             bool result = false;
 
             result = EmployeeAccessor.UpdateUserRoles(userRoles);
 
-            return result; 
+            return result;
         }
 
         /// <summary>
@@ -262,7 +270,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="userRolesID"></param>
         /// <returns></returns>
-        public bool DeleteUserRoleByID (int userRolesID )
+        public bool DeleteUserRoleByID(int userRolesID)
         {
             bool result = false;
 
@@ -341,7 +349,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="addressType"></param>
         /// <returns></returns>
-        public bool CreateAddressType ( AddressType addressType )
+        public bool CreateAddressType(AddressType addressType)
         {
             bool result = false;
 
@@ -370,7 +378,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="addressType"></param>
         /// <returns></returns>
-        public bool UpdateAddressType ( AddressType addressType )
+        public bool UpdateAddressType(AddressType addressType)
         {
             bool result = false;
 
@@ -384,7 +392,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="addressTypeID"></param>
         /// <returns></returns>
-        public bool DeleteAddressType ( int addressTypeID )
+        public bool DeleteAddressType(int addressTypeID)
         {
             bool result = false;
 

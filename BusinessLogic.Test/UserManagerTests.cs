@@ -94,5 +94,56 @@ namespace BusinessLogic.Test
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void CreateEmployeeTestNoAddress()
+        {
+            var employee = new Employee();
+
+            employee.FirstName = "Michael";
+            employee.LastName = "Takrama";
+            employee.OtherNames = "Worlanyo";
+            employee.PersonalPhoneNumber = "233245042433";
+            employee.PersonalEmail = "mtaks@gmail.com";
+
+            employee.CountryId = 45;
+
+            employee.MaritalStatus = false;
+            employee.Gender = true;
+            employee.DateOfBirth = DateTime.Now;
+            employee.Username = "SCSYCMN";
+            //employee.PasswordHash = "SCSYCCM";
+            employee.PhoneNumber = "2332222";
+            employee.Email = "taks@ksman.com";
+            //employee.HireDate = DateTime.Now;
+            employee.SSNo = ""; //needs to be added in presentation
+            employee.PicUrl = ""; //needs to be added in presentation
+
+
+            employee.UserRolesId = "DESENG";
+            employee.ClearanceLevelId = 30001;
+            employee.isEmployed = true;
+            employee.AdditonalInfo = "Additional Info";
+
+            var emp = new EmployeeManager();
+            bool result = emp.CreateEmployee(employee);
+
+
+            int actual;
+
+            if (result == true)
+            {
+                actual = 1;
+            }
+            else
+            {
+                actual = 0;
+            }
+
+
+            int expected = 1;
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
