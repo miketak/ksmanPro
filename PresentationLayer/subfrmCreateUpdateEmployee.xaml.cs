@@ -36,7 +36,7 @@ namespace PresentationLayer
         /// <summary>
         /// Employee from database
         /// </summary>
-        Employee _employee;
+        Employee _employee = new Employee();
 
         /// <summary>
         /// Employee username from calling class.
@@ -108,7 +108,7 @@ namespace PresentationLayer
         async void Update_EmployeeAddress_Event(object sender, EventArgs e)
         {
             //Update address
-            if ( _employee != null)
+            if (_employee != null)
             {
                 _employee.Address = subfrmAddAddress.getUpdatedAddress();
             }
@@ -117,7 +117,7 @@ namespace PresentationLayer
                 _employee = new Employee();
                 _employee.Address = subfrmAddAddress.getUpdatedAddress();
             }
-            
+
             //MessageBox.Show("Hey I'm working");
 
             //Set Address Boxes
@@ -142,17 +142,17 @@ namespace PresentationLayer
                         txtAddress.Text += adtext + "\n";
                     }
                 }
-            } 
+            }
 
             //Indicate Success
-             var mySettings = new MetroDialogSettings()
-            {
-                AffirmativeButtonText = "Ok",
-                ColorScheme = MetroDialogColorScheme.Theme
-            };
+            var mySettings = new MetroDialogSettings()
+           {
+               AffirmativeButtonText = "Ok",
+               ColorScheme = MetroDialogColorScheme.Theme
+           };
 
-             await this.ShowMessageAsync("Success", "Addresses Saved Successfully",
-                 MessageDialogStyle.AffirmativeAndNegative, mySettings);
+            await this.ShowMessageAsync("Success", "Addresses Saved Successfully",
+                MessageDialogStyle.AffirmativeAndNegative, mySettings);
 
         }
 
@@ -219,14 +219,14 @@ namespace PresentationLayer
                 txtPersonalEmail.Text = _employee.PersonalEmail;
 
                 cmbNationality.SelectedItem = _employee.Nationality;
-                 
+
                 chkMaritalStatus.IsChecked = _employee.MaritalStatus ? true : false;
 
                 if (_employee.Gender != null)
                     cmbGender.SelectedItem = _employee.Gender == true ? "Male" : "Female";
 
                 dateDOB.SelectedDate = _employee.DateOfBirth;
-                if ( dateDOB.SelectedDate == DateTime.MinValue )
+                if (dateDOB.SelectedDate == DateTime.MinValue)
                 {
                     dateDOB.SelectedDate = null;
                 }
@@ -304,7 +304,7 @@ namespace PresentationLayer
 
                 // fill Address types---------------------------------------------------------------------------------
                 List<Address> addressesOfEmployee = _employee.Address;
-                if ( addressesOfEmployee.Count != 0)
+                if (addressesOfEmployee.Count != 0)
                 {
                     foreach (var addType in addressesOfEmployee)
                     {
@@ -320,12 +320,12 @@ namespace PresentationLayer
                         {
                             txtAddress.Text += adtext + "\n";
                         }
-                    }                    
-                }                
+                    }
+                }
                 //------------------------------------------------------------------------------------------------------
-                
 
-                
+
+
             }
             else //add mode
             {
@@ -341,11 +341,11 @@ namespace PresentationLayer
 
                 // fill Address types
                 string noAddressPrompt = "No Addresses Yet";
-                cmbAddressTypes.Items.Add( noAddressPrompt );
+                cmbAddressTypes.Items.Add(noAddressPrompt);
                 //cmbAddressTypes.SelectedItem = noAddressPrompt;
                 cmbAddressTypes.IsEnabled = false;
             }
-            
+
 
         }
 
@@ -358,14 +358,14 @@ namespace PresentationLayer
         {
             Console.WriteLine("CMB ADDRESS Selection Change");
 
-            if ( _employee.Address != null )
+            if (_employee.Address != null)
             {
                 //clear Address Text Box
                 txtAddress.Clear();
                 Address newAddressToDisplay = new Address();
 
                 //Get Selection and addresstypeID
-                if ( (string)cmbAddressTypes.SelectedItem != null)
+                if ((string)cmbAddressTypes.SelectedItem != null)
                 {
                     string selectedAddressText = (string)cmbAddressTypes.SelectedItem;
                     var selectedAddress = _addressTypes.Find(x => x.Name == selectedAddressText);
@@ -375,10 +375,10 @@ namespace PresentationLayer
                     newAddressToDisplay = addressFromEmployee.Find(x => x.AddressTypeId == selectedAddress.AddressTypeId);
                 }
 
-                if ( newAddressToDisplay != null )
+                if (newAddressToDisplay != null)
                 {
                     //Set Address Box
-                    if ( newAddressToDisplay.AddressLines != null)
+                    if (newAddressToDisplay.AddressLines != null)
                     {
                         foreach (var adtext in newAddressToDisplay.AddressLines)
                         {
@@ -386,15 +386,15 @@ namespace PresentationLayer
                             {
                                 txtAddress.Text += adtext + "\n";
                             }
-                        } 
-                    }  
+                        }
+                    }
                 }
                 else
                 {
                     txtAddress.Text = "No Address Saved";
                 }
 
-                
+
             }
         }
 
@@ -440,7 +440,7 @@ namespace PresentationLayer
 
                 MessageBox.Show("Message" + e.Message);
             }
-            
+
 
         }
 
@@ -448,42 +448,46 @@ namespace PresentationLayer
         {
             //clear _departments object
             _departments.Clear();
-            
+
             //reload departments
             var employeeManager = new EmployeeManager();
             _departments = employeeManager.RetrieveDepartmentsByVisibility(true);
 
 
             //Get selected department id for _departments enumerable
-            Department loadedDepartments = _departments.Find(x => x.Name == (string)cmbDepartment.SelectedItem);
-            fillJobPositions(loadedDepartments.DepartmentId);
-        
+            if ( cmbDepartment.SelectedItem != null )
+            {
+                Department loadedDepartments = _departments.Find(x => x.Name == (string)cmbDepartment.SelectedItem);
+                fillJobPositions(loadedDepartments.DepartmentId);
+            }
+            
+
         }
 
         private async void btnCancel(object sender, RoutedEventArgs e)
         {
             actualClose = true;
-             var mySettings = new MetroDialogSettings()
-            {
-                AffirmativeButtonText = "Yes",
-                NegativeButtonText = "Cancel",
-                ColorScheme = MetroDialogColorScheme.Theme
-            };
+            var mySettings = new MetroDialogSettings()
+           {
+               AffirmativeButtonText = "Yes",
+               NegativeButtonText = "Cancel",
+               ColorScheme = MetroDialogColorScheme.Theme
+           };
 
-             MessageDialogResult result =  await this.ShowMessageAsync("Warning", "Closing might result in loss of Data. Do you still want to cancel?",
-                 MessageDialogStyle.AffirmativeAndNegative, mySettings);
+            MessageDialogResult result = await this.ShowMessageAsync("Warning", "Closing might result in loss of Data. Do you still want to cancel?",
+                MessageDialogStyle.AffirmativeAndNegative, mySettings);
 
             if (result == MessageDialogResult.Affirmative)
             {
                 this.Close();
             }
-            
+
         }
 
         private void msdEditAddress(object sender, MouseButtonEventArgs e)
         {
             //Open form in edit mode
-            if ( txtAddress.Text.Count() == 0)
+            if (txtAddress.Text.Count() == 0)
             {
                 MessageBox.Show("Kindly add an address");
                 txtStatusMessage.Text += "Kindly add an address";
@@ -493,12 +497,12 @@ namespace PresentationLayer
                 var editAddress = new subfrmAddAddress(_employee.Address);
                 editAddress.ShowDialog();
             }
-           
+
         }
 
         private void txtAddress_ToolTipOpening(object sender, ToolTipEventArgs e)
         {
-            if ( txtStatusMessage.Text.Length < 17)
+            if (txtStatusMessage.Text.Length < 17)
                 txtStatusMessage.Text += "Double Click to Edit Address";
 
         }
@@ -510,25 +514,25 @@ namespace PresentationLayer
 
         private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if ( !actualClose )
+            if (!actualClose)
             {
                 e.Cancel = true;
             }
-            
-             var mySettings = new MetroDialogSettings()
-            {
-                AffirmativeButtonText = "Yes",
-                NegativeButtonText = "Cancel",
-                ColorScheme = MetroDialogColorScheme.Theme
-            };
 
-             MessageDialogResult result =  await this.ShowMessageAsync("Warning", "Closing might result in loss of Data. Do you still want to cancel?",
-                 MessageDialogStyle.AffirmativeAndNegative, mySettings);
+            var mySettings = new MetroDialogSettings()
+           {
+               AffirmativeButtonText = "Yes",
+               NegativeButtonText = "Cancel",
+               ColorScheme = MetroDialogColorScheme.Theme
+           };
+
+            MessageDialogResult result = await this.ShowMessageAsync("Warning", "Closing might result in loss of Data. Do you still want to cancel?",
+                MessageDialogStyle.AffirmativeAndNegative, mySettings);
 
             if (result == MessageDialogResult.Affirmative)
             {
                 actualClose = true;
-                this.Close();  
+                this.Close();
             }
             else
             {
@@ -537,34 +541,49 @@ namespace PresentationLayer
 
         }
 
-        private void btnSave(object sender, RoutedEventArgs e)
+        private async void btnSave(object sender, RoutedEventArgs e)
         {
-            if ( _employee.UserId == 0) //Create Employee
+            if (_employee.UserId == 0) //Create Employee
             {
+                //Validate User Input
+                if (1 == ValidateInputs())
+                    return;
 
-                _employee.FirstName = txtFirstName.Text != null ? txtFirstName.Text : String.Empty;
-                _employee.LastName = txtLastName.Text != null ? txtLastName.Text : String.Empty;
+                _employee = new Employee();
+                _employee.FirstName = txtFirstName.Text;
+                _employee.LastName = txtLastName.Text;
                 _employee.OtherNames = txtOtherNames.Text;
                 _employee.PersonalPhoneNumber = txtPersonalTelephone.Text;
                 _employee.PersonalEmail = txtPersonalEmail.Text;
                 //_employee.Address :: Already Set in Add/Edit Address SubForm
-                
 
-                if ( cmbNationality.SelectedItem != null )
+                if (cmbNationality.SelectedItem != null)
                     _employee.CountryId = _countries.Find(x => x.NiceName == (string)cmbNationality.SelectedItem).CountryID;
 
                 _employee.MaritalStatus = (bool)chkMaritalStatus.IsChecked;
                 _employee.Gender = (string)cmbGender.SelectedItem == "Male" ? true : false;
-                _employee.DateOfBirth = (DateTime)dateDOB.SelectedDate;
+
+
+                if ( dateDOB.SelectedDate != null)
+                {
+                    _employee.DateOfBirth = (DateTime)dateDOB.SelectedDate;
+                }
+                else
+                {
+                    _employee.DateOfBirth = null;
+                }
+                   
+  
+
                 _employee.Username = txtUsername.Text; //Create check for username existence
                 _employee.PhoneNumber = txtCompanyTelephone.Text;
                 _employee.Email = txtCompanyEmail.Text;
 
 
-                if ( cmbJobPosition.SelectedItem != null )
+                if (cmbJobPosition.SelectedItem != null)
                     _employee.UserRolesId = _jobPositions.Find(x => x.Name == (string)cmbJobPosition.SelectedItem).UserRolesId;
 
-                if ( cmbClearanceLevel.SelectedItem != null )
+                if (cmbClearanceLevel.SelectedItem != null)
                     _employee.ClearanceLevelId = _clearanceLevels.Find(x => x.Name == (string)cmbClearanceLevel.SelectedItem).ClearanceLevelId;
 
                 _employee.isEmployed = (bool)chkisActive.IsChecked;
@@ -573,7 +592,28 @@ namespace PresentationLayer
 
                 // Write Employee Data to Database
                 var employeeManager = new EmployeeManager();
-                employeeManager.CreateEmployee(_employee);
+                try
+                {
+                    employeeManager.CreateEmployee(_employee);
+                    ClearControls();
+                }
+                catch (Exception ex)
+                {
+                    //throw;
+                    MessageBox.Show("Error: " + ex.Message);
+                    return;
+                }
+
+                //Success Message
+                var mySettings = new MetroDialogSettings()
+                {
+                   AffirmativeButtonText = "Ok",
+                   ColorScheme = MetroDialogColorScheme.Theme
+                };
+
+                await this.ShowMessageAsync("Success", "Employee Created Successfully!",
+                    MessageDialogStyle.Affirmative, mySettings);
+
             }
             else //Update Employee
             {
@@ -582,6 +622,89 @@ namespace PresentationLayer
             }
         }
 
-        
+        /// <summary>
+        /// Resets all controls and instance variables after successful creation
+        /// </summary>
+        private void ClearControls()
+        {   
+            TraverseVisualTree(this);
+            _employee = null;   
+        }
+
+        /// <summary>
+        /// Clears All Controls in Form
+        /// </summary>
+        /// <param name="addEditEmployee">Form Class</param>
+        static public void TraverseVisualTree(Visual addEditEmployee)
+        {
+            int childrenCount = VisualTreeHelper.GetChildrenCount(addEditEmployee);
+            for (int i = 0; i < childrenCount; i++)
+            {
+                var visualChild = (Visual)VisualTreeHelper.GetChild(addEditEmployee, i);
+                if ( visualChild is TextBox )
+                {
+                    TextBox tb = (TextBox)visualChild;
+                    tb.Clear();
+                }
+                if ( visualChild is ComboBox )
+                {
+                    ComboBox cb = (ComboBox)visualChild;
+                    cb.SelectedItem = null;
+                }
+                TraverseVisualTree(visualChild);
+            }
+        }
+
+        /// <summary>
+        /// Validates input
+        /// </summary>
+        /// <returns></returns>
+        private int ValidateInputs()
+        {
+            int signal = 0;
+
+            if (txtFirstName.Text == "")
+            {
+                txtFirstName.BorderBrush = System.Windows.Media.Brushes.Red;
+                signal = 1;
+
+            }
+
+            if (txtLastName.Text == "")
+            {
+                txtLastName.BorderBrush = System.Windows.Media.Brushes.Red;
+                signal = 1;
+            }
+
+            if (txtPersonalTelephone.Text == "")
+            {
+                txtPersonalTelephone.BorderBrush = System.Windows.Media.Brushes.Red;
+                signal = 1;
+            }
+
+            if (cmbJobPosition.SelectedItem == null)
+            {
+                cmbJobPosition.BorderBrush = System.Windows.Media.Brushes.Red;
+                signal = 1;
+            }
+
+            if (cmbClearanceLevel.SelectedItem == null)
+            {
+                cmbClearanceLevel.BorderBrush = System.Windows.Media.Brushes.Red;
+                signal = 1;
+            }
+
+            if (txtUsername.Text == "")
+            {
+                txtUsername.BorderBrush = System.Windows.Media.Brushes.Red;
+                MessageBox.Show("Kindly Generate Username");
+                txtUsername.Focus();
+                signal = 1;
+            }
+
+            return signal;
+        }
+
+
     }
 }

@@ -33,8 +33,19 @@ namespace BusinessLogic
             //Set Hire Date - control must be created in presentation layer
             employee.HireDate = DateTime.Now;
 
+            //Handle Empty SSN Issue
+            employee.SSNo = employee.SSNo != null ? employee.SSNo : String.Empty;
+
+            //Handle Empty Pic Url issue
+            employee.PicUrl = employee.PicUrl != null ? employee.PicUrl : String.Empty;
+
+            //User isBlocked :: False
+            employee.isBlocked = false;
+
             //Write Employee and Get new UserId
             employee.UserId = EmployeeAccessor.CreateEmployee(employee);
+
+
 
             //Write Addresses if not null
             int count = 0;

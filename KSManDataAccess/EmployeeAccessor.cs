@@ -31,6 +31,9 @@ namespace DataAccessLayer
             var cmdText = @"sp_create_new_user";
             var cmd = new SqlCommand(cmdText, conn);
 
+            //Birthdate Baricade
+           // em.DateOfBirth = em.DateOfBirth != null ? em.DateOfBirth : System.Data.SqlTypes.SqlDateTime.MinValue.Value;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@UserID", SqlDbType.Int);
             cmd.Parameters["@UserID"].Value = userId;
@@ -46,11 +49,11 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@UserRolesID", em.UserRolesId);
             cmd.Parameters.AddWithValue("@ClearanceLevelID", em.ClearanceLevelId);
             cmd.Parameters.AddWithValue("@Username", em.Username);
-            cmd.Parameters.AddWithValue("@HireDate", em.HireDate); //hasn't been set in business layer and presentation layer
+            cmd.Parameters.AddWithValue("@HireDate", em.HireDate); //set manually in BL temporarily
             cmd.Parameters.AddWithValue("@PasswordHash", em.PasswordHash);
             cmd.Parameters.AddWithValue("@Gender", em.Gender);
-            cmd.Parameters.AddWithValue("@BirthDate", em.DateOfBirth);
-            cmd.Parameters.AddWithValue("@CountryID", em.CountryId);
+            cmd.Parameters.AddWithValue("@BirthDate", em.DateOfBirth.HasValue ? em.CountryId : (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@CountryID", em.CountryId.HasValue ? em.CountryId : (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@MaritalStatus", em.MaritalStatus);
             cmd.Parameters.AddWithValue("@PersonalEmail", em.PersonalEmail);
             cmd.Parameters.AddWithValue("@PersonalPhoneNumber", em.PersonalPhoneNumber);
@@ -743,7 +746,8 @@ namespace DataAccessLayer
                             PriorityNumber = reader.GetInt32(0),
                             Name = reader.GetString(1),
                             Description = reader.GetString(2),
-                            DepartmentId = reader.GetString(3)
+                            DepartmentId = reader.GetString(3),
+                            ClearanceLevelId = reader.GetInt32(4)
 
                         };
 

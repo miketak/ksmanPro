@@ -11,9 +11,9 @@ namespace DataObjects
 
         public bool? Gender { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
-        public int CountryId { get; set; }  // :: Serves as Nationality
+        public int? CountryId { get; set; }  // :: Serves as Nationality
 
         public string Nationality { get; set; }   //shall be scrapped
 
