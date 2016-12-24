@@ -84,6 +84,7 @@ namespace BusinessLogic
             try
             {
                 var allUserDataInDB = EmployeeAccessor.RetrieveEmployeeByUsername(username);
+                employee.UserId = allUserDataInDB.UserId;
                 employee.Username = allUserDataInDB.Username;
                 employee.FirstName = allUserDataInDB.FirstName;
                 employee.LastName = allUserDataInDB.LastName;

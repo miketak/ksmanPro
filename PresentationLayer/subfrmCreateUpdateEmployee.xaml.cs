@@ -617,6 +617,7 @@ namespace PresentationLayer
             }
             else //Update Employee
             {
+                MessageBox.Show("Eureka");
                 var employeeManager = new EmployeeManager();
                 employeeManager.UpdateEmployeeByID(_employee);
             }
