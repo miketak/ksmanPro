@@ -455,12 +455,12 @@ namespace PresentationLayer
 
 
             //Get selected department id for _departments enumerable
-            if ( cmbDepartment.SelectedItem != null )
+            if (cmbDepartment.SelectedItem != null)
             {
                 Department loadedDepartments = _departments.Find(x => x.Name == (string)cmbDepartment.SelectedItem);
                 fillJobPositions(loadedDepartments.DepartmentId);
             }
-            
+
 
         }
 
@@ -543,93 +543,131 @@ namespace PresentationLayer
 
         private async void btnSave(object sender, RoutedEventArgs e)
         {
-            if (_employee.UserId == 0) //Create Employee
+            //Validate User Input
+            if (1 == ValidateInputs())
+                return;
+
+            //_employee = new Employee();
+
+            _employee.FirstName = txtFirstName.Text;
+
+            _employee.LastName = txtLastName.Text;
+
+            _employee.OtherNames = txtOtherNames.Text;
+
+            _employee.PersonalPhoneNumber = txtPersonalTelephone.Text;
+
+            _employee.PersonalEmail = txtPersonalEmail.Text;
+
+            //_employee.Address :: Already Set in Add/Edit Address SubForm
+
+            if (cmbNationality.SelectedItem != null)
+                _employee.CountryId = _countries.Find(x => x.NiceName == (string)cmbNationality.SelectedItem).CountryID;
+
+            _employee.MaritalStatus = (bool)chkMaritalStatus.IsChecked;
+            _employee.Gender = (string)cmbGender.SelectedItem == "Male" ? true : false;
+
+
+            if (dateDOB.SelectedDate != null)
             {
-                //Validate User Input
-                if (1 == ValidateInputs())
-                    return;
-
-                _employee = new Employee();
-                _employee.FirstName = txtFirstName.Text;
-                _employee.LastName = txtLastName.Text;
-                _employee.OtherNames = txtOtherNames.Text;
-                _employee.PersonalPhoneNumber = txtPersonalTelephone.Text;
-                _employee.PersonalEmail = txtPersonalEmail.Text;
-                //_employee.Address :: Already Set in Add/Edit Address SubForm
-
-                if (cmbNationality.SelectedItem != null)
-                    _employee.CountryId = _countries.Find(x => x.NiceName == (string)cmbNationality.SelectedItem).CountryID;
-
-                _employee.MaritalStatus = (bool)chkMaritalStatus.IsChecked;
-                _employee.Gender = (string)cmbGender.SelectedItem == "Male" ? true : false;
-
-
-                if ( dateDOB.SelectedDate != null)
-                {
-                    _employee.DateOfBirth = (DateTime)dateDOB.SelectedDate;
-                }
-                else
-                {
-                    _employee.DateOfBirth = null;
-                }
-                   
-  
-
-                _employee.Username = txtUsername.Text; //Create check for username existence
-                _employee.PhoneNumber = txtCompanyTelephone.Text;
-                _employee.Email = txtCompanyEmail.Text;
-
-
-                if (cmbJobPosition.SelectedItem != null)
-                    _employee.UserRolesId = _jobPositions.Find(x => x.Name == (string)cmbJobPosition.SelectedItem).UserRolesId;
-
-                if (cmbClearanceLevel.SelectedItem != null)
-                    _employee.ClearanceLevelId = _clearanceLevels.Find(x => x.Name == (string)cmbClearanceLevel.SelectedItem).ClearanceLevelId;
-
-                _employee.isEmployed = (bool)chkisActive.IsChecked;
-
-                _employee.AdditonalInfo = txtAdditionalInfo.Text;
-
-                // Write Employee Data to Database
-                var employeeManager = new EmployeeManager();
-                try
-                {
-                    employeeManager.CreateEmployee(_employee);
-                    ClearControls();
-                }
-                catch (Exception ex)
-                {
-                    //throw;
-                    MessageBox.Show("Error: " + ex.Message);
-                    return;
-                }
-
-                //Success Message
-                var mySettings = new MetroDialogSettings()
-                {
-                   AffirmativeButtonText = "Ok",
-                   ColorScheme = MetroDialogColorScheme.Theme
-                };
-
-                await this.ShowMessageAsync("Success", "Employee Created Successfully!",
-                    MessageDialogStyle.Affirmative, mySettings);
-
+                _employee.DateOfBirth = (DateTime)dateDOB.SelectedDate;
             }
-            else //Update Employee
+            else
             {
-                MessageBox.Show("Eureka");
-                var employeeManager = new EmployeeManager();
-                employeeManager.UpdateEmployeeByID(_employee);
+                _employee.DateOfBirth = null;
             }
+
+            
+            _employee.Username = txtUsername.Text; //Create check for username existence
+
+            _employee.PhoneNumber = txtCompanyTelephone.Text;
+              
+            _employee.Email = txtCompanyEmail.Text;
+
+
+            if (cmbJobPosition.SelectedItem != null)
+                _employee.UserRolesId = _jobPositions.Find(x => x.Name == (string)cmbJobPosition.SelectedItem).UserRolesId;
+
+            if (cmbClearanceLevel.SelectedItem != null)
+                _employee.ClearanceLevelId = _clearanceLevels.Find(x => x.Name == (string)cmbClearanceLevel.SelectedItem).ClearanceLevelId;
+
+            _employee.isEmployed = (bool)chkisActive.IsChecked;
+
+            _employee.AdditonalInfo = txtAdditionalInfo.Text;
+
+            // Write Employee Data to Database
+            string userMessage;
+            string title = null;
+            var employeeManager = new EmployeeManager();
+            try
+            {
+                if (_employee.UserId == 0) //Create New Employee
+                {
+                    //MessageBox.Show("Creating");
+                    if (employeeManager.CreateEmployee(_employee)){
+                        title = "Success!";
+                        userMessage = "Employee Created Successfully!";
+                    }                       
+                    else
+                    {
+                        title = "Failure!";
+                        userMessage = "There was an error saving your data!";
+                        return;
+                    }
+                        
+                }
+                else //Update Employee
+                {
+                    //MessageBox.Show("Updating");
+                    if (employeeManager.UpdateEmployeeByID(_employee))
+                    {
+                        title = "Success!";
+                        userMessage = "Employee Updated Successfully!";
+                    }
+                    else
+                    {
+                        title = "Failure!";
+                        userMessage = "There was an error in your update.";
+                    }
+
+                    
+                }
+
+                ClearControls();
+            }
+            catch (Exception ex)
+            {
+                //throw;
+                MessageBox.Show("Error: " + ex.Message);
+                return;
+            }
+
+            //Success Message
+            var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Ok",
+                ColorScheme = MetroDialogColorScheme.Theme
+            };
+
+            await this.ShowMessageAsync(title,userMessage,
+                MessageDialogStyle.Affirmative, mySettings);
+
         }
+        //else //Update Employee
+        //{
+        //    MessageBox.Show("Eureka");
+        //    var employeeManager = new EmployeeManager();
+        //    employeeManager.UpdateEmployeeByID(_employee);
+        //}
+        //}
 
         /// <summary>
         /// Resets all controls and instance variables after successful creation
         /// </summary>
         private void ClearControls()
-        {   
+        {
             TraverseVisualTree(this);
-            _employee = null;   
+            _employee = null;
         }
 
         /// <summary>
@@ -642,12 +680,12 @@ namespace PresentationLayer
             for (int i = 0; i < childrenCount; i++)
             {
                 var visualChild = (Visual)VisualTreeHelper.GetChild(addEditEmployee, i);
-                if ( visualChild is TextBox )
+                if (visualChild is TextBox)
                 {
                     TextBox tb = (TextBox)visualChild;
                     tb.Clear();
                 }
-                if ( visualChild is ComboBox )
+                if (visualChild is ComboBox)
                 {
                     ComboBox cb = (ComboBox)visualChild;
                     cb.SelectedItem = null;

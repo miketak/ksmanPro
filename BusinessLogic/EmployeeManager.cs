@@ -148,6 +148,18 @@ namespace BusinessLogic
         {
             bool result = false;
 
+            //Set Hire Date - control must be created in presentation layer
+            employee.HireDate = DateTime.Now;
+
+            //Handle Empty SSN Issue
+            employee.SSNo = employee.SSNo != null ? employee.SSNo : String.Empty;
+
+            //Handle Empty Pic Url issue
+            employee.PicUrl = employee.PicUrl != null ? employee.PicUrl : String.Empty;
+
+            //User isBlocked :: False
+            employee.isBlocked = false;
+
             result = EmployeeAccessor.UpdateEmployeeByID(employee);
 
             return result;
