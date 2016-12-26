@@ -605,8 +605,10 @@ namespace PresentationLayer
                 {
                     //MessageBox.Show("Creating");
                     if (employeeManager.CreateEmployee(_employee)){
+
                         title = "Success!";
                         userMessage = "Employee Created Successfully!";
+                        ClearControls();
                     }                       
                     else
                     {
@@ -629,11 +631,9 @@ namespace PresentationLayer
                         title = "Failure!";
                         userMessage = "There was an error in your update.";
                     }
-
-                    
+                                       
                 }
-
-                ClearControls();
+                
             }
             catch (Exception ex)
             {

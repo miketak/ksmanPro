@@ -21,7 +21,7 @@ namespace DataAccessLayer
         /// <summary>
         /// Creates a new Employee
         /// </summary>
-        /// <param name="em"></param>
+        /// <param name="employee"></param>
         /// <returns>Returns a boolean on success/failure</returns>
         public static int CreateEmployee(Employee em)
         {
@@ -32,7 +32,7 @@ namespace DataAccessLayer
             var cmd = new SqlCommand(cmdText, conn);
 
             //Birthdate Baricade
-           // em.DateOfBirth = em.DateOfBirth != null ? em.DateOfBirth : System.Data.SqlTypes.SqlDateTime.MinValue.Value;
+           // employee.DateOfBirth = employee.DateOfBirth != null ? employee.DateOfBirth : System.Data.SqlTypes.SqlDateTime.MinValue.Value;
 
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@UserID", SqlDbType.Int);
@@ -52,7 +52,7 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@HireDate", em.HireDate); //set manually in BL temporarily
             cmd.Parameters.AddWithValue("@PasswordHash", em.PasswordHash);
             cmd.Parameters.AddWithValue("@Gender", em.Gender);
-            cmd.Parameters.AddWithValue("@BirthDate", em.DateOfBirth.HasValue ? em.CountryId : (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@BirthDate", em.DateOfBirth.HasValue ? em.DateOfBirth : (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@CountryID", em.CountryId.HasValue ? em.CountryId : (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@MaritalStatus", em.MaritalStatus);
             cmd.Parameters.AddWithValue("@PersonalEmail", em.PersonalEmail);
@@ -243,13 +243,61 @@ namespace DataAccessLayer
         }
 
         /// <summary>
-        /// Updates Employee Records
+        /// Updates Employee By ID
         /// </summary>
-        /// <param name="userID"></param>
+        /// <param name="employee">Employee DTO for update</param>
         /// <returns></returns>
         public static bool UpdateEmployeeByID( Employee employee )
         {
-            return false;
+            int count = 0;
+
+            var conn = DBConnection.GetConnection();
+            var cmdText = @"sp_update_user";
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserID", employee.UserId);
+            cmd.Parameters.AddWithValue("@FirstName", employee.FirstName);
+            cmd.Parameters.AddWithValue("@LastName", employee.LastName);
+            cmd.Parameters.AddWithValue("@OtherNames", employee.OtherNames);
+            cmd.Parameters.AddWithValue("@PhoneNumber", employee.PhoneNumber);
+            cmd.Parameters.AddWithValue("@Email", employee.Email);
+            cmd.Parameters.AddWithValue("@ssnNo", employee.SSNo);
+            cmd.Parameters.AddWithValue("@picUrl", employee.PicUrl);
+            cmd.Parameters.AddWithValue("@isEmployed", employee.isEmployed);
+            cmd.Parameters.AddWithValue("@isBlocked", employee.isBlocked);
+            cmd.Parameters.AddWithValue("@UserRolesID", employee.UserRolesId);
+            cmd.Parameters.AddWithValue("@ClearanceLevelID", employee.ClearanceLevelId);
+            cmd.Parameters.AddWithValue("@Username", employee.Username);
+            cmd.Parameters.AddWithValue("@HireDate", employee.HireDate); //set manually in BL temporarily
+            //cmd.Parameters.AddWithValue("@PasswordHash", employee.PasswordHash);
+            cmd.Parameters.AddWithValue("@Gender", employee.Gender);
+            cmd.Parameters.AddWithValue("@BirthDate", employee.DateOfBirth.HasValue ? employee.DateOfBirth : (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@CountryID", employee.CountryId.HasValue && employee.CountryId != -1 ? employee.CountryId : (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@MaritalStatus", employee.MaritalStatus);
+            cmd.Parameters.AddWithValue("@PersonalEmail", employee.PersonalEmail);
+            cmd.Parameters.AddWithValue("@PersonalPhoneNumber", employee.PersonalPhoneNumber);
+            cmd.Parameters.AddWithValue("@AdditionalInfo", employee.AdditonalInfo);
+
+            try
+            {
+                conn.Open();
+                count = (int)cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            //Insert into Users Table
+
+            //Returns the User ID
+            bool result = count == 1 ? true : false;
+            return result;
         }
 
         /// <summary>
