@@ -251,6 +251,12 @@ namespace PresentationLayer
                         _primary = new Address();
                         _primary.AddressTypeId = oldAddressTypeID;
 
+                        if ( _addressList != null )
+                        {
+                            if (_addressList.Count > 0)
+                                _primary.UserAddressId = _addressList[0].UserAddressId;
+                        }                        
+
                         List<string> addresslines = new List<string>();
                         addresslines.Add(txtAddressLine1.Text);
                         addresslines.Add(txtAddressLine2.Text);
@@ -267,6 +273,13 @@ namespace PresentationLayer
                     case 2:
                         _secondary1 = new Address();
                         _secondary1.AddressTypeId = oldAddressTypeID;
+
+                        if ( _addressList != null )
+                        {
+                            if (_addressList.Count > 1)
+                                _secondary1.UserAddressId = _addressList[1].UserAddressId;
+                        }
+                        
 
                         addresslines = new List<string>();
                         addresslines.Add(txtAddressLine1.Text);
@@ -285,6 +298,12 @@ namespace PresentationLayer
                         _secondary2 = new Address();
                         _secondary2.AddressTypeId = oldAddressTypeID;
 
+                        if ( _addressList != null )
+                        {
+                            if (_addressList.Count > 2)
+                                _secondary2.UserAddressId = _addressList[2].UserAddressId;
+                        }                        
+
                         addresslines = new List<string>();
                         addresslines.Add(txtAddressLine1.Text);
                         addresslines.Add(txtAddressLine2.Text);
@@ -302,6 +321,12 @@ namespace PresentationLayer
                         _secondary3 = new Address();
                         _secondary3.AddressTypeId = oldAddressTypeID;
 
+                        if ( _addressList.Count != null )
+                        {
+                            if (_addressList.Count > 3)
+                                _secondary3.UserAddressId = _addressList[3].UserAddressId;
+                        }
+
                         addresslines = new List<string>();
                         addresslines.Add(txtAddressLine1.Text);
                         addresslines.Add(txtAddressLine2.Text);
@@ -317,8 +342,13 @@ namespace PresentationLayer
                         break;
                     case 5:
                         _secondary4 = new Address();
-
                         _secondary4.AddressTypeId = oldAddressTypeID;
+
+                        if ( _addressList != null )
+                        {
+                            if (_addressList.Count > 4)
+                                _secondary4.UserAddressId = _addressList[4].UserAddressId;
+                        }                        
 
                         addresslines = new List<string>();
                         addresslines.Add(txtAddressLine1.Text);

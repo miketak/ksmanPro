@@ -559,7 +559,7 @@ namespace PresentationLayer
 
             _employee.PersonalEmail = txtPersonalEmail.Text;
 
-            //_employee.Address :: Already Set in Add/Edit Address SubForm
+            // _employee.Address :: Already Set in Add/Edit Address SubForm
 
             if (cmbNationality.SelectedItem != null)
                 _employee.CountryId = _countries.Find(x => x.NiceName == (string)cmbNationality.SelectedItem).CountryID;
@@ -596,7 +596,7 @@ namespace PresentationLayer
             _employee.AdditonalInfo = txtAdditionalInfo.Text;
 
             // Write Employee Data to Database
-            string userMessage;
+            string userMessage = null;
             string title = null;
             var employeeManager = new EmployeeManager();
             try
@@ -639,7 +639,6 @@ namespace PresentationLayer
             {
                 //throw;
                 MessageBox.Show("Error: " + ex.Message);
-                return;
             }
 
             //Success Message

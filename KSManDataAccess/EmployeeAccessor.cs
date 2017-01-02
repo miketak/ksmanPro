@@ -594,8 +594,7 @@ namespace DataAccessLayer
                            StateID = reader.IsDBNull(5) ? -1 : reader.GetInt32(5),
                            Zip = reader.IsDBNull(8) ? null : reader.GetString(8),
                            CountryID = reader.IsDBNull(9) ? -1 : reader.GetInt32(9),
-                           AddressTypeId = reader.IsDBNull(11) ? -1 : reader.GetInt32(11),
-                           //UserPersonalInformationId = reader.IsDBNull(13) ? -1 : reader.GetInt32(13)                            
+                           AddressTypeId = reader.IsDBNull(11) ? -1 : reader.GetInt32(11)                           
                         };
 
                         //Process AddressLines
@@ -626,13 +625,45 @@ namespace DataAccessLayer
         }
 
         /// <summary>
-        /// Updates User Address By ID
+        /// Update Address By User ID
         /// </summary>
-        /// <param name="employee"></param>
+        /// <param name="userID"></param>
+        /// <param name="address"></param>
         /// <returns></returns>
-        private static bool UpdateAddressByUserID ( Employee employee )
+        public static int UpdateAddressByUserID ( int userID, Address address )
         {
-            return false;
+            int count = 0;
+
+            var conn = DBConnection.GetConnection();
+            var cmdText = @"sp_update_user_address";
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UsersAddressID", address.UserAddressId);
+            cmd.Parameters.AddWithValue("@AddressLine1", address.AddressLines[0]);
+            cmd.Parameters.AddWithValue("@AddressLine2", address.AddressLines[1]);
+            cmd.Parameters.AddWithValue("@AddressLine3", address.AddressLines[2]);
+            cmd.Parameters.AddWithValue("@City", address.City);
+            cmd.Parameters.AddWithValue("@StateID", address.StateID);
+            cmd.Parameters.AddWithValue("@Zip", address.Zip);
+            cmd.Parameters.AddWithValue("@CountryID", address.CountryID);
+            cmd.Parameters.AddWithValue("@AddressTypeID", address.AddressTypeId);
+            cmd.Parameters.AddWithValue("@UserID", userID);
+
+            try
+            {
+                conn.Open();
+                count = cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return count;
         }
 
         /// <summary>

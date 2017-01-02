@@ -47,7 +47,7 @@ namespace BusinessLogic
 
 
 
-            //Write Addresses if not null
+            // Write Addresses if not null
             int count = 0;
             if (employee.Address != null)
             {
@@ -56,7 +56,7 @@ namespace BusinessLogic
                     count += EmployeeAccessor.CreateAddressByUserID(employee.UserId, addressElement);
                 }
 
-                if (employee.UserId != 0 && count == employee.Address.Count)
+                if ( employee.UserId != 0 && count == employee.Address.Count )
                     result = true;
 
                 return result;
@@ -70,6 +70,7 @@ namespace BusinessLogic
             return result;
 
         }
+
 
         /// <summary>
         /// Retrieves Employee from database using Employee Id or User Id
@@ -119,9 +120,6 @@ namespace BusinessLogic
                 throw;
             }
 
-
-
-
             return employee;
         }
 
@@ -160,12 +158,46 @@ namespace BusinessLogic
             //User isBlocked :: False
             employee.isBlocked = false;
 
+            //Update Employee Details
             result = EmployeeAccessor.UpdateEmployeeByID(employee);
 
+            //Update Employee Address
+            int count = 0;
+            try
+            {
+                if (employee.Address != null)
+                {
+                    foreach (var addressElement in employee.Address)
+                    {
+                        if (addressElement.UserAddressId != 0) // Update Employee Address
+                        {
+                            count += EmployeeAccessor.UpdateAddressByUserID(employee.UserId, addressElement);
+                        }
+                        else // Create New Address
+                        {
+                            count += EmployeeAccessor.CreateAddressByUserID(employee.UserId, addressElement);
+                        }
 
+                    }
 
+                    //Check if write was successful
+                    if (employee.UserId != 0 && count == employee.Address.Count)
+                    {
+                        result = true;
+                    }
+
+                    else
+                    {
+                        result = false;
+                    }
+                }
+            }
+            catch (Exception)
+            {                
+                throw;
+            }
+            
             //Perform update for addresses
-
             return result;
         }
 
