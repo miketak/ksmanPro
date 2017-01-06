@@ -10,7 +10,7 @@ namespace DataObjects
     {
         public int ClearanceLevelId { get; set; }
 
-        public int PriorityNumber { get; set; }
+        //public int PriorityNumber { get; set; }
 
         public string Name { get; set; }
 

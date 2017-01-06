@@ -19,8 +19,8 @@ namespace DataAccessLayer
         /// <summary>
         /// Verifies username and password
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="passwordHash"></param>
+        /// <param name="username">Username for verification</param>
+        /// <param name="passwordHash">Password for verification</param>
         /// <returns></returns>
         public static bool VerifyUsernameAndPassword(string username, string passwordHash)
         {

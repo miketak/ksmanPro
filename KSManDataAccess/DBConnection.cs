@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
+    /// <summary>
+    /// DB Connection Class
+    /// </summary>
     class DBConnection
     {
         internal static SqlConnection GetConnection()

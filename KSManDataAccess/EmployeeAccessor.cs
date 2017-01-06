@@ -517,9 +517,10 @@ namespace DataAccessLayer
         // User Address CRUD
 
         /// <summary>
-        /// Creates Address with User ID.
+        /// Create new Address For Employee
         /// </summary>
-        /// <param name="employee"></param>
+        /// <param name="userID">Employee User ID</param>
+        /// <param name="address">Employee Address</param>
         /// <returns></returns>
         public static int CreateAddressByUserID( int userID, Address address)
         {
@@ -822,11 +823,10 @@ namespace DataAccessLayer
                         // create an clearancelevel object
                         var cll = new ClearanceLevel()
                         {
-                            PriorityNumber = reader.GetInt32(0),
+                            ClearanceLevelId = reader.GetInt32(0),
                             Name = reader.GetString(1),
                             Description = reader.GetString(2),
                             DepartmentId = reader.GetString(3),
-                            ClearanceLevelId = reader.GetInt32(4)
 
                         };
 
