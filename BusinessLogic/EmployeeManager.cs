@@ -20,7 +20,7 @@ namespace BusinessLogic
         /// <summary>
         /// Create new Employee
         /// </summary>
-        /// <param name="employee"></param>
+        /// <param name="employee">Employee Object</param>
         /// <returns>Return Confirmation Result</returns>
         public bool CreateEmployee(Employee employee)
         {
@@ -45,8 +45,6 @@ namespace BusinessLogic
             //Write Employee and Get new UserId
             employee.UserId = EmployeeAccessor.CreateEmployee(employee);
 
-
-
             // Write Addresses if not null
             int count = 0;
             if (employee.Address != null)
@@ -61,16 +59,14 @@ namespace BusinessLogic
 
                 return result;
             }
-
-
-            // Check for write succcess
+            
+            // Check for write succcess if address is null
             if (employee.UserId != 0 )
                 result = true;
 
             return result;
 
         }
-
 
         /// <summary>
         /// Retrieves Employee from database using Employee Id or User Id
@@ -262,7 +258,6 @@ namespace BusinessLogic
             return result;
         }
 
-
         /// <summary>
         /// Deletes Departments
         /// </summary>
@@ -294,7 +289,6 @@ namespace BusinessLogic
             return result;
         }
 
-
         /// <summary>
         /// Retrieves Job Positions based on DepartmentID
         /// </summary>
@@ -305,8 +299,7 @@ namespace BusinessLogic
         {
             var jobPositions = new List<UserRoles>();
 
-            var jobPositionAccess = new EmployeeAccessor();
-            jobPositions = jobPositionAccess.RetrieveUserRoles(departmentId, isRetrieveAll);
+            jobPositions = EmployeeAccessor.RetrieveUserRoles(departmentId, isRetrieveAll);
 
             return jobPositions;
         }
@@ -315,7 +308,7 @@ namespace BusinessLogic
         /// Updates User Roles
         /// </summary>
         /// <param name="userRoles"></param>
-        /// <returns></returns>
+        /// <returns>Returns a boolean</returns>
         public bool UpdateUserRoles(UserRoles userRoles)
         {
             bool result = false;
@@ -388,7 +381,7 @@ namespace BusinessLogic
         /// <summary>
         /// Deletes Clearance Level
         /// </summary>
-        /// <param name="clearanceLevelId"></param>
+        /// <param name="clearanceLevelId">Clearance Level ID</param>
         /// <returns></returns>
         public bool DeleteCleranceLevel(int clearanceLevelId)
         {
@@ -401,14 +394,13 @@ namespace BusinessLogic
 
 
 
-
         //AddressTypes CRUD
 
         /// <summary>
         /// Creates new Address Type
         /// </summary>
-        /// <param name="addressType"></param>
-        /// <returns></returns>
+        /// <param name="addressType">Address Type DTO</param>
+        /// <returns>Returns success boolean</returns>
         public bool CreateAddressType(AddressType addressType)
         {
             bool result = false;
@@ -421,8 +413,8 @@ namespace BusinessLogic
         /// <summary>
         /// Retrieves AddressTypes by ID
         /// </summary>
-        /// <param name="addresstypeID"></param>
-        /// <param name="retrieveAll"></param>
+        /// <param name="addresstypeID">Address Type Integer ID</param>
+        /// <param name="retrieveAll">Retrieve all signal</param>
         /// <returns>A list of Address Types</returns>
         public List<AddressType> RetrieveAddressTypeByID(int addresstypeID, bool retrieveAll)
         {

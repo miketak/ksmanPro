@@ -30,7 +30,7 @@ namespace BusinessLogic
         /// <summary>
         /// Retrieves States
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns states</returns>
         public List<State> RetrieveStates()
         {
             List<State> stateList = new List<State>();

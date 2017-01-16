@@ -46,7 +46,7 @@ namespace PresentationLayer
         /// <summary>
         /// Address Type list
         /// </summary>
-        List<AddressType> _addressTypes; //might probably go away
+        List<AddressType> _addressTypes; 
 
         /// <summary>
         /// Job positions field for form
@@ -83,7 +83,7 @@ namespace PresentationLayer
             _isEditMode = true;
             subfrmAddAddress.UpdateEvent += new EventHandler(Update_EmployeeAddress_Event);
             InitializeComponent();
-            initialWindowSetup();
+            SetupWindow();
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace PresentationLayer
             _isEditMode = false;
             subfrmAddAddress.UpdateEvent += new EventHandler(Update_EmployeeAddress_Event);
             InitializeComponent();
-            initialWindowSetup();
+            SetupWindow();
 
         }
 
@@ -192,7 +192,7 @@ namespace PresentationLayer
         /// <summary>
         /// Sets up window elements from User information
         /// </summary>
-        private void initialWindowSetup()
+        private void SetupWindow()
         {
             if (_isEditMode)
             {

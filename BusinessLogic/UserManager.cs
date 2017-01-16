@@ -20,8 +20,8 @@ namespace BusinessLogic
         /// <summary>
         /// Hash Encryption for Password
         /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
+        /// <param name="source">Source string</param>
+        /// <returns>Encrypted String</returns>
         internal string HashSHA256(string source)   //change back to internal
         {
             var result = "";
@@ -54,9 +54,9 @@ namespace BusinessLogic
         /// <summary>
         /// Authenticates employee
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
+        /// <param name="username">Entered username</param>
+        /// <param name="password">Entered password</param>
+        /// <returns>Returns User if Authentication Passes</returns>
         public User AuthenticateUser(string username, string password)
         {
             User user = null;
@@ -98,9 +98,9 @@ namespace BusinessLogic
         /// <summary>
         /// Updates Password 
         /// </summary>
-        /// <param name="userID"></param>
-        /// <param name="oldPassword"></param>
-        /// <param name="newPassword"></param>
+        /// <param name="userID">Users UserID</param>
+        /// <param name="oldPassword">User's Old Password</param>
+        /// <param name="newPassword">User's New Password</param>
         /// <returns></returns>
         public bool UpdatePassword(int userID, string oldPassword, string newPassword)
         {

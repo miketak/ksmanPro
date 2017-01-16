@@ -17,7 +17,6 @@ namespace BusinessLogic.Test
             var umg = new UserManager();
 
             var userfromDB = umg.AuthenticateUser("SCSYMCX", "password2");
-            // Assert.AreEqual(expectedResult, userfromDB);
             Assert.AreEqual(userfromDB.FirstName, "Martin");
             Assert.AreEqual(userfromDB.LastName, "Cox");
 

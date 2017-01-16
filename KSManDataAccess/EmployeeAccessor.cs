@@ -62,9 +62,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                Console.WriteLine("About to run Execute Scalar");
                 userId = (int)cmd.ExecuteScalar();
-                Console.WriteLine("User ID = " + userId);
             }
             catch (Exception)
             {
@@ -74,8 +72,6 @@ namespace DataAccessLayer
             {
                 conn.Close();
             }
-            
-            //Insert into Users Table
 
             //Returns the User ID
             return userId;
@@ -85,7 +81,7 @@ namespace DataAccessLayer
         /// Retrieves all Employee Data by Username
         /// </summary>
         /// <param name="username"></param>
-        /// <returns></returns>
+        /// <returns>Returns Employee Object By Username</returns>
         public static Employee RetrieveEmployeeByUsername(string username)
         {
             //Retrieve all details
@@ -167,8 +163,8 @@ namespace DataAccessLayer
         /// <summary>
         /// Retrieve active or inactive employee based on paramater. Retrieves all details
         /// </summary>
-        /// <param name="isEmployed"></param>
-        /// <returns></returns>
+        /// <param name="isEmployed">Employee Activity</param>
+        /// <returns>Retruns Employee List</returns>
         public static List<Employee> RetrieveEmployees(bool isEmployed)
         {
             var employeesInDB = new List<Employee>();
@@ -429,7 +425,7 @@ namespace DataAccessLayer
         /// <param name="departmentId">Department Id employee for retrieval</param>
         /// <param name="isAll">Indicator to retrieve all roles irrespective departmentId</param>
         /// <returns>Returns a list of UserRole Objects</returns>
-        public List<UserRoles> RetrieveUserRoles(string departmentId, bool isAll)
+        public static List<UserRoles> RetrieveUserRoles(string departmentId, bool isAll)
         {
             var userRolesInDb = new List<UserRoles>();
 
@@ -562,7 +558,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="userID">Personal Information ID Parameter for Select Query</param>
         /// <returns>Returns a list of Addresses</returns>
-        private static List<Address> retrieveAddressesByUserID(int userID) //remember there is a test here.
+        private static List<Address> retrieveAddressesByUserID(int userID) 
         {
             //Retrieve all details
             Address address = null;
