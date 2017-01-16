@@ -43,6 +43,7 @@
     <Compile Include="EmployeeDataObjects\Address.cs" />
     <Compile Include="EmployeeDataObjects\AddressType.cs" />
     <Compile Include="EmployeeDataObjects\Employee.cs" />
+    <Compile Include="ProgramDataObjects\ClearanceAccess.cs" />
     <Compile Include="ProgramDataObjects\ClearanceLevel.cs" />
     <Compile Include="ProgramDataObjects\Country.cs" />
     <Compile Include="ProgramDataObjects\Department.cs" />

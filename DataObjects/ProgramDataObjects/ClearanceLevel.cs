@@ -18,14 +18,14 @@ namespace DataObjects
 
         public string DepartmentId { get; set; }
 
-        public bool IsBlocked { get; set; }
+        //public bool IsBlocked { get; set; }
 
-        public bool IsViewable { get; set; }
+        //public bool IsViewable { get; set; }
 
-        public bool IsEditable { get; set; }
+        //public bool IsEditable { get; set; }
 
-        public int FunctionsId { get; set; }
+        //public int FunctionsId { get; set; }
 
-        public int UserId { get; set; }
+        //public int UserId { get; set; }
     }
 }

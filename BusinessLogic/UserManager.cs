@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer;
 using DataObjects;
+using DataObjects.ProgramDataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,6 +121,38 @@ namespace BusinessLogic
                 throw;
             }
             return result;
+        }
+
+
+        private ClearanceAccess RetrieveClearanceAccess( int clearanceLevelID, int functionsID )
+        {
+            var clearanceAccess = new ClearanceAccess();
+
+            clearanceAccess = UserAccessor.RetrieveClearanceAccess( clearanceLevelID, functionsID );
+
+            return clearanceAccess;
+        }
+        
+        /// <summary>
+        /// To Retrieve User Access Data
+        /// </summary>
+        /// <param name="user">Current User</param>
+        /// <returns>ClearanceAccess list DTO</returns>
+        public List<ClearanceAccess> RetrieveUserAccess ( User user )
+        {
+            var userAccess = new List<ClearanceAccess>();
+            var clearanceAccess = new List<ClearanceAccess>();
+
+            //Retrieve Functions available to Specific UserRole
+            userAccess = UserAccessor.RetrieveUserAccess( user.UserRolesId );
+
+            foreach ( var k in userAccess )
+            { 
+                //Use User Clearance Level to retrieve access properties
+                clearanceAccess.Add( RetrieveClearanceAccess(user.ClearanceLevelId, k.FeatureID) );
+            }
+
+            return clearanceAccess;
         }
     }
 }

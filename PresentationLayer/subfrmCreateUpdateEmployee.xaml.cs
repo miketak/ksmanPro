@@ -672,7 +672,7 @@ namespace PresentationLayer
         /// <summary>
         /// Clears All Controls in Form
         /// </summary>
-        /// <param name="addEditEmployee">Form Class</param>
+        /// <param name="centralDashboard">Form Class</param>
         static public void TraverseVisualTree(Visual addEditEmployee)
         {
             int childrenCount = VisualTreeHelper.GetChildrenCount(addEditEmployee);

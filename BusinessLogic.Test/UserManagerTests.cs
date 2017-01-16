@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BusinessLogic;
 using DataObjects;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace BusinessLogic.Test
 {
@@ -28,8 +29,8 @@ namespace BusinessLogic.Test
         {
             var employee = new Employee();
 
-            employee.FirstName = "Michael";
-            employee.LastName = "Takrama";
+            employee.FirstName = "Ryan";
+            employee.LastName = "Paul";
             employee.OtherNames = "Worlanyo";
             employee.PersonalPhoneNumber = "233245042433";
             employee.PersonalEmail = "mtaks@gmail.com";
@@ -49,7 +50,7 @@ namespace BusinessLogic.Test
 
 
             employee.UserRolesId = "DESENG";
-            employee.ClearanceLevelId = 30001;
+            employee.ClearanceLevelId = 203;
             employee.isEmployed = true;
             employee.AdditonalInfo = "Additional Info";
 
@@ -100,8 +101,8 @@ namespace BusinessLogic.Test
         {
             var employee = new Employee();
 
-            employee.FirstName = "Michael";
-            employee.LastName = "Takrama";
+            employee.FirstName = "John";
+            employee.LastName = "Tei";
             employee.OtherNames = "Worlanyo";
             employee.PersonalPhoneNumber = "233245042433";
             employee.PersonalEmail = "mtaks@gmail.com";
@@ -121,7 +122,7 @@ namespace BusinessLogic.Test
 
 
             employee.UserRolesId = "DESENG";
-            employee.ClearanceLevelId = 30001;
+            employee.ClearanceLevelId = 204;
             employee.isEmployed = true;
             employee.AdditonalInfo = "Additional Info";
 
@@ -144,6 +145,27 @@ namespace BusinessLogic.Test
             int expected = 1;
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void RetrieveUserAccessTest()
+        {
+            Trace.WriteLine("Retrieve User Starting ***");
+
+            //Parameters 
+            var user = new User();
+            user.UserRolesId = "DESENG";
+            user.ClearanceLevelId = 204;
+
+            UserManager um = new UserManager();
+            var userAccess = um.RetrieveUserAccess(user);
+
+            Trace.WriteLine(userAccess[0].FeatureName);
+
+            string expected = "Time Entry App";
+            string result = userAccess[0].FeatureName;
+            Assert.AreEqual(expected, result);
+
         }
     }
 }

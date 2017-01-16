@@ -38,7 +38,7 @@ namespace DataAccessLayer.Test
 
             //employee.DepartmentId = "EGDEPT"; //not used in user table
             employee.UserRolesId = "DESENG";
-            employee.ClearanceLevelId = 30001;
+            employee.ClearanceLevelId = 204;
             employee.isEmployed = true;
             employee.AdditonalInfo = "Additional Info";
 

@@ -1,4 +1,5 @@
 ﻿using DataObjects;
+using DataObjects.ProgramDataObjects;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -159,6 +160,120 @@ namespace DataAccessLayer
                 conn.Close();
             }
             return count;
+        }
+
+        public static ClearanceAccess RetrieveClearanceAccess(int clearanceLevelID, int functionsID)
+        {
+            ClearanceAccess clearanceAccessInDB = null;
+
+            //Getting connection
+            var conn = DBConnection.GetConnection();
+
+            //Using stored procedure
+            var cmdText = @"sp_retrieve_user_clearances_by_functionsID";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // add a parameter to the command
+            cmd.Parameters.Add("@ClearanceLevelID", SqlDbType.Int);
+            cmd.Parameters["@ClearanceLevelID"].Value = clearanceLevelID;
+            cmd.Parameters.Add("@FunctionsID", SqlDbType.Int);
+            cmd.Parameters["@FunctionsID"].Value = functionsID;
+
+            try
+            {
+                // you have to open a connection before using it
+                conn.Open();
+
+                // create a data reader with our command
+                var reader = cmd.ExecuteReader();
+
+                // check to make sure the reader has data
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    clearanceAccessInDB = new ClearanceAccess()
+                    {
+                        FeatureID = reader.GetInt32(0),
+                        FeatureName = reader.GetString(1),
+                        hasAccess = reader.GetBoolean(2),
+                        isEditable = reader.GetBoolean(3)
+                    };
+                    // close the reader
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("There was a problem retrieving clearance data.", ex);
+            }
+            finally
+            {
+                // final housekeeping
+                conn.Close();
+            }
+
+            return clearanceAccessInDB;
+        }
+
+        /// <summary>
+        /// Retrieves User Access Data
+        /// </summary>
+        /// <param name="userRolesID">UserRole of User</param>
+        /// <returns>List<CrearanceAccess) DTO</returns>
+        public static List<ClearanceAccess> RetrieveUserAccess(string userRolesID)
+        {
+            var userAccessInDB = new List<ClearanceAccess>();
+
+            //Getting connection
+            var conn = DBConnection.GetConnection();
+
+            //Using stored procedure
+            var cmdText = @"sp_retrieve_user_access";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // add a parameter to the command
+            cmd.Parameters.Add("@UserRolesID", SqlDbType.VarChar, 6);
+            cmd.Parameters["@UserRolesID"].Value = userRolesID;
+
+            try
+            {
+                // you have to open a connection before using it
+                conn.Open();
+
+                // create a data reader with our command
+                var reader = cmd.ExecuteReader();
+
+                // check to make sure the reader has data
+                if (reader.HasRows)
+                {
+                    while ( reader.Read() )
+                    {
+                        // create an employee object
+                        var userAccess = new ClearanceAccess()
+                        {
+                            FeatureID = reader.GetInt32(0),
+                            UserRolesID = reader.GetString(1)
+                        };
+                        userAccessInDB.Add(userAccess);
+                    }
+                    
+                    // close the reader
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("There was a problem retrieving user access data.", ex);
+            }
+            finally
+            {
+                // final housekeeping
+                conn.Close();
+            }
+
+            return userAccessInDB;
         }
     }
 }

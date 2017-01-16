@@ -53,7 +53,7 @@ namespace PresentationLayer
         List<Country> _countries;
 
         /// <summary>
-        /// Holds old Address Type Name for Combo box selection change
+        /// Holds old Address Type FeatureName for Combo box selection change
         /// </summary>
         string _oldAddressTypeName;
 

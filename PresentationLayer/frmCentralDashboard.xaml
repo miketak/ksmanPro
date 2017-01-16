@@ -70,18 +70,18 @@
                     <TextBox Name="txtSearch" Height="25" Width="200" VerticalAlignment="Top" Foreground="Gray" Text="Search"/>
                     <!--<Label Content="Search" Foreground="White"/>-->
                 </StackPanel>
-                <Button Content="Time Entry App" Background="AliceBlue" Foreground="Black" Margin="0 5 0 5"/>
-                <Button Content="Employee Central" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
-                <Button Content="Admin Central" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5" Click="btnAdminCentral"/>
-                <Button Content="Leave Central" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
-                <Button Content="SC Job Pro" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
-                <Button Content="SC Sales" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
-                <Button Content="SC Logistics" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
-                <Button Content="SC Learning Modules" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
-                <Button Content="SC Projects Portal" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
-                <Button Content="SC Careers Portal" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
-                <Button Content="SC HRM" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
-                <Button Content="SC Announcements" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                <Button Content="Time Entry App" Name ="timeEntryApp" Background="AliceBlue" Foreground="Black" Margin="0 5 0 5"/>
+                <Button Content="Employee Central" Name ="employeeCentral" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                <Button Content="Admin Central" Name ="adminCentral" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5" Click="btnAdminCentral"/>
+                <Button Content="Leave Central" Name ="leaveCentral" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                <Button Content="SC Job Pro" Name ="scjobPro" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                <Button Content="SC Sales" Name="scSales" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                <Button Content="SC Logistics" Name="scLogistics" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                <Button Content="SC Learning Modules" Name="scLearningModules" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                <Button Content="SC Projects Portal" Name="scProjectsPortal" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                <Button Content="SC Careers Portal" Name="scCareersPortal" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                <Button Content="SC HRM" Name ="schrm" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                <Button Content="SC Announcements" Name="scannouncement" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
             </StackPanel>
         </Border>
 
