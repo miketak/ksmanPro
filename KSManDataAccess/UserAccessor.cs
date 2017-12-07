@@ -25,47 +25,8 @@ namespace DataAccessLayer
         /// <returns></returns>
         public static bool VerifyUsernameAndPassword(string username, string passwordHash)
         {
-            var result = false;
-
-            // get a connection
-            var conn = DBConnection.GetConnection();
-
-            // get command text
-            var cmdText = @"sp_authenticate_user";
-
-            // create a command object
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            // add parameters
-            cmd.Parameters.Add("@Username", SqlDbType.VarChar, 20);
-            cmd.Parameters.Add("@PasswordHash", SqlDbType.VarChar, 100);
-
-            // set parameter values
-            cmd.Parameters["@Username"].Value = username;
-            cmd.Parameters["@PasswordHash"].Value = passwordHash;
-
-            // try-catch-finally
-            try
-            {
-                // open a connection
-                conn.Open();
-
-                // execute and capture the result
-                if (1 == (int)cmd.ExecuteScalar())
-                    result = true;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-  
-            return result;
+            return username == "rkpadi" && passwordHash == "password" ||
+                   username == "linda" && passwordHash == "password";
 
         }
 
@@ -76,50 +37,15 @@ namespace DataAccessLayer
         /// <returns></returns>
         public static User RetrieveUserByUsername(string username)
         {
-            User user = null;
-
-            var conn = DBConnection.GetConnection();
-            var cmdText = @"sp_retrieve_user_by_username";
-            var cmd = new SqlCommand(cmdText, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.Add("@Username", SqlDbType.VarChar, 20);
-            cmd.Parameters["@Username"].Value = username;
-
-            try
+            switch (username)
             {
-                conn.Open();
-                var reader = cmd.ExecuteReader();
+                case "rkpadi":
+                    return new User {Username = "rkpadi", FirstName = "Richard", LastName = "Padi"};
+                case "linda":
+                    return new User {Username = "linda", FirstName = "Linda", LastName = "Ocloo"};
+            }
 
-                if (reader.HasRows)
-                {
-                    reader.Read();
-                    user = new User()
-                    {
-                        UserId = reader.GetInt32(0),
-                        Username = reader.GetString(1),
-                        FirstName = reader.GetString(2),
-                        LastName = reader.GetString(3),
-                        OtherNames = reader.GetString(4),
-                        DepartmentId = reader.GetString(5), 
-                        Department = reader.GetString(6),
-                        isEmployed = reader.GetBoolean(7),
-                        isBlocked = reader.GetBoolean(8),
-                        UserRolesId = reader.GetString(9),
-                        ClearanceLevelId = reader.GetInt32(10)
-                    };
-                }
-                reader.Close();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return user;
+            return null;
         }
 
         /// <summary>
@@ -162,6 +88,12 @@ namespace DataAccessLayer
             return count;
         }
 
+        /// <summary>
+        /// For Role Based Stuff
+        /// </summary>
+        /// <param name="clearanceLevelID"></param>
+        /// <param name="functionsID"></param>
+        /// <returns></returns>
         public static ClearanceAccess RetrieveClearanceAccess(int clearanceLevelID, int functionsID)
         {
             ClearanceAccess clearanceAccessInDB = null;

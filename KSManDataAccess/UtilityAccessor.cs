@@ -12,7 +12,6 @@ namespace DataAccessLayer
     public class UtilityAccessor
     {
         // Country Utility Methods
-
         /// <summary>
         /// Data Access Method to Retrieve Countries from Database
         /// </summary>
@@ -128,9 +127,7 @@ namespace DataAccessLayer
             return country;
         }
 
-
         // State Utility Methods
-
         /// <summary>
         /// Retrieves state by ID
         /// </summary>

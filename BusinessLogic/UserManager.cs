@@ -62,7 +62,7 @@ namespace BusinessLogic
             User user = null;
             
             //Username & Password pre-validation
-            if (username.Length < 7 || username.Length > 20)
+            if (username.Length < 5 || username.Length > 20)
             {
                 throw new ApplicationException("Invalid Username");
             }
@@ -73,7 +73,7 @@ namespace BusinessLogic
 
             try
             {
-                if ( UserAccessor.VerifyUsernameAndPassword( username, HashSHA256(password) ) )
+                if ( UserAccessor.VerifyUsernameAndPassword( username, password)) //HashSHA256(password) ) )
                 {
                     password = null;
                     // need to create a employee object to use as an access token

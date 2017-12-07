@@ -17,7 +17,6 @@ namespace DataAccessLayer
     public class EmployeeAccessor
     {
         //Employee CRUD
-
         /// <summary>
         /// Creates a new Employee
         /// </summary>
@@ -308,7 +307,6 @@ namespace DataAccessLayer
 
 
         // Department CRUD
-
         /// <summary>
         /// Creates a new departments
         /// </summary>
@@ -408,7 +406,6 @@ namespace DataAccessLayer
 
 
         // User Role CRUD
-
         /// <summary>
         /// Create User Roles
         /// </summary>
@@ -511,7 +508,6 @@ namespace DataAccessLayer
 
 
         // User Address CRUD
-
         /// <summary>
         /// Create new Address For Employee
         /// </summary>
@@ -675,7 +671,6 @@ namespace DataAccessLayer
 
 
         // Address Types CRUD
-
         /// <summary>
         /// Creates new Address Type
         /// </summary>
@@ -770,7 +765,6 @@ namespace DataAccessLayer
 
 
         // Clearance Level CRUD
-
         /// <summary>
         /// Creates new clearance level
         /// </summary>

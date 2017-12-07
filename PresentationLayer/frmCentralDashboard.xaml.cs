@@ -27,7 +27,7 @@ namespace PresentationLayer
         /// <summary>
         /// Current User
         /// </summary>
-        User _user = null;
+        User _user;
 
         /// <summary>
         /// Central Dashboard Constructor
@@ -37,15 +37,7 @@ namespace PresentationLayer
         {
             _user = user;
             InitializeComponent();
-            RetrieveUserAccess();
             SetupWindow();
-        }
-
-        private void RetrieveUserAccess()
-        {
-            var m = new UserManager();
-
-            _user.ClearanceAccess = m.RetrieveUserAccess(_user);
         }
 
         private void SetupWindow()
@@ -54,77 +46,8 @@ namespace PresentationLayer
             txtName.Text = _user.FirstName + " " + _user.LastName;
 
             //Set status message
-            txtStatusMessage.Content += "Welcome back " + _user.FirstName + " " + _user.LastName;
-
-            //Hide All Buttons
-            HideAllButtons();
-
-            //Setup Available Buttons
-            foreach (var k in _user.ClearanceAccess)
-            {
-                EnforceUserAccess(k.FeatureName.Replace(" ", ""), k.hasAccess);
-            }
-            
-
-            
+            txtStatusMessage.Content += "Welcome back " + _user.FirstName + " " + _user.LastName;           
         }
-
-        private void EnforceUserAccess(string feature, bool access)
-        {
-
-           
-
-            UserFeatures uf;
-
-            if ( !Enum.TryParse(feature.ToUpper(), out uf))
-            {
-                MessageBox.Show("Enum Parse Error " + feature.ToUpper() );
-            }
-            
-
-            switch (uf)
-            {
-                case UserFeatures.ADMINCENTRAL:
-                    if (access)
-                        adminCentral.Visibility = Visibility.Visible;
-                    break;
-                case UserFeatures.EMPLOYEECENTRAL:
-                    if (access)
-                        employeeCentral.Visibility = Visibility.Visible;
-                    break;
-                case UserFeatures.SCANNOUNCEMENTS:
-                    if (access)
-                        scannouncement.Visibility = Visibility.Visible;
-                    break;
-                case UserFeatures.SCHRM:
-                    if ( access )
-                        schrm.Visibility = Visibility.Visible;
-                    break;
-                case UserFeatures.TIMEENTRYAPP:
-                    if ( access )
-                        timeEntryApp.Visibility = Visibility.Visible;
-                    break;
-            }
-            
-        }
-
-        private void HideAllButtons()
-        {
-            timeEntryApp.Visibility = Visibility.Collapsed;
-            employeeCentral.Visibility = Visibility.Collapsed;
-            adminCentral.Visibility = Visibility.Collapsed;
-            leaveCentral.Visibility = Visibility.Collapsed;
-            scjobPro.Visibility = Visibility.Collapsed;
-            scSales.Visibility = Visibility.Collapsed;
-            scLogistics.Visibility = Visibility.Collapsed;
-            scLearningModules.Visibility = Visibility.Collapsed;
-            scProjectsPortal.Visibility = Visibility.Collapsed;
-            scCareersPortal.Visibility = Visibility.Collapsed;
-            schrm.Visibility = Visibility.Collapsed;
-            scannouncement.Visibility = Visibility.Collapsed;
-        }
-
-
 
         private async void tryMe_Click(object sender, RoutedEventArgs e)
         {
